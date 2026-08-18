@@ -4,7 +4,7 @@
 - 当前阶段：Phase 0 / Gate 0
 - 证据层级：`local_candidate`
 - 核心蓝图：[memoized-riding-giraffe.md](memoized-riding-giraffe.md)
-- 当前阻断：完整词表、术语定义和专家 reviewer 尚未冻结
+- 当前阻断：完整词表仍随语料扩量增补，专家 reviewer 未签署；**V2 范围内使用中的 44 个词条已冻结并入库**（见 §5.0）
 
 ## 1. 目的
 
@@ -62,6 +62,32 @@
 如果不同 occurrence 相互冲突，concept 不得选择其中一个并隐藏其余证据。可标 `disputed`、保留多个 assignment，或只在 occurrence 层展示。
 
 ## 5. 分类轴候选
+
+## 5.0 已入库词表（2026-08-18）
+
+迁移之前，`axis` 与 `term` 只是指派行上的两列自由文本。后果不止是中文界面显示
+`behavior / man eating` 这样的英文 slug——没有任何东西阻止同一概念写成两种拼法，
+本文件 §8 要求的"每个 term 有定义、适用 kind、证据要求和双语评审"也无处落地。
+
+现在词表是一等对象：`shj_taxonomy_axes` 与 `shj_taxonomy_terms`（migration `003`），
+由 `npm run generate:taxonomy` 确定性产出 seed `005`，并在词表装入后建立
+`shj_taxonomy_assignments (axis, term)` 外键——**此后不可能指派词表中不存在的词条**。
+
+| 轴 | 中文 | 词条数 |
+|---|---|---|
+| `morphology` | 形态 | 22 |
+| `behavior` | 行为 | 4 |
+| `body` | 体征 | 3 |
+| `sound` | 声音 | 4 |
+| `effect` | 服食效用 | 4 |
+| `omen` | 兆应 | 6 |
+| `seasonality` | 时序 | 1 |
+
+每个词条带双语标签、双语定义与 `evidence_requirement`；定义写"凭什么归到这一类"，
+不是把标签换个说法重说一遍——`verify:domain` 对此有专项检查，标签与定义雷同即失败。
+API 以 INNER JOIN 取词表，未发布的轴或词条不会出现在读者面前。
+
+计数以 `generated/domain-verification.json` 为准，不在此手抄。
 
 以下是核心蓝图要求的最小候选轴，不是已冻结完整词表。
 
@@ -201,7 +227,7 @@
 
 ## 11. Taxonomy verifier 契约
 
-规划命令：`npm run verify:shanhaijing-taxonomy`，当前未实现。
+词表完整性检查已并入 `npm run verify:domain`（词表覆盖、双语标签、双语定义、发布状态四项）；独立的 `verify:shanhaijing-taxonomy` 不再单列。
 
 至少检查：
 

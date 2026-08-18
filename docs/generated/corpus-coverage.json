@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-08-18T11:55:05.080Z",
+  "command": "npm run verify:domain",
+  "evidenceLevel": "local_candidate",
+  "editionSlug": "nanshan-v1-public-domain-collation",
+  "editionChecksum": "824c1e36104b9886ea3498d7742e6cc1ff4a61c17712c4da0044a2214dc0a6a3",
+  "totals": {
+    "uniqueCreatureConcepts": 23,
+    "textualOccurrences": 24,
+    "passagesReviewed": 43,
+    "passagesTotal": 43
+  },
+  "sections": [
+    {
+      "slug": "queshan-first-route",
+      "title": "南山经·鹊山首列",
+      "sequence": 1,
+      "passages": 10,
+      "passagesReviewed": 10,
+      "textualOccurrences": 10,
+      "creatureConceptsMentioned": 10
+    },
+    {
+      "slug": "nanci2-route",
+      "title": "南山经·南次二经",
+      "sequence": 2,
+      "passages": 18,
+      "passagesReviewed": 18,
+      "textualOccurrences": 7,
+      "creatureConceptsMentioned": 7
+    },
+    {
+      "slug": "nanci3-route",
+      "title": "南山经·南次三经",
+      "sequence": 3,
+      "passages": 15,
+      "passagesReviewed": 15,
+      "textualOccurrences": 7,
+      "creatureConceptsMentioned": 6
+    }
+  ]
+}

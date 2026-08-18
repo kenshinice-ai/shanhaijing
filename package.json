@@ -23,6 +23,7 @@
     "measure:performance": "tsx scripts/measure_performance.ts",
     "generate:overview": "tsx scripts/generate_overview.ts",
     "generate:corpus-seed": "tsx scripts/generate_nanshan_full.ts",
+    "generate:taxonomy": "tsx scripts/generate_taxonomy_vocabulary.ts",
     "build:static": "npm run bake:static -w @shanhaijing/api -- --api \"${BAKE_API_URL:-http://localhost:4000}\" && VITE_DATA_MODE=static npm run build -w @shanhaijing/web -- --base=./"
   },
   "engines": {

@@ -79,8 +79,13 @@ export function EntityDrawer({ atlas, entity, locale, onClose, onSelect }: Props
         <h4>{locale === "zh-CN" ? "分类证据" : "Taxonomy claims"} <b>{creature.taxonomy.length}</b></h4>
         <ul className="drawer-taxonomy">
           {creature.taxonomy.map((claim) => <li key={`${claim.axis}-${claim.term}`}>
-            <span className="axis">{claim.axis}</span>
-            <span className="term">{claim.term.replaceAll("_", " ")}</span>
+            <span className="axis">{claim.axisLabel}</span>
+            {/* The slug stays in the markup for anyone reading the data, but
+                the reader sees the vocabulary's own label and definition. */}
+            <span className="term" data-axis={claim.axis} data-term={claim.term} title={claim.termDefinition}>
+              {claim.termLabel}
+            </span>
+            <small className="term-definition">{claim.termDefinition}</small>
             <small lang="zh-Hant">{claim.evidenceNote}</small>
           </li>)}
         </ul>

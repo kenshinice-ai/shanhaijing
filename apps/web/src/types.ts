@@ -58,6 +58,9 @@ const PassageSchema = z.object({
 
 const TaxonomySchema = z.object({
   axis: z.string(), term: z.string(), confidence: z.enum(["high", "medium", "low", "unknown"]), evidenceNote: z.string(),
+  // Labels are required, not optional: a claim the reader cannot read in
+  // their own language is a claim the interface should never have shipped.
+  axisLabel: z.string().min(1), termLabel: z.string().min(1), termDefinition: z.string().min(1),
 });
 
 const CreatureSchema = z.object({

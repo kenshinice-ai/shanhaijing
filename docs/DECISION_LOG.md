@@ -230,6 +230,21 @@
   移动端预算的冻结列入下一轮前置条件。
 - 证据：`PERFORMANCE_BUDGETS.md` §3.1。
 
+### SJ-D018：分类词表升为一等对象并双语化
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户列入本轮范围`
+- 输入：使用中的 7 轴 44 词条及其原文证据（`shj_taxonomy_assignments.evidence_note`）
+- 决策：新增 `shj_taxonomy_axes`／`shj_taxonomy_terms`（migration `003`），词表由
+  `generate:taxonomy` 确定性产出 seed `005`，并在装入后对指派建立 `(axis, term)` 外键；
+  API 以 INNER JOIN 返回本地化标签与定义，界面不再显示 slug。
+- 理由：中文优先的图集在证据面板上显示 `behavior / man eating`，是把机器标识当成了读者界面；
+  更实际的风险是自由文本没有唯一性约束，同一概念迟早写成两种拼法而统计无从发现。
+- 影响：`TaxonomySchema` 的三个标签字段为**必填**——缺翻译即 payload 解析失败，
+  比"英文兜底"更早暴露问题；词表随语料扩量增补，新词条必须同时给出双语定义。
+- 证据：`TAXONOMY.md` §5.0、`verify:domain` 的 TAXONOMY-* 检查、`generated/domain-verification.json`。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -247,4 +262,5 @@
 | `SJ-DLOG-005` | 2026-08-18 | 记录主负责人内部签署，外部机构签署保持 pending（SJ-D012） | 主负责人 | `REVIEWER_ASSIGNMENTS_2026-08-15.md` 第 5 节 |
 | `SJ-DLOG-006` | 2026-08-18 | 记录生僻字子集字体（SJ-D014）与首版发布授权（SJ-D015） | 主负责人 | `RARE_GLYPH_FONT.md`、`RELEASE_CHECKLIST.md` |
 | `SJ-DLOG-007` | 2026-08-18 | 以无背书声明取代等待外部签署（SJ-D016）；冻结四项性能预算（SJ-D017） | 主负责人 | `PERFORMANCE_BUDGETS.md` §3.1、`i18n.ts` |
+| `SJ-DLOG-008` | 2026-08-18 | 分类词表入库并双语化（SJ-D018） | 主负责人 | `TAXONOMY.md` §5.0 |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |

@@ -228,6 +228,122 @@ async function main(): Promise<void> {
   }
 
   // --- Report ----------------------------------------------------------------
+  // 分类词表：界面上的每一条分类主张都必须能用读者的语言读出来。
+  // 词表缺项、缺翻译或轴未发布，都属于"证据存在但读者看不懂"，按 fail closed 处理。
+  const vocabulary = await rows<{ axis: string; term: string; label_zh: string; label_en: string; definition_zh: string; definition_en: string; review_status: string }>(
+    `SELECT t.axis, t.term, t.label_zh, t.label_en, t.definition_zh, t.definition_en, t.review_status FROM shj_taxonomy_terms t ORDER BY t.axis, t.term`,
+  );
+  const axes = await rows<{ axis: string; label_zh: string; label_en: string; review_status: string }>(
+    `SELECT axis, label_zh, label_en, review_status FROM shj_taxonomy_axes ORDER BY sequence`,
+  );
+  const used = await rows<{ axis: string; term: string }>(
+    `SELECT DISTINCT a.axis, a.term FROM shj_taxonomy_assignments a WHERE a.review_status='published' ORDER BY a.axis, a.term`,
+  );
+  const vocabularyKeys = new Set(vocabulary.map((row) => `${row.axis}:${row.term}`));
+  const axisNames = new Set(axes.map((row) => row.axis));
+  checks += 1;
+  for (const row of used) {
+    if (!vocabularyKeys.has(`${row.axis}:${row.term}`)) {
+      fail("TAXONOMY-VOCABULARY", `指派引用了词表中不存在的词条：${row.axis}/${row.term}`);
+    }
+    if (!axisNames.has(row.axis)) fail("TAXONOMY-AXIS", `指派引用了未登记的轴：${row.axis}`);
+  }
+  checks += 1;
+  for (const row of vocabulary) {
+    if (!row.label_zh.trim() || !row.label_en.trim()) fail("TAXONOMY-BILINGUAL", `词条缺少双语标签：${row.axis}/${row.term}`);
+    if (!row.definition_zh.trim() || !row.definition_en.trim()) fail("TAXONOMY-DEFINITION", `词条缺少双语定义：${row.axis}/${row.term}`);
+    if (row.review_status !== "published") fail("TAXONOMY-STATUS", `词条未发布却被词表收录：${row.axis}/${row.term}（${row.review_status}）`);
+    // 定义不能只是把标签换个说法重说一遍。
+    if (row.definition_zh.trim() === row.label_zh.trim()) fail("TAXONOMY-DEFINITION", `词条定义与标签重复：${row.axis}/${row.term}`);
+  }
+  checks += 1;
+  for (const row of axes) {
+    if (!row.label_zh.trim() || !row.label_en.trim()) fail("TAXONOMY-BILINGUAL", `轴缺少双语标签：${row.axis}`);
+    if (row.review_status !== "published") fail("TAXONOMY-STATUS", `轴未发布：${row.axis}`);
+  }
+  info("TAXONOMY-VOCABULARY", `分类词表：${axes.length} 轴、${vocabulary.length} 词条，覆盖 ${used.length} 组已发布指派`);
+
+  // 覆盖矩阵：CONTENT_COVERAGE_MATRIX.md 里有一段标记区，声明只能由校验器重写。
+  // 在此之前它一直写着"未生成"，而语料早已冻结——文档因此比数据落后了两个版本。
+  // 三项统计分开出，不合并成一个"异兽数"，这是 SJ-R002 的要求。
+  const coverageRows = await rows<{
+    section_slug: string; section_title: string; sequence: string;
+    passages: string; reviewed: string; occurrences: string; concepts: string;
+  }>(
+    `SELECT s.slug AS section_slug,
+            s.title_zh AS section_title,
+            s.sequence::text AS sequence,
+            count(DISTINCT p.id)::text AS passages,
+            count(DISTINCT p.id) FILTER (
+              WHERE p.review_status='published' AND COALESCE(a.audit_status,'pending_review')='reviewed'
+            )::text AS reviewed,
+            count(DISTINCT o.id) FILTER (WHERE o.review_status='published')::text AS occurrences,
+            count(DISTINCT o.creature_id) FILTER (WHERE o.review_status='published')::text AS concepts
+       FROM shj_text_sections s
+       JOIN shj_text_editions e ON e.id=s.edition_id AND e.work_id=$1 AND e.is_baseline
+       LEFT JOIN shj_text_passages p ON p.section_id=s.id
+       LEFT JOIN shj_passage_audits a ON a.passage_id=p.id
+       LEFT JOIN shj_creature_occurrences o ON o.passage_id=p.id
+      GROUP BY s.slug, s.title_zh, s.sequence
+      ORDER BY s.sequence`,
+    [workId],
+  );
+  const baselineEdition = editions.find((edition) => edition.is_baseline);
+  const coverage = {
+    generatedAt: new Date().toISOString(),
+    command: "npm run verify:domain",
+    evidenceLevel: EVIDENCE_LEVEL,
+    editionSlug: baselineEdition?.slug ?? null,
+    editionChecksum: baselineEdition?.checksum_sha256 ?? null,
+    totals: {
+      uniqueCreatureConcepts: Number(stats.concepts),
+      textualOccurrences: Number(stats.occurrences),
+      passagesReviewed: Number(stats.passages_reviewed),
+      passagesTotal: Number(stats.passages_total),
+    },
+    sections: coverageRows.map((row) => ({
+      slug: row.section_slug,
+      title: row.section_title,
+      sequence: Number(row.sequence),
+      passages: Number(row.passages),
+      passagesReviewed: Number(row.reviewed),
+      textualOccurrences: Number(row.occurrences),
+      creatureConceptsMentioned: Number(row.concepts),
+    })),
+  };
+  await writeFile(join(REPORT_DIR, "corpus-coverage.json"), `${JSON.stringify(coverage, null, 2)}\n`);
+
+  const coverageTable = [
+    "| 山系 | 段落 | 已审核 | 文本提及 | 出现的异兽概念 |",
+    "|---|---|---|---|---|",
+    ...coverage.sections.map((section) =>
+      `| ${section.title} | ${section.passages} | ${section.passagesReviewed} | ${section.textualOccurrences} | ${section.creatureConceptsMentioned} |`),
+    `| **合计** | **${coverage.totals.passagesTotal}** | **${coverage.totals.passagesReviewed}** | **${coverage.totals.textualOccurrences}** | **${coverage.totals.uniqueCreatureConcepts}（归并后独立概念）** |`,
+  ].join("\n");
+  const coverageBlock = [
+    "",
+    `> 由 \`${coverage.command}\` 于 \`${coverage.generatedAt}\` 生成；底本 \`${coverage.editionSlug}\`，`,
+    `> checksum \`${(coverage.editionChecksum ?? "").slice(0, 16)}…\`；证据层级 \`${coverage.evidenceLevel}\`。`,
+    "",
+    coverageTable,
+    "",
+    "> 合计列的「异兽概念」是**归并后的独立概念数**，不是各行相加——同一异兽在多个山系出现只计一次。",
+    "> 三项统计彼此独立，禁止相加或互相替代。",
+    "",
+  ].join("\n");
+  const matrixPath = join(ROOT, "docs/CONTENT_COVERAGE_MATRIX.md");
+  const matrix = await readFile(matrixPath, "utf8");
+  const begin = "<!-- SHANHAIJING_COVERAGE:BEGIN -->";
+  const end = "<!-- SHANHAIJING_COVERAGE:END -->";
+  checks += 1;
+  if (!matrix.includes(begin) || !matrix.includes(end)) {
+    fail("COVERAGE-MARKERS", "CONTENT_COVERAGE_MATRIX.md 缺少机器生成区标记");
+  } else {
+    const rewritten = `${matrix.slice(0, matrix.indexOf(begin) + begin.length)}${coverageBlock}${matrix.slice(matrix.indexOf(end))}`;
+    if (rewritten !== matrix) await writeFile(matrixPath, rewritten);
+    info("COVERAGE-MATRIX", `覆盖矩阵统计区已更新：${coverage.sections.length} 个山系`);
+  }
+
   const errors = findings.filter((finding) => finding.severity === "error");
   const summary = {
     generatedAt: new Date().toISOString(),

@@ -4,7 +4,7 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T11:39:41.093Z",
+  "generatedAt": "2026-08-18T11:55:05.273Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
@@ -47,8 +47,8 @@
     },
     {
       "path": "docs/CONTENT_COVERAGE_MATRIX.md",
-      "bytes": 7672,
-      "sha256": "3819393d571c748e6d32872ff23d07e676c2a439165115743f6b976664be5253"
+      "bytes": 8899,
+      "sha256": "e8c4ea6f1a3ff9de14658126cb9eef70397fe4e20a6c20a4509e921687de0f84"
     },
     {
       "path": "docs/ENTITY_AND_DATA_DICTIONARY.md",
@@ -57,8 +57,8 @@
     },
     {
       "path": "docs/TAXONOMY.md",
-      "bytes": 10218,
-      "sha256": "7f9a4a468adc3499b8aacf84a4b31c0124615ac6c5553bc5e6b2b56699114df9"
+      "bytes": 11704,
+      "sha256": "82a73817b917e58bf328f23f8a38bb2d87956f5dc2c15c96e0ded198067db9a3"
     },
     {
       "path": "docs/GEOGRAPHY_AND_MAPS.md",
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/DECISION_LOG.md",
-      "bytes": 19808,
-      "sha256": "bdd738c0cbf52ebd5a462a5ee1b6ae8e8a02af2afdc0fa26949bc31088f218ce"
+      "bytes": 21029,
+      "sha256": "f0584ade27b226c630da3f74865d815a1e88762d4803a04d763269b2d133a9b8"
     },
     {
       "path": "docs/RISK_REGISTER.md",

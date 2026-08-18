@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-18T06:42:38.585Z",
+  "generatedAt": "2026-08-18T11:55:05.081Z",
   "command": "npm run verify:domain",
   "evidenceLevel": "local_candidate",
   "database": "shanhaijing_atlas",
   "postgres": "PostgreSQL 18.6 (Homebrew)",
   "result": "pass",
-  "checks": 196,
+  "checks": 200,
   "errors": 0,
   "statistics": {
     "uniqueCreatureConcepts": 23,
@@ -15,5 +15,16 @@
       "passagesTotal": 43
     }
   },
-  "findings": []
+  "findings": [
+    {
+      "checkId": "TAXONOMY-VOCABULARY",
+      "severity": "info",
+      "message": "分类词表：7 轴、44 词条，覆盖 44 组已发布指派"
+    },
+    {
+      "checkId": "COVERAGE-MATRIX",
+      "severity": "info",
+      "message": "覆盖矩阵统计区已更新：3 个山系"
+    }
+  ]
 }

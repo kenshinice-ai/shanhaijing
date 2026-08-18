@@ -1,10 +1,10 @@
 # 《山海经 Atlas》内容覆盖矩阵
 
 - 文档状态：`review_ready`
-- 当前阶段：Phase 0 / Gate 0
+- 当前阶段：Phase 1 完成（《南山经》全篇）；Phase 2 语料扩量待编辑决策
 - 证据层级：`local_candidate`
 - 核心蓝图：[memoized-riding-giraffe.md](memoized-riding-giraffe.md)
-- 统计状态：尚无冻结语料，禁止填写或推断全书总数
+- 统计状态：《南山经》已冻结并生成统计（见 §5）；**全书总数仍禁止填写或推断**——已冻结的只是南山经
 
 ## 1. 用途
 
@@ -20,16 +20,19 @@
 
 ## 2. 当前 Gate 0 状态
 
-| 输入 | 状态 | 阻断原因 |
+| 输入 | 状态 | 说明 |
 |---|---|---|
-| baseline edition | `blocked` | 尚未由古籍专家冻结 |
-| section hierarchy | `blocked` | 依赖 baseline edition |
-| passage segmentation | `blocked` | 规则与 reviewer 未冻结 |
+| baseline edition | `frozen`（南山经） | `nanshan-v1-public-domain-collation`，逐段 SHA-256 与 edition checksum 入库 |
+| section hierarchy | `frozen`（南山经） | 三列山系，见 §5 生成区 |
+| passage segmentation | `frozen`（南山经） | `nanshan-full-v2`，43 段；扩量到其他篇需重新冻结 |
 | occurrence inclusion policy | `draft` | 见 `CORPUS_AND_EDITORIAL_POLICY.md` |
-| concept merge/split policy | `draft` | 尚未以 Pilot 演练 |
-| Pilot scope | `blocked` | 篇章或山系尚未批准 |
-| coverage verifier | `not_implemented` | Gate 0 后实现 |
-| generated counts | `unavailable` | 不存在合法输入 |
+| concept merge/split policy | `applied` | 已在南山经上实作：凤皇两次出现计为一个概念、鹓鶵为仅名无形态的 provisional |
+| Pilot scope | `completed` | 《南山经》全篇 |
+| coverage verifier | `implemented` | 并入 `npm run verify:domain`，直接重写 §5 生成区与 `generated/corpus-coverage.json` |
+| generated counts | `available` | 见 §5；散文中不得手抄 |
+
+**未冻结的部分同样要说清楚**：西山经、北山经、东山经、中山经与海经诸篇的底本、
+section tree 与 segmentation **全未冻结**，因此本文件不给出任何全书口径的分母。
 
 ## 3. 覆盖矩阵字段
 
@@ -73,12 +76,21 @@
 
 ## 5. 机器生成统计区
 
-以下标记之间的内容只能由 coverage verifier 重写。当前无合法输入，因此保持明确的未生成状态。
+以下标记之间的内容只能由 coverage verifier 重写：`npm run verify:domain` 每次运行都会以数据库现状覆盖它。手工修改会在下次运行时被抹掉，这是有意的。
 
 <!-- SHANHAIJING_COVERAGE:BEGIN -->
+> 由 `npm run verify:domain` 于 `2026-08-18T11:55:05.080Z` 生成；底本 `nanshan-v1-public-domain-collation`，
+> checksum `824c1e36104b9886…`；证据层级 `local_candidate`。
 
-> 未生成。baseline edition、segmentation version 与 Pilot scope 尚未冻结；`verify:shanhaijing-corpus` 尚未实现。
+| 山系 | 段落 | 已审核 | 文本提及 | 出现的异兽概念 |
+|---|---|---|---|---|
+| 南山经·鹊山首列 | 10 | 10 | 10 | 10 |
+| 南山经·南次二经 | 18 | 18 | 7 | 7 |
+| 南山经·南次三经 | 15 | 15 | 7 | 6 |
+| **合计** | **43** | **43** | **24** | **23（归并后独立概念）** |
 
+> 合计列的「异兽概念」是**归并后的独立概念数**，不是各行相加——同一异兽在多个山系出现只计一次。
+> 三项统计彼此独立，禁止相加或互相替代。
 <!-- SHANHAIJING_COVERAGE:END -->
 
 ## 6. JSON 真源契约
@@ -86,8 +98,7 @@
 建议输出路径：
 
 ```text
-docs/shanhaijing/generated/corpus-coverage.json
-docs/shanhaijing/generated/corpus-coverage.md
+docs/generated/corpus-coverage.json
 ```
 
 JSON 顶层至少包含：
@@ -97,7 +108,7 @@ JSON 顶层至少包含：
   "schema_version": "pending",
   "evidence_level": "local_candidate",
   "generated_at": null,
-  "command": "npm run verify:shanhaijing-corpus",
+  "command": "npm run verify:domain",
   "generator_version": "not_implemented",
   "inputs": [],
   "edition": null,

@@ -65,9 +65,18 @@ export async function loadShanhaijingAtlas(
           FROM shj_creature_occurrences o JOIN shj_textual_places pl ON pl.id=o.place_id
           WHERE o.creature_id=c.id AND o.review_status='published'),'[]'::json) AS "placeSlugs",
         COALESCE((SELECT json_agg(json_build_object(
-          'axis',a.axis,'term',a.term,'confidence',a.confidence,'evidenceNote',a.evidence_note
-        ) ORDER BY a.axis,a.term) FROM shj_taxonomy_assignments a
-          WHERE a.creature_id=c.id AND a.review_status='published'),'[]'::json) AS taxonomy
+          'axis',a.axis,'term',a.term,'confidence',a.confidence,'evidenceNote',a.evidence_note,
+          -- 词表是受控的:轴与词条各自带双语标签与定义,界面不再显示 slug。
+          -- INNER JOIN 是有意的——词表里没有的 term 不该出现在读者面前,
+          -- 而外键保证了它也不可能存在。
+          'axisLabel',CASE WHEN $2='zh-CN' THEN ax.label_zh ELSE ax.label_en END,
+          'termLabel',CASE WHEN $2='zh-CN' THEN tm.label_zh ELSE tm.label_en END,
+          'termDefinition',CASE WHEN $2='zh-CN' THEN tm.definition_zh ELSE tm.definition_en END
+        ) ORDER BY ax.sequence,a.term) FROM shj_taxonomy_assignments a
+          JOIN shj_taxonomy_terms tm ON tm.axis=a.axis AND tm.term=a.term
+          JOIN shj_taxonomy_axes ax ON ax.axis=a.axis
+          WHERE a.creature_id=c.id AND a.review_status='published'
+            AND tm.review_status='published' AND ax.review_status='published'),'[]'::json) AS taxonomy
        FROM shj_creatures c
        LEFT JOIN shj_creature_translations t ON t.creature_id=c.id AND t.locale=$2 AND t.status='published'
        LEFT JOIN shj_creature_translations f ON f.creature_id=c.id AND f.locale=$3 AND f.status='published'

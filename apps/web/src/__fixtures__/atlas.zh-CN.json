@@ -239,22 +239,31 @@
     ],
     "taxonomy": [
      {
-      "axis": "behavior",
-      "term": "man_eating",
-      "confidence": "high",
-      "evidenceNote": "能食人"
-     },
-     {
       "axis": "morphology",
       "term": "fox_nine_tails",
       "confidence": "high",
-      "evidenceNote": "其狀如狐而九尾"
+      "evidenceNote": "其狀如狐而九尾",
+      "axisLabel": "形态",
+      "termLabel": "九尾之狐",
+      "termDefinition": "狐形而九尾。"
+     },
+     {
+      "axis": "behavior",
+      "term": "man_eating",
+      "confidence": "high",
+      "evidenceNote": "能食人",
+      "axisLabel": "行为",
+      "termLabel": "食人",
+      "termDefinition": "原文明言食人或能食人。"
      },
      {
       "axis": "sound",
       "term": "infant_like",
       "confidence": "high",
-      "evidenceNote": "其音如嬰兒"
+      "evidenceNote": "其音如嬰兒",
+      "axisLabel": "声音",
+      "termLabel": "声如婴儿",
+      "termDefinition": "以婴儿啼声为听感类比。"
      }
     ]
    },
@@ -284,22 +293,31 @@
     ],
     "taxonomy": [
      {
-      "axis": "behavior",
-      "term": "self_singing_dancing",
-      "confidence": "high",
-      "evidenceNote": "自歌自舞"
-     },
-     {
       "axis": "morphology",
       "term": "pheasant_five_colours",
       "confidence": "high",
-      "evidenceNote": "其狀如雞，五采而文"
+      "evidenceNote": "其狀如雞，五采而文",
+      "axisLabel": "形态",
+      "termLabel": "五采之雉",
+      "termDefinition": "鸡雉之形而五采成文。"
+     },
+     {
+      "axis": "behavior",
+      "term": "self_singing_dancing",
+      "confidence": "high",
+      "evidenceNote": "自歌自舞",
+      "axisLabel": "行为",
+      "termLabel": "自歌自舞",
+      "termDefinition": "自歌自舞，不因外物。"
      },
      {
       "axis": "omen",
       "term": "peace_omen",
       "confidence": "high",
-      "evidenceNote": "見則天下安寧"
+      "evidenceNote": "見則天下安寧",
+      "axisLabel": "兆应",
+      "termLabel": "安宁之兆",
+      "termDefinition": "见则天下安宁。"
      }
     ]
    },
@@ -326,16 +344,22 @@
     ],
     "taxonomy": [
      {
-      "axis": "effect",
-      "term": "swift_movement",
-      "confidence": "high",
-      "evidenceNote": "食之善走"
-     },
-     {
       "axis": "morphology",
       "term": "primate_like",
       "confidence": "high",
-      "evidenceNote": "其狀如禺"
+      "evidenceNote": "其狀如禺",
+      "axisLabel": "形态",
+      "termLabel": "禺形",
+      "termDefinition": "以禺立形者。"
+     },
+     {
+      "axis": "effect",
+      "term": "swift_movement",
+      "confidence": "high",
+      "evidenceNote": "食之善走",
+      "axisLabel": "服食效用",
+      "termLabel": "食之善走",
+      "termDefinition": "原文称食之者善走。"
      }
     ]
    },
@@ -363,13 +387,19 @@
       "axis": "morphology",
       "term": "composite_mammal",
       "confidence": "high",
-      "evidenceNote": "馬形、虎文、赤尾"
+      "evidenceNote": "馬形、虎文、赤尾",
+      "axisLabel": "形态",
+      "termLabel": "复合兽形",
+      "termDefinition": "兽形而杂取他物的纹、尾、首等部件。"
      },
      {
       "axis": "sound",
       "term": "song_like",
       "confidence": "high",
-      "evidenceNote": "其音如謠"
+      "evidenceNote": "其音如謠",
+      "axisLabel": "声音",
+      "termLabel": "声如歌谣",
+      "termDefinition": "以歌谣为听感类比。"
      }
     ]
    },
@@ -399,13 +429,19 @@
       "axis": "morphology",
       "term": "reptile_bird_composite",
       "confidence": "high",
-      "evidenceNote": "龜身、鳥首、虺尾"
+      "evidenceNote": "龜身、鳥首、虺尾",
+      "axisLabel": "形态",
+      "termLabel": "龟身鸟首",
+      "termDefinition": "龟身而鸟首、虺尾的复合体。"
      },
      {
       "axis": "sound",
       "term": "split_wood_like",
       "confidence": "high",
-      "evidenceNote": "其音如判木"
+      "evidenceNote": "其音如判木",
+      "axisLabel": "声音",
+      "termLabel": "声如判木",
+      "termDefinition": "以劈木之声为听感类比。"
      }
     ]
    },
@@ -435,13 +471,19 @@
       "axis": "morphology",
       "term": "aquatic_terrestrial_composite",
       "confidence": "high",
-      "evidenceNote": "魚而陵居、牛形、蛇尾、有翼"
+      "evidenceNote": "魚而陵居、牛形、蛇尾、有翼",
+      "axisLabel": "形态",
+      "termLabel": "水陆复合",
+      "termDefinition": "以鱼为名而居于陆，或兼具水陆两栖的部件组合。"
      },
      {
       "axis": "seasonality",
       "term": "winter_summer_cycle",
       "confidence": "high",
-      "evidenceNote": "冬死而夏生"
+      "evidenceNote": "冬死而夏生",
+      "axisLabel": "时序",
+      "termLabel": "冬死夏生",
+      "termDefinition": "冬死而夏生的往复周期。"
      }
     ]
    }

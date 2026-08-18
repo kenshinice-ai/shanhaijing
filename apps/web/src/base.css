@@ -223,6 +223,8 @@ main { max-width: 1280px; margin: 0 auto; padding: var(--gap-l) var(--gap-m) 64p
 }
 .drawer-link:hover { border-color: var(--accent); color: var(--accent); }
 
+.drawer-taxonomy .term-definition { display: block; color: var(--muted); font-size: 0.8rem; line-height: 1.6; }
+
 .shj-reduced-data {
   margin: 0 0 12px; padding: 8px 12px; border-radius: var(--radius-s);
   background: rgba(169, 216, 210, 0.08); border: 1px solid var(--line-soft);
