@@ -4,7 +4,7 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T23:32:58.016Z",
+  "generatedAt": "2026-08-18T23:36:51.626Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
