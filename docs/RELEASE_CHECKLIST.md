@@ -16,7 +16,7 @@
 - static manifest checksum：`not_implemented`
 - release owner：`R-RELEASE`
 - reviewer：项目责任 reviewer matrix 已指定；外部机构签署 `pending`，按 SJ-D016 以常驻无背书声明披露，不再阻断发布
-- rollback reference：Cloudflare Pages 保留历史 deployment，回滚为重新指向上一个 deployment
+- rollback reference：[RUNBOOK.md](RUNBOOK.md) §2，已于 2026-08-18 演练
 - authorization reference：SJ-D015（2026-08-18，用户在验证通过后授权首版发布）
 - release disposition：`authorized`
 
@@ -81,9 +81,10 @@
 - [x] 390x844、768x1024 与 1280x800 均无文档级横向溢出；768 宽下地图标签重叠 0 处。
 - [x] console/network 无未解释错误；线上 0 次 API 调用。
 - [x] CDN 可达路径与 Content-Type 通过；rights withdrawal 行为**已演练**——五种非公开状态在事务中真实写入后，API 一律不返回母图（含 assetUrl），见 [generated/rights-gate.md](generated/rights-gate.md)。演练首跑即抓出闸门 fail open 并已修复。
-- [ ] soak、rollback rehearsal 和 artifact retention 记录未完成。
+- [x] rollback rehearsal 已完成并记录；artifact 保留期由 Cloudflare 逐 deployment 保存（v1.0.0 产物 11 文件仍可取回）。
+- [ ] soak 测试未进行。
 - [x] 报告路径：`docs/generated/production-smoke-2026-08-18.md`
-- [ ] Gate：`passed-with-exceptions`（rollback 未演练；soak 与 artifact retention 未记录）。
+- [ ] Gate：`passed-with-exceptions`（soak 未做；CDN 缓存清除未演练）。
 
 ### 5. production
 
@@ -92,12 +93,14 @@
 - [x] production authorization：SJ-D015（2026-08-18）
 - [x] 变更窗口和责任人：2026-08-18，主负责人
 - [x] 版本 manifest、输入 checksum 和源码 commit 已冻结（tag `v1.0.0` → `c20af77`）。
-- [ ] rollback 方案已记录但**未演练**（Cloudflare Pages 保留历史 deployment，回滚为重新指向上一个）。
+- [x] rollback 已演练并留下记录（[generated/rollback-rehearsal-2026-08-18.md](generated/rollback-rehearsal-2026-08-18.md)）：
+  回滚 13 秒、前滚 14 秒，逐文件校验；演练当场发现并修正了一处会导致「空白站点 + 200」的流程缺陷。步骤见 [RUNBOOK.md](RUNBOOK.md)。
 - [x] production deployment result 已记录（deployment `a7597129`，<https://shanhaijing-atlas.pages.dev>）。
 - [x] production smoke、静态资源、深链、locale、媒体 rights gate 通过；API/error 路径不适用（纯静态，0 API 调用）。
-- [ ] 监控、日志、告警和撤回联系人未登记。
+- [x] 撤回与发布联系人已登记（[RUNBOOK.md](RUNBOOK.md) §1）。
+- [ ] 监控与告警仍未接入：无外部探针，依赖 Cloudflare dashboard；已在 RUNBOOK 中明写为待办而非既成事实。
 - [x] smoke 报告路径：`docs/generated/production-smoke-2026-08-18.md`
-- [ ] Gate：`passed-with-exceptions`（rollback 未演练；监控与撤回联系人未登记）。
+- [ ] Gate：`passed-with-exceptions`（监控与告警未接入；soak 未做）。
 
 ## Stop conditions
 

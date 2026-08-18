@@ -1,6 +1,6 @@
 # v1.0.0 之后的一轮
 
-- 状态：`review_ready`
+- 状态：`completed`（2026-08-18 当日完成；结果见 §5）
 - 日期：2026-08-18
 - 证据层级：`local_candidate`
 - 核心蓝图：[memoized-riding-giraffe.md](memoized-riding-giraffe.md)
@@ -54,8 +54,26 @@ v1.0.0 是带例外发布的：[RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) 第 
 **原 13 旧仓库收尾**：已在「The Bible Atlas」侧执行——该仓库新增 `db/migrations/023_retire_shanhaijing_domain.sql`
 退役领域表，`docs/shanhaijing/` 与领域源码已移除，仅余历史构建产物。本仓库无需再跟进。
 
+## 5. 完成情况
+
+全部本轮范围已完成并发布（v1.0.1，deployment `47d555f9`）。执行中另有四项**计划外的真实缺陷**被发现：
+
+| 缺陷 | 怎么发现的 | 严重度 |
+|---|---|---|
+| 资产权利闸门 fail open——撤回状态的母图仍带 URL 返回 | 写演练脚本时首跑即抓到（SJ-R007 的 critical 情形） | 高 |
+| 搜索框 `aria-expanded` 用在不允许的角色上，辅助技术无从得知列表已展开 | axe 审计首跑 | 中 |
+| 来源列表把链接嵌在 `<summary>` 里，键盘用户无法判断 Enter 的行为 | axe 审计首跑 | 中 |
+| 回滚流程会产出「空白站点 + 200」 | 回滚演练首跑 | 高 |
+
+四项的共同点：**它们都不是读代码能发现的，只有真正跑一遍才会暴露**。
+这也是本轮把门禁从"写过"改成"每次都跑"的直接理由。
+
+未闭合的例外（已如实记在 `RELEASE_CHECKLIST.md`）：监控与告警未接入、soak 未做、
+CDN 缓存清除未演练、屏幕阅读器实机与 200% 缩放未走查、移动端性能预算待真机档位。
+
 ## 4. 修订记录
 
 | Revision | 日期 | 修改 | 作者/owner | 证据 |
 |---|---|---|---|---|
 | `SJ-NEXT-001` | 2026-08-18 | 建立 v1.0.0 之后一轮的范围与裁决 | 主负责人 | `RELEASE_CHECKLIST.md`、`generated/production-smoke-2026-08-18.md` |
+| `SJ-NEXT-002` | 2026-08-18 | 本轮完成并发布；登记四项计划外缺陷 | 主负责人 | `generated/rollback-rehearsal-2026-08-18.md`、`generated/rights-gate.md`、`generated/accessibility-2026-08-18.md` |

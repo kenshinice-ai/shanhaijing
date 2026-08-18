@@ -36,9 +36,16 @@ cd apps/web && VITE_API_URL=http://localhost:4100 npx vite --port 5180
 | `npm run verify:docs` | 文档机械一致性：必备文件、链接、状态与证据枚举、治理 ID 连续性 |
 | `npm run generate:overview` | 从数据库确定性重绘艺术总览 SVG 母图 |
 | `npm run generate:corpus-seed` | 从冻结校核语料确定性重新产出 `db/seeds/004_nanshan_full.sql` |
-| `bash deploy/deploy-static.sh` | 烘焙 + 静态构建 + 产物断言 |
+| `npm run verify:parity` | dynamic 与 static 逐 key 比对，并拒绝产物里出现烘焙未产出的文件 |
+| `npm run verify:rights` | 权利闸门演练：五种非公开状态在事务中真实写入，API 必须一律不返回该资产 |
+| `npm run measure:performance -- --check` | 产物字节与 Zod 校验基线，越过已冻结预算即失败 |
+| `npm run generate:taxonomy` | 从受控词表确定性重新产出 `db/seeds/005_taxonomy_vocabulary.sql` |
+| `bash deploy/deploy-static.sh` | 烘焙 + 静态构建 + 产物断言 + parity |
 
 两个生成器都是确定性的：同一数据库状态永远产出字节相同的结果，所以资产可以带稳定 checksum。
+
+所有门禁在 push 与 PR 上由 GitHub Actions 跑一遍（空库装载、幂等重放、生成器确定性、
+上述全部 verifier、构建与产物断言）。运行手册见 [docs/RUNBOOK.md](docs/RUNBOOK.md)。
 
 ## 三条不可让步的规则
 
@@ -60,5 +67,11 @@ cd apps/web && VITE_API_URL=http://localhost:4100 npx vite --port 5180
 
 本项目于 2026-08-18 从多图集 monorepo 抽出为独立仓库，六项计数与全部资产 checksum 迁移前后
 逐字节一致；见 [docs/MIGRATION_RECORD_2026-08-18.md](docs/MIGRATION_RECORD_2026-08-18.md)。
+
+## 无背书声明
+
+本图集为项目自行编纂的候选成果，**未经任何学术机构或外部专家签署**。分类、地望候选、
+声音推演与艺术演绎均为本项目的编辑判断，不代表学术定论；引用时请一并注明其证据等级。
+决策见 [DECISION_LOG.md](docs/DECISION_LOG.md) SJ-D016。
 
 A PARADISE PRODUCTION · 天域文创出品

@@ -3,11 +3,11 @@
 - 生成命令：`npm run verify:docs`
 - 生成器版本：`1.0.0`
 - 生成器 SHA-256：`af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6`
-- 生成时间：`2026-08-18T11:55:05.273Z`
+- 生成时间：`2026-08-18T12:03:25.346Z`
 - 证据层级：`local_candidate`
 - 检查结果：`pass`
 - 输入文件：30
-- 检查数：288
+- 检查数：294
 - errors / warnings / info：0 / 0 / 1
 - Gate 结论：`blocked`；本报告只证明机械一致性，不替代专家评审、输入冻结或 Gate 0 授权。
 
@@ -56,7 +56,7 @@
 | docs/DECISION_LOG.md | 21029 | `f0584ade27b226c630da3f74865d815a1e88762d4803a04d763269b2d133a9b8` |
 | docs/RISK_REGISTER.md | 4855 | `bd0e5507e61065081580c57f2779512ab12ec6b50595021e7081a92ed6167574` |
 | docs/EXPERT_REVIEW_QUESTIONS.md | 5779 | `08d14b6cd490694db13c1534103c3cc9148eb67047c9395a553197f8adf0045c` |
-| docs/RELEASE_CHECKLIST.md | 9077 | `ebea1282e8fd7239b46ddead8b57f8b2fb08c381667f622d603905e4189b41d6` |
+| docs/RELEASE_CHECKLIST.md | 9454 | `06c5da81c664be2d8a9eecf11825c4d05ad986465d47ca1b0c6038d5f2f58560` |
 | docs/REVIEWER_ASSIGNMENTS_2026-08-15.md | 11314 | `966c83cd776b86f9dfe43f7ff5c3c0f53bf4e8c6f87d2a4eae61c7f0deabcad6` |
 | docs/MAP_IMPLEMENTATION_STRATEGY_2026-08-15.md | 9483 | `1a810a4d8022d028664fad9a0fd88bd89d2b2761415cc750a0783a28912ff43b` |
 | docs/FANTASY_COMPOSITE_MAP_ART_DIRECTION_2026-08-15.md | 7628 | `c3191b2aaba8a66519cfa1e9d34e0d31acf17d0eb05138905b4a5db23ebb7d46` |
