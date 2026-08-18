@@ -21,6 +21,57 @@ const OUT_SVG = join(OUT_DIR, "artistic-overview-v1.svg");
 const MANIFEST = join(ROOT, "docs/generated/artistic-overview-v1.manifest.json");
 const VERSION = "artistic-composite-svg-v1";
 
+/**
+ * 母图的三套画风。三者共用同一套几何——山簇、水系、海岸全部由语料推导，
+ * 换的只是颜色与笔触，因此比较的是"哪一版更好看、标签更压得住"，
+ * 而不是"哪一版把地理画对了"。
+ *
+ * `ink` 是采用版：叠加层要在母图上放 94 个标签，母图越安静，证据越读得清。
+ * 另两版保留在生成器里可随时重出，比较记录见 generated/map-variants-2026-08-18.md。
+ */
+interface Palette {
+  seaTop: string; seaMid: string; seaLow: string; glint: string;
+  landInner: string; landMid: string; landOuter: string; landEdge: string;
+  peakA: [string, string, string]; peakB: [string, string, string]; peakC: [string, string, string];
+  riverFrom: string; riverTo: string; mist: string; aura: string;
+  grainOpacity: string; contourOpacity: string; rangeOpacity: string;
+}
+
+const PALETTES: Record<string, Palette> = {
+  // A · 手卷:现行版本,墨绿海面与土色大陆。
+  handscroll: {
+    seaTop: "#16333a", seaMid: "#10262c", seaLow: "#0a181d", glint: "#5da294",
+    landInner: "#8a744d", landMid: "#6d6647", landOuter: "#48513c", landEdge: "#32402f",
+    peakA: ["#d8c489", "#8f7c52", "#4c4a35"], peakB: ["#b9c9a0", "#6f815c", "#3a4736"], peakC: ["#a3b5b3", "#5f7674", "#33403f"],
+    riverFrom: "#7fc0b2", riverTo: "#3f7a74", mist: "#e8e2cf", aura: "#f5c15d",
+    grainOpacity: ".05", contourOpacity: ".16", rangeOpacity: ".5",
+  },
+  // B · 青绿:矿物石青石绿,层叠更重,近传统青绿山水。
+  mineral: {
+    seaTop: "#123c46", seaMid: "#0c2b34", seaLow: "#071a20", glint: "#6fc2ba",
+    landInner: "#7d8f5f", landMid: "#5d7a55", landOuter: "#3c5c4c", landEdge: "#27423a",
+    peakA: ["#cfe0b4", "#7fa46d", "#3d5a42"], peakB: ["#a8d3c4", "#4f8f84", "#27524f"], peakC: ["#8fc0cc", "#4a7f8e", "#254852"],
+    riverFrom: "#9fdcd0", riverTo: "#46918a", mist: "#eef3e4", aura: "#f3cb6a",
+    grainOpacity: ".04", contourOpacity: ".2", rangeOpacity: ".55",
+  },
+  // C · 水墨:近单色淡墨,纸色地面,留白最多——标签压上去最清楚。
+  ink: {
+    seaTop: "#1b2f33", seaMid: "#142529", seaLow: "#0d1a1d", glint: "#7d9c97",
+    landInner: "#7c7358", landMid: "#5f5f4b", landOuter: "#454b3c", landEdge: "#2f382e",
+    peakA: ["#cdc4a6", "#7d7663", "#42413a"], peakB: ["#b3bda8", "#68705f", "#383d36"], peakC: ["#a6b0ae", "#5c6664", "#333a39"],
+    riverFrom: "#8fb5ad", riverTo: "#4a6f6b", mist: "#ece7d8", aura: "#efc978",
+    grainOpacity: ".06", contourOpacity: ".12", rangeOpacity: ".42",
+  },
+};
+
+const args = process.argv.slice(2);
+const argValue = (name: string): string | undefined => {
+  const hit = args.find((arg) => arg.startsWith(`${name}=`));
+  return hit ? hit.slice(name.length + 1) : undefined;
+};
+const VARIANT = argValue("--variant") ?? "ink";
+const PALETTE = PALETTES[VARIANT] ?? PALETTES.ink!;
+
 // Same projection as ShanhaijingWorkspace so overlay hotspots land on the art.
 const X = (layoutX: number): number => layoutX * 8.6 + 65;
 const Y = (layoutY: number): number => layoutY * 5 + 60;
@@ -79,7 +130,8 @@ async function main(): Promise<void> {
 
     const svg = render(places, rivers);
     await mkdir(OUT_DIR, { recursive: true });
-    await writeFile(OUT_SVG, svg);
+    const outPath = argValue("--out") ?? OUT_SVG;
+    await writeFile(outPath, svg);
     const checksum = createHash("sha256").update(svg).digest("hex");
     const manifest = {
       version: VERSION,
@@ -92,9 +144,10 @@ async function main(): Promise<void> {
       interpretation_class: "artistic_interpretation",
       disclosure: "Composition is artistic; it is not ancient geography or modern coordinates.",
     };
+    if (argValue("--out")) return;   // 比较用的产物不写 manifest,避免污染已发布资产的记录
     await writeFile(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
     console.log(`artistic overview: ${Buffer.byteLength(svg)} bytes, sha256 ${checksum}`);
-    console.log(`written: ${OUT_SVG}`);
+    console.log(`written: ${outPath}（画风 ${VARIANT}）`);
   } finally {
     await pool.end();
   }
@@ -108,18 +161,19 @@ function render(places: Place[], rivers: River[]): string {
   // how the master is fitted, and forcing "slice" on the root would crop the
   // composition in any standalone viewer.
   emit(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true">`);
+  const p = PALETTE;
   emit(`<defs>
-<linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16333a"/><stop offset=".55" stop-color="#10262c"/><stop offset="1" stop-color="#0a181d"/></linearGradient>
-<linearGradient id="seaGlint" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5da294" stop-opacity=".22"/><stop offset=".5" stop-color="#5da294" stop-opacity="0"/><stop offset="1" stop-color="#5da294" stop-opacity=".18"/></linearGradient>
-<radialGradient id="land" cx=".46" cy=".42" r=".78"><stop offset="0" stop-color="#8a744d"/><stop offset=".45" stop-color="#6d6647"/><stop offset=".78" stop-color="#48513c"/><stop offset="1" stop-color="#32402f"/></radialGradient>
-<linearGradient id="peakA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c489"/><stop offset=".38" stop-color="#8f7c52"/><stop offset="1" stop-color="#4c4a35"/></linearGradient>
-<linearGradient id="peakB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9c9a0"/><stop offset=".4" stop-color="#6f815c"/><stop offset="1" stop-color="#3a4736"/></linearGradient>
-<linearGradient id="peakC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a3b5b3"/><stop offset=".42" stop-color="#5f7674"/><stop offset="1" stop-color="#33403f"/></linearGradient>
-<linearGradient id="river" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7fc0b2" stop-opacity=".85"/><stop offset="1" stop-color="#3f7a74" stop-opacity=".55"/></linearGradient>
-<linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8e2cf" stop-opacity="0"/><stop offset=".5" stop-color="#e8e2cf" stop-opacity=".14"/><stop offset="1" stop-color="#e8e2cf" stop-opacity="0"/></linearGradient>
-<radialGradient id="aura"><stop offset="0" stop-color="#f5c15d" stop-opacity=".5"/><stop offset=".6" stop-color="#f5c15d" stop-opacity=".14"/><stop offset="1" stop-color="#f5c15d" stop-opacity="0"/></radialGradient>
+<linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.seaTop}"/><stop offset=".55" stop-color="${p.seaMid}"/><stop offset="1" stop-color="${p.seaLow}"/></linearGradient>
+<linearGradient id="seaGlint" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.glint}" stop-opacity=".22"/><stop offset=".5" stop-color="${p.glint}" stop-opacity="0"/><stop offset="1" stop-color="${p.glint}" stop-opacity=".18"/></linearGradient>
+<radialGradient id="land" cx=".46" cy=".42" r=".78"><stop offset="0" stop-color="${p.landInner}"/><stop offset=".45" stop-color="${p.landMid}"/><stop offset=".78" stop-color="${p.landOuter}"/><stop offset="1" stop-color="${p.landEdge}"/></radialGradient>
+<linearGradient id="peakA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.peakA[0]}"/><stop offset=".38" stop-color="${p.peakA[1]}"/><stop offset="1" stop-color="${p.peakA[2]}"/></linearGradient>
+<linearGradient id="peakB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.peakB[0]}"/><stop offset=".4" stop-color="${p.peakB[1]}"/><stop offset="1" stop-color="${p.peakB[2]}"/></linearGradient>
+<linearGradient id="peakC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.peakC[0]}"/><stop offset=".42" stop-color="${p.peakC[1]}"/><stop offset="1" stop-color="${p.peakC[2]}"/></linearGradient>
+<linearGradient id="river" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.riverFrom}" stop-opacity=".85"/><stop offset="1" stop-color="${p.riverTo}" stop-opacity=".55"/></linearGradient>
+<linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.mist}" stop-opacity="0"/><stop offset=".5" stop-color="${p.mist}" stop-opacity=".14"/><stop offset="1" stop-color="${p.mist}" stop-opacity="0"/></linearGradient>
+<radialGradient id="aura"><stop offset="0" stop-color="${p.aura}" stop-opacity=".5"/><stop offset=".6" stop-color="${p.aura}" stop-opacity=".14"/><stop offset="1" stop-color="${p.aura}" stop-opacity="0"/></radialGradient>
 <filter id="soft" x="-100%" y="-400%" width="300%" height="900%"><feGaussianBlur stdDeviation="7"/></filter>
-<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.93 0 0 0 0 0.89 0 0 0 0 0.78 0 0 0 .05 0"/></filter>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.93 0 0 0 0 0.89 0 0 0 0 0.78 0 0 0 ${p.grainOpacity} 0"/></filter>
 </defs>`);
 
   // Sea and swell lines.
@@ -143,7 +197,7 @@ function render(places: Place[], rivers: River[]): string {
   emit(`<path d="${hull}" fill="none" stroke="#d8c489" stroke-opacity=".28" stroke-width="2"/>`);
   // Elevation-style inner contours: reuse the hull scaled about its centroid.
   for (const scale of [0.86, 0.7, 0.54]) {
-    emit(`<use href="#hull" fill="none" stroke="#2f3a2c" stroke-opacity=".16" stroke-width="1" transform="translate(${fixed(cx * (1 - scale))} ${fixed(cy * (1 - scale))}) scale(${scale})"/>`);
+    emit(`<use href="#hull" fill="none" stroke="${p.landEdge}" stroke-opacity="${p.contourOpacity}" stroke-width="1" transform="translate(${fixed(cx * (1 - scale))} ${fixed(cy * (1 - scale))}) scale(${scale})"/>`);
   }
 
   // Distant ranges hugging the inland horizon, clipped to the landmass so no

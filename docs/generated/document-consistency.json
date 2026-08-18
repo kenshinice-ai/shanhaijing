@@ -4,14 +4,14 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T13:11:32.759Z",
+  "generatedAt": "2026-08-18T23:32:58.016Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
   "gateStatus": "blocked",
   "counts": {
     "inputs": 30,
-    "checks": 298,
+    "checks": 301,
     "errors": 0,
     "warnings": 0,
     "info": 1
@@ -48,7 +48,7 @@
     {
       "path": "docs/CONTENT_COVERAGE_MATRIX.md",
       "bytes": 9390,
-      "sha256": "90d156c7ef9e41fdbee77a8cf60b86f2fa8548ad4b6645db19c3a8bbee0003fb"
+      "sha256": "365faaf50820517e70f3225334cfdf9b18101fc6ebc7e7e43f5e3d335a55a3b9"
     },
     {
       "path": "docs/ENTITY_AND_DATA_DICTIONARY.md",
@@ -107,8 +107,8 @@
     },
     {
       "path": "docs/PERFORMANCE_BUDGETS.md",
-      "bytes": 26929,
-      "sha256": "297096685a32fbcae735bf513eff7f138a6ab8146195054ae6ebc8931d3b08d1"
+      "bytes": 27380,
+      "sha256": "6f94657d8ad2c5f5564e57fabb24cef1fcd02e5707dbbb7c8b2242585030bf56"
     },
     {
       "path": "docs/TEST_AND_VERIFICATION_PLAN.md",
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/DECISION_LOG.md",
-      "bytes": 23028,
-      "sha256": "0c2b47c43bcab50b44061c2495ca00dabbe30aed186d15cb9ba397711265cd73"
+      "bytes": 25443,
+      "sha256": "fb0f4061577b72a586e9fa03f5de3ac5af00f5f85d41d760b1fb775773b97b03"
     },
     {
       "path": "docs/RISK_REGISTER.md",
@@ -142,8 +142,8 @@
     },
     {
       "path": "docs/RELEASE_CHECKLIST.md",
-      "bytes": 10493,
-      "sha256": "4ea505ce41249f8c4589903416da63121135364d488cd622c89b8ff323f1d19f"
+      "bytes": 10495,
+      "sha256": "e7c9942d40a9e940b392551a420b2f1a94d28545e9c1058de0b3f5bf74a9338b"
     },
     {
       "path": "docs/REVIEWER_ASSIGNMENTS_2026-08-15.md",

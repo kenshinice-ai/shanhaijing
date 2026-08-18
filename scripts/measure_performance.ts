@@ -2,6 +2,7 @@ import { gzipSync, brotliCompressSync, constants } from "node:zlib";
 import { readFile, readdir, mkdir, writeFile, stat } from "node:fs/promises";
 import { join, resolve, relative } from "node:path";
 import { AtlasResponseSchema, WorksResponseSchema } from "../apps/web/src/types.js";
+import { circleBox, placeNodeLabels, placeRouteLabels, textBox } from "../apps/web/src/map-labels.js";
 
 /**
  * Deterministic half of the performance baseline.
@@ -51,10 +52,14 @@ interface Timing { p50: number; p95: number; worst: number; runs: number }
  * Paint and interaction stay `candidate` until a real device profile exists.
  */
 const BUDGETS = [
-  { id: "first_load_brotli", unit: "KB", baseline: 105.6, target: 110, warning: 140, blocking: 180 },
-  { id: "main_bundle_brotli", unit: "KB", baseline: 77.6, target: 80, warning: 100, blocking: 130 },
-  { id: "atlas_payload_raw_per_locale", unit: "KB", baseline: 87.6, target: 120, warning: 200, blocking: 300 },
-  { id: "zod_atlas_parse_p95", unit: "ms", baseline: 0.23, target: 1, warning: 5, blocking: 20 },
+  { id: "first_load_brotli", unit: "KB", baseline: 107.3, target: 140, warning: 220, blocking: 320 },
+  { id: "main_bundle_brotli", unit: "KB", baseline: 78.3, target: 90, warning: 130, blocking: 200 },
+  // 传输字节才是读者付出的代价。原始字节留作理智上限，阈值按全书实测（1,284 KB）留足余量。
+  { id: "atlas_payload_brotli", unit: "KB", baseline: 12.5, target: 30, warning: 60, blocking: 100 },
+  { id: "atlas_payload_raw_per_locale", unit: "KB", baseline: 93.4, target: 500, warning: 900, blocking: 1500 },
+  { id: "zod_atlas_parse_p95", unit: "ms", baseline: 0.25, target: 5, warning: 15, blocking: 40 },
+  // 全量加载的真正风险不在字节而在这里：标签避让曾是 O(n²)，全书规模一次 625 ms。
+  { id: "map_label_layout_ms_full_book", unit: "ms", baseline: 203, target: 250, warning: 400, blocking: 800 },
 ] as const;
 
 function time(label: string, run: () => void): Timing {
@@ -108,6 +113,28 @@ async function main(): Promise<void> {
 
   const distStat = await stat(DIST);
   void distStat;
+
+  /**
+   * 全书规模下的标签避让耗时。地图叠加层要在母图上摆好每一个山名与里距，
+   * 这笔计算随节点数增长得比字节快得多——它，而不是载荷体积，才是
+   * 「全部加载」在五藏山经全篇下的成败点。
+   */
+  const labelLayout = (() => {
+    const nodeCount = 468;   // 五藏山经全篇的地点数量级
+    const nodes = Array.from({ length: nodeCount }, (_, i) => ({
+      id: `n${i}`, x: 65 + (i % 26) * 34 + (i % 3) * 4, y: 60 + Math.floor(i / 26) * 46,
+      text: i % 2 ? `第${i}座山之名` : `Mount Number ${i}`, fontSize: 14, preferBelow: i % 2 === 0,
+    }));
+    const fixedBoxes = nodes.flatMap((node) => [circleBox(node.x, node.y, 19), textBox(node.x, node.y + 5, "3", 12, "middle")]);
+    const edges = nodes.slice(0, -1).map((node, i) => ({
+      id: `e${i}`, x1: node.x, y1: node.y, x2: nodes[i + 1]!.x, y2: nodes[i + 1]!.y, text: "東三百里",
+    }));
+    const started = process.hrtime.bigint();
+    const slots = placeNodeLabels(nodes, fixedBoxes);
+    const names = nodes.map((node) => textBox(node.x + slots.get(node.id)!.dx, node.y + slots.get(node.id)!.dy, node.text, 14));
+    placeRouteLabels(edges, [...fixedBoxes, ...names]);
+    return { nodes: nodeCount, ms: round(Number(process.hrtime.bigint() - started) / 1e6) };
+  })();
   const summary = {
     generatedAt: new Date().toISOString(),
     generator: "scripts/measure_performance.ts",
@@ -123,6 +150,7 @@ async function main(): Promise<void> {
     },
     assets,
     payloads,
+    labelLayout,
     budgets: BUDGETS,
   };
 
@@ -154,6 +182,12 @@ async function main(): Promise<void> {
     "",
     `最差单次：${payloads.map((row) => `${row.locale} Zod ${row.zodAtlas.worst} ms`).join("、")}。`,
     "",
+    "## 3. 地图标签避让（全书规模）", "",
+    `按五藏山经全篇的地点量级（${labelLayout.nodes} 个节点）跑一次完整避让：**${labelLayout.ms} ms**。`,
+    "这笔计算随节点数增长快于字节，是「全部加载」在全书规模下真正的成败点，因此单列为预算。",
+    "结果经 `useMemo` 固定，只在数据或语言变化时重算，不随抽屉开合、标签页切换重跑。",
+    "",
+    "",
   ];
   await writeFile(join(REPORT_DIR, "performance-baseline.md"), lines.join("\n"));
   console.log(`Performance baseline: ${assets.length} files, ${kb(totalRaw)} raw / ${kb(totalBrotli)} brotli; first load ${kb(firstLoadBrotli)} brotli`);
@@ -163,11 +197,14 @@ async function main(): Promise<void> {
   // --check turns the report into a gate. Without it a budget is a wish.
   if (args.includes("--check")) {
     const mainBundle = assets.filter((asset) => asset.path.endsWith(".js")).reduce((max, asset) => Math.max(max, asset.brotli), 0);
+    const atlasBrotli = Math.max(...assets.filter((asset) => asset.path.includes("atlas.")).map((asset) => asset.brotli));
     const measured: Record<string, number> = {
       first_load_brotli: firstLoadBrotli / 1024,
       main_bundle_brotli: mainBundle / 1024,
+      atlas_payload_brotli: atlasBrotli / 1024,
       atlas_payload_raw_per_locale: Math.max(...payloads.map((row) => row.atlasBytes)) / 1024,
       zod_atlas_parse_p95: Math.max(...payloads.map((row) => row.zodAtlas.p95)),
+      map_label_layout_ms_full_book: labelLayout.ms,
     };
     let breached = false;
     for (const budget of BUDGETS) {

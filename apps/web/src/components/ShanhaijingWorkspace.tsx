@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { label, t } from "../i18n";
 import { circleBox, placeNodeLabels, placeRouteLabels, textBox } from "../map-labels";
 import { prefersReducedData } from "../prefs";
@@ -55,8 +56,14 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
   // the structured substitute carries the same topology without it.
   const reducedData = prefersReducedData();
   const artMaster = reducedData ? null : (overview?.assetUrl ?? null);
+  const dense = domain.places.length > 20;
+  const nodeLabelSize = dense ? 14 : 17;
+  // 标签避让只随数据与语言变化，却曾在每次渲染重跑一遍——打开抽屉、切换标签页
+  // 都要重算。三十九个节点时这笔账被藏住了，语料扩到全书就不是了。
+  const layout = useMemo(() => {
   // Rank each place within its own route band (west to east) so labels can be
   // staggered against their immediate neighbours rather than globally.
+  // 这张表本身也在 memo 内：放在外面每次渲染都是新 Map，依赖恒变，memo 等于没写。
   const labelRank = new Map<string, number>();
   const bands = new Map<number, ShanhaijingPlace[]>();
   for (const place of domain.places) {
@@ -66,8 +73,6 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
   for (const band of bands.values()) {
     [...band].sort((a, b) => a.layoutX - b.layoutX).forEach((place, index) => labelRank.set(place.slug, index));
   }
-  const dense = domain.places.length > 20;
-  const nodeLabelSize = dense ? 14 : 17;
   // Node geometry is computed once so the route-distance placement below sees
   // exactly the boxes the nodes will render into.
   const geometry = domain.places.map((place) => ({
@@ -95,8 +100,8 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
     })),
     fixedObstacles,
   );
-  const nodes = geometry.map((node) => ({ ...node, labelAt: nodeSlots.get(node.place.slug) ?? { dx: 0, dy: 44 } }));
-  const routeLabels = placeRouteLabels(
+  const nodesLocal = geometry.map((node) => ({ ...node, labelAt: nodeSlots.get(node.place.slug) ?? { dx: 0, dy: 44 } }));
+    const routeLabels = placeRouteLabels(
     domain.topologyEdges.flatMap((edge) => {
       const from = placeBySlug.get(edge.fromSlug);
       const to = placeBySlug.get(edge.toSlug);
@@ -108,8 +113,13 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
         text: `${edge.directionText}${edge.distanceValue ?? ""}${edge.distanceUnit}`,
       }];
     }),
-    [...fixedObstacles, ...nodes.map((node) => textBox(node.x + node.labelAt.dx, node.y + node.labelAt.dy, node.place.name, nodeLabelSize))],
-  );
+    [...fixedObstacles, ...nodesLocal.map((node) => textBox(node.x + node.labelAt.dx, node.y + node.labelAt.dy, node.place.name, nodeLabelSize))],
+    );
+    return { nodes: nodesLocal, routeLabels };
+    // 依赖是数据与字号；选中状态、抽屉开合都不该让它重算。
+  }, [domain.places, domain.creatures, domain.topologyEdges, nodeLabelSize]);
+  const { nodes, routeLabels } = layout;
+
   return <section className="shj-overview">
     <div className="shj-overview-heading">
       <div>

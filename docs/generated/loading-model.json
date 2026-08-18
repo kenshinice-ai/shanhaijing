@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-08-18T23:15:19.794Z",
+  "generator": "scripts/measure_loading_model.ts",
+  "node": "v26.7.0",
+  "platform": "darwin/arm64",
+  "iterations": 40,
+  "scenarios": [
+    {
+      "scenario": "现状（南山经）",
+      "factor": 1,
+      "passages": 43,
+      "places": 39,
+      "bytes": {
+        "raw": 92356,
+        "gzip": 17274,
+        "brotli": 12841
+      },
+      "jsonParse": {
+        "p50": 0.111,
+        "p95": 0.127
+      },
+      "zod": {
+        "p50": 0.167,
+        "p95": 0.308
+      }
+    },
+    {
+      "scenario": "南山经 + 西山经",
+      "factor": 3.5,
+      "passages": 172,
+      "places": 156,
+      "bytes": {
+        "raw": 425449,
+        "gzip": 55201,
+        "brotli": 23512
+      },
+      "jsonParse": {
+        "p50": 0.501,
+        "p95": 0.587
+      },
+      "zod": {
+        "p50": 0.547,
+        "p95": 0.689
+      }
+    },
+    {
+      "scenario": "五藏山经全篇（外推）",
+      "factor": 12,
+      "passages": 516,
+      "places": 468,
+      "bytes": {
+        "raw": 1314667,
+        "gzip": 127511,
+        "brotli": 40046
+      },
+      "jsonParse": {
+        "p50": 1.452,
+        "p95": 1.673
+      },
+      "zod": {
+        "p50": 1.282,
+        "p95": 1.696
+      }
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
 import { createApp } from "./app.js";
@@ -52,5 +54,16 @@ describe("HTTP errors and the locale contract", () => {
     const response = await request(app).get("/api/nothing-here");
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ error: { code: "NOT_FOUND", message: "Route not found" } });
+  });
+});
+
+describe("coverage counts only what a reader can reach", () => {
+  it("keeps a frozen-but-unpublished edition out of the atlas denominator", () => {
+    // 回归防线：冻结《西山经》后首页一度显示「43/125」，而段落列表里只有 43 条。
+    // 分母必须只数已发布底本——这条断言盯住那句 SQL 里的 review_status 过滤。
+    const source = readFileSync(join(__dirname, "shanhaijing.ts"), "utf8");
+    const coverageQuery = source.slice(source.indexOf('"passagesTotal"'));
+    const fromClause = coverageQuery.slice(0, coverageQuery.indexOf("GROUP BY") + 1 || 2000);
+    expect(fromClause).toContain("shj_text_editions e ON e.id=s.edition_id AND e.review_status='published'");
   });
 });

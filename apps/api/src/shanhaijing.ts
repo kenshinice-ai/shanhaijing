@@ -174,7 +174,10 @@ export async function loadShanhaijingAtlas(
          )::int AS "passagesWithFallbackLocale"
        FROM shj_text_passages p
        JOIN shj_text_sections s ON s.id=p.section_id
-       JOIN shj_text_editions e ON e.id=s.edition_id
+       -- 分母只算**已发布的底本**。冻结但未发布的篇目（如《西山经》）会让首页
+       -- 显示「43/125」,而读者在段落列表里只看得到 43 条——那不是进度，是困惑。
+       -- 冻结进度属内部证据，归 CONTENT_COVERAGE_MATRIX，不归对外载荷。
+       JOIN shj_text_editions e ON e.id=s.edition_id AND e.review_status='published'
        LEFT JOIN shj_passage_audits a ON a.passage_id=p.id
        LEFT JOIN shj_passage_translations t ON t.passage_id=p.id
          AND t.locale=$2 AND t.status='published'

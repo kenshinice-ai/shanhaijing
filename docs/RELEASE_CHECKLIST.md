@@ -11,7 +11,7 @@
 
 - release revision：`v1.0.0`
 - source commit：见 tag `v1.0.0`
-- input checksum set：语料 edition `824c1e36…4dc0a6a3`、母图 `6e6b4eee…d1d89b5b3`、
+- input checksum set：语料 edition `824c1e36…4dc0a6a3`、母图 `b6b4baa1…d2950cece1`、
   子集字体 `831bffe3…9ea75a13` / `b1559655…96d1ae4e`
 - static manifest checksum：`not_implemented`
 - release owner：`R-RELEASE`
@@ -27,7 +27,7 @@
 用途：本地文档、代码或候选资产的可重复检查，不代表隔离数据库、静态产物或部署。
 
 - [x] 独立仓库与 commit 边界已建立（`kenshinice-ai/shanhaijing`，默认分支 `main`）。
-- [x] 输入版本和 checksum 已记录（语料 edition `824c1e36…4dc0a6a3`、母图 `6e6b4eee…d1d89b5b3`、
+- [x] 输入版本和 checksum 已记录（语料 edition `824c1e36…4dc0a6a3`、母图 `b6b4baa1…d2950cece1`、
   生僻字子集两枚 woff2 见 [RARE_GLYPH_FONT.md](RARE_GLYPH_FONT.md)）。
 - [x] 文档链接、术语、枚举和状态 consistency report 通过（276 检查 0 错误）。
 - [x] 未把候选 fixture 或本地文件写成 release artifact。

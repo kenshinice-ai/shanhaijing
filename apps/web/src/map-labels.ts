@@ -100,6 +100,72 @@ function penalty(box: Box, other: Box): number {
   return area === 0 ? 0 : area * (other.weight ?? 1);
 }
 
+/**
+ * Uniform grid over the map, so a candidate position is scored against the
+ * boxes near it instead of every box on the canvas.
+ *
+ * Scanning all obstacles is quadratic, which the Nanshan Jing's thirty-nine
+ * nodes hide completely — 15 ms — and the whole 五藏山经's four hundred-odd
+ * would not: measured at 625 ms, on every render. Boxes that cannot overlap
+ * contribute exactly zero to the cost, so restricting the scan to overlapping
+ * candidates changes the arithmetic not at all; it only stops doing the
+ * multiplication for pairs that are nowhere near each other.
+ */
+const CELL = 64;
+
+interface Entry { box: Box; owner: string }
+
+class BoxIndex {
+  private readonly cells = new Map<number, Entry[]>();
+  /** The box each owner currently occupies; earlier ones are stale. */
+  private readonly current = new Map<string, Box>();
+
+  private *keys(box: Box): Generator<number> {
+    const x0 = Math.floor(box.x / CELL); const x1 = Math.floor((box.x + box.width) / CELL);
+    const y0 = Math.floor(box.y / CELL); const y1 = Math.floor((box.y + box.height) / CELL);
+    for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) yield x * 100000 + y;
+  }
+
+  /**
+   * Placing an owner again supersedes its previous box rather than removing it.
+   * Refinement runs a fixed number of passes, so each owner leaves at most a
+   * handful of stale entries — cheaper than deleting from every cell it spans.
+   */
+  set(owner: string, box: Box): void {
+    this.current.set(owner, box);
+    for (const key of this.keys(box)) {
+      const bucket = this.cells.get(key);
+      if (bucket) bucket.push({ box, owner }); else this.cells.set(key, [{ box, owner }]);
+    }
+  }
+
+  add(box: Box): void { this.set(`fixed:${this.current.size}`, box); }
+
+  /** Total weighted overlap of `box` against everything indexed but `skipOwner`. */
+  cost(box: Box, skipOwner?: string): number {
+    let total = 0;
+    const seen = new Set<Box>();
+    for (const key of this.keys(box)) {
+      const bucket = this.cells.get(key);
+      if (!bucket) continue;
+      for (const entry of bucket) {
+        if (entry.owner === skipOwner) continue;
+        if (this.current.get(entry.owner) !== entry.box) continue; // superseded
+        if (seen.has(entry.box)) continue;
+        seen.add(entry.box);
+        total += penalty(box, entry.box);
+      }
+    }
+    return total;
+  }
+}
+
+function indexOf(boxes: Box[]): BoxIndex {
+  const index = new BoxIndex();
+  for (const box of boxes) index.add(box);
+  return index;
+}
+
 /** Overlapping area of two boxes; 0 when they merely touch. */
 export function overlapArea(a: Box, b: Box): number {
   const ix = Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x);
@@ -199,34 +265,31 @@ function nodeSlots(preferBelow: boolean): { dx: number; dy: number }[] {
 export function placeNodeLabels(nodes: NodeLabelInput[], obstacles: Box[]): Map<string, NodeLabelOffset> {
   const boxes = new Map<string, Box>();
   const chosen = new Map<string, NodeLabelOffset>();
+  const fixed = indexOf(obstacles);
+  const peers = new BoxIndex();
   const pick = (node: NodeLabelInput): NodeLabelOffset => {
     let best: { offset: NodeLabelOffset; cost: number } | null = null;
     for (const [index, slot] of nodeSlots(node.preferBelow).entries()) {
       const box = textBox(node.x + slot.dx, node.y + slot.dy, node.text, node.fontSize);
-      let cost = index * 0.5;
-      for (const other of obstacles) cost += penalty(box, other);
-      for (const [id, other] of boxes) if (id !== node.id) cost += penalty(box, other);
+      const cost = index * 0.5 + fixed.cost(box) + peers.cost(box, node.id);
       if (!best || cost < best.cost) best = { offset: slot, cost };
       if (cost === index * 0.5) break;
     }
     return best?.offset ?? { dx: 0, dy: 44 };
   };
-  for (const node of nodes) {
+  const place = (node: NodeLabelInput): void => {
     const offset = pick(node);
     chosen.set(node.id, offset);
-    boxes.set(node.id, textBox(node.x + offset.dx, node.y + offset.dy, node.text, node.fontSize));
-  }
+    const box = textBox(node.x + offset.dx, node.y + offset.dy, node.text, node.fontSize);
+    boxes.set(node.id, box);
+    peers.set(node.id, box);
+  };
+  for (const node of nodes) place(node);
   // Greedy placement is order-dependent: an early name can take the slot a
   // later, more constrained one needed. Re-picking each name against the
   // finished layout lets those trades unwind. Two passes settle it; the order
   // is fixed, so the result stays reproducible.
-  for (let pass = 0; pass < REFINEMENT_PASSES; pass++) {
-    for (const node of nodes) {
-      const offset = pick(node);
-      chosen.set(node.id, offset);
-      boxes.set(node.id, textBox(node.x + offset.dx, node.y + offset.dy, node.text, node.fontSize));
-    }
-  }
+  for (let pass = 0; pass < REFINEMENT_PASSES; pass++) for (const node of nodes) place(node);
   return chosen;
 }
 
@@ -237,6 +300,8 @@ export function placeRouteLabels(
 ): Map<string, PlacedRouteLabel> {
   const placed = new Map<string, PlacedRouteLabel>();
   const boxes = new Map<string, Box>();
+  const fixed = indexOf(obstacles);
+  const peers = new BoxIndex();
   const pick = (edge: RouteLabelInput): PlacedRouteLabel | null => {
     let best: { x: number; y: number; cost: number } | null = null;
     for (const [index, candidate] of CANDIDATES.entries()) {
@@ -244,27 +309,21 @@ export function placeRouteLabels(
       const x = point.x + (candidate.dx ?? 0);
       const y = point.y + candidate.dy;
       const box = textBox(x, y, edge.text, fontSize, "middle");
-      let cost = index * 0.5;
-      for (const other of obstacles) cost += penalty(box, other);
-      for (const [id, other] of boxes) if (id !== edge.id) cost += penalty(box, other);
+      const cost = index * 0.5 + fixed.cost(box) + peers.cost(box, edge.id);
       if (!best || cost < best.cost) best = { x, y, cost };
       if (cost === index * 0.5) break; // free slot; no later candidate can win
     }
     return best;
   };
-  for (const edge of edges) {
+  const place = (edge: RouteLabelInput): void => {
     const at = pick(edge);
-    if (!at) continue;
+    if (!at) return;
     placed.set(edge.id, { x: at.x, y: at.y });
-    boxes.set(edge.id, textBox(at.x, at.y, edge.text, fontSize, "middle"));
-  }
-  for (let pass = 0; pass < REFINEMENT_PASSES; pass++) {
-    for (const edge of edges) {
-      const at = pick(edge);
-      if (!at) continue;
-      placed.set(edge.id, { x: at.x, y: at.y });
-      boxes.set(edge.id, textBox(at.x, at.y, edge.text, fontSize, "middle"));
-    }
-  }
+    const box = textBox(at.x, at.y, edge.text, fontSize, "middle");
+    boxes.set(edge.id, box);
+    peers.set(edge.id, box);
+  };
+  for (const edge of edges) place(edge);
+  for (let pass = 0; pass < REFINEMENT_PASSES; pass++) for (const edge of edges) place(edge);
   return placed;
 }

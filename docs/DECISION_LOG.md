@@ -268,6 +268,38 @@
 - 证据：`scripts/data/xishan_corpus_v1.json`、`db/seeds/006_xishan_corpus.sql`、
   `generated/domain-verification.json`（286 检查 0 错误）、`CONTENT_COVERAGE_MATRIX.md` §5。
 
+### SJ-D020：母图改用水墨画风
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户要求按最优解并作对比`
+- 输入：三套画风同几何渲染（手卷／青绿／水墨）及其在标签落区的像素分布实测
+- 决策：母图默认画风改为 `ink`（水墨），三套调色板全部保留在生成器中可随时重出比较。
+- 理由：母图的职责是背景，其上要落 94 个标签。实测标签落区内「与标签抢对比的亮像素」占比：
+  青绿 5.47%、手卷 2.30%、水墨 1.42%。**青绿单看最漂亮，也最不适合当背景**；
+  水墨陆地最暗、噪声最低，山簇与水系仍清晰。
+- 影响：母图 checksum 由 `6e6b4eee…` 变为 `b6b4baa1…`；几何、热点坐标与段落映射一字未动。
+  生成器脚本 checksum 同步在 seed `003` 重新登记——`verify:domain` 的 `overview-prompt`
+  闸门当场拦下了未登记的改动，这正是它存在的意义。
+- 证据：`generated/map-variants-2026-08-18.md`。
+
+### SJ-D021：性能预算按传输与计算重定，加载模型定为全量加载
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户要求按真实用户体验判定`
+- 输入：`generated/loading-model.md`（把领域内容按真实《西山经》原文投影放大后实测）
+- 决策：
+  1. 预算改以**传输字节（brotli）与计算时间**为准，原始字节退为理智上限并大幅放宽；
+  2. 新增「地图标签避让（全书规模）」预算；
+  3. 加载模型定为**全量加载**，不做按需分片。
+- 理由：全书外推的真实代价是 brotli 39 KB、解析加校验约 3.4 ms。为省下这点东西而引入
+  分片，要付出路由、缓存失效、离线可用性与「切篇时白屏」的代价——**用户体验是变差而非变好**。
+  真正随规模恶化的是标签避让（曾 625 ms），那已通过空间索引与 memo 解决并纳入预算。
+- 影响：语料扩至全书无需改动加载架构；若标签避让越过 warning，反应是继续优化算法，
+  不是削减地图内容。
+- 证据：`PERFORMANCE_BUDGETS.md` §3.1、`generated/loading-model.md`、`generated/performance-baseline.md`。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -287,4 +319,5 @@
 | `SJ-DLOG-007` | 2026-08-18 | 以无背书声明取代等待外部签署（SJ-D016）；冻结四项性能预算（SJ-D017） | 主负责人 | `PERFORMANCE_BUDGETS.md` §3.1、`i18n.ts` |
 | `SJ-DLOG-008` | 2026-08-18 | 分类词表入库并双语化（SJ-D018） | 主负责人 | `TAXONOMY.md` §5.0 |
 | `SJ-DLOG-009` | 2026-08-18 | 裁定 X-2 并冻结《西山经》语料（SJ-D019） | 主负责人 | `XISHAN_BASELINE_OPTIONS_2026-08-18.md`、`scripts/data/xishan_corpus_v1.json` |
+| `SJ-DLOG-010` | 2026-08-18 | 母图改水墨（SJ-D020）；预算重定与全量加载裁决（SJ-D021） | 主负责人 | `generated/map-variants-2026-08-18.md`、`generated/loading-model.md` |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |

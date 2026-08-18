@@ -22,6 +22,7 @@
     "verify:rights": "tsx scripts/verify_rights_gate.ts",
     "verify:constraints": "tsx scripts/verify_constraints.ts",
     "measure:performance": "tsx scripts/measure_performance.ts",
+    "measure:loading": "tsx scripts/measure_loading_model.ts",
     "generate:overview": "tsx scripts/generate_overview.ts",
     "generate:corpus-seed": "tsx scripts/generate_nanshan_full.ts",
     "generate:taxonomy": "tsx scripts/generate_taxonomy_vocabulary.ts",

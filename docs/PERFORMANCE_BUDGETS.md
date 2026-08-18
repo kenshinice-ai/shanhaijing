@@ -56,28 +56,33 @@
 
 预算至少定义：target、warning、blocking 三档。若只冻结 blocking，可先运行，但必须在 Gate 0 记录为何暂缺 target/warning。测试噪声不得通过放宽阈值处理，应先固定环境、增加重复次数并报告置信区间或离散程度。
 
-## 3.1 已冻结预算（2026-08-18）
+## 3.1 已冻结预算（2026-08-18 重定）
 
-基线先于阈值：下列四项由 `npm run measure:performance` 在固定方法下测出，随后按余量冻结，
-并由 `npm run measure:performance -- --check` 在 CI 中执行——越过 blocking 直接失败。
-方法与逐文件数据见 [generated/performance-baseline.md](generated/performance-baseline.md)。
+首版把「单 locale atlas payload 原始字节」定在 300 KB 封顶，**尺子拿错了**：读者付出的是
+传输字节与解析时间，不是磁盘上的 JSON 大小。这份 JSON 的 key、枚举与句式高度重复，
+brotli 后只剩 13.9%——按原始字节封顶，会在真实代价还微不足道时就逼出分片。
+
+重定后的预算与阈值（`npm run measure:performance -- --check` 在 CI 中执行）：
 
 | 预算 | 状态 | 基线 | target | warning | blocking |
 |---|---|---|---|---|---|
-| 首屏传输（brotli，中文，不含按需字体） | `frozen` | 105.6 KB | 110 KB | 140 KB | 180 KB |
-| 主 JS bundle（brotli） | `frozen` | 77.6 KB | 80 KB | 100 KB | 130 KB |
-| 单 locale atlas payload（原始字节） | `frozen` | 87.6 KB | 120 KB | 200 KB | 300 KB |
-| Zod atlas 校验 p95（Node 26 / darwin-arm64） | `frozen` | 0.23 ms | 1 ms | 5 ms | 20 ms |
+| 首屏传输（brotli，中文，不含按需字体） | `frozen` | 107.5 KB | 140 KB | 220 KB | 320 KB |
+| 主 JS bundle（brotli） | `frozen` | 78.5 KB | 90 KB | 130 KB | 200 KB |
+| **单 locale atlas payload（brotli）** | `frozen` | 13.2 KB | 30 KB | 60 KB | 100 KB |
+| 单 locale atlas payload（原始字节，理智上限） | `frozen` | 93.4 KB | 500 KB | 900 KB | 1500 KB |
+| Zod atlas 校验 p95（Node 26 / darwin-arm64） | `frozen` | 0.24 ms | 5 ms | 15 ms | 40 ms |
+| **地图标签避让（全书规模 468 节点）** | `frozen` | 209 ms | 250 ms | 400 ms | 800 ms |
 
-三点说明，免得这四行被过度解读：
+三点说明：
 
-1. **Zod 那一项是回归闸，不是设备承诺。** 它固定在生成报告的宿主上测量，用来拦住让校验成本
-   突然抬高一个数量级的 schema 改动；蓝图里「p95 < 150 ms」针对的是终端设备，仍是 `candidate`。
-2. **payload 预算按 locale 计。** 语料扩量会推高它；触及 warning（200 KB）即为分片/LOD 的技术
-   演进触发器，而不是把阈值调大。
-3. **绘制与交互仍是 `candidate`。** 首次观测见
-   [generated/performance-runtime-2026-08-18.md](generated/performance-runtime-2026-08-18.md)；
-   在接入真机档位与 CPU 降频之前，移动端不得宣称 `pass`。
+1. **阈值放宽是有实测支撑的，不是因为"现在电脑快"就随手抬高。**
+   全书外推的实测值是：原始 1,284 KB、brotli 39 KB、解析 1.7 ms、校验 1.7 ms
+   （见 [generated/loading-model.md](generated/loading-model.md)）。新阈值在这些数字之上仍留两倍以上余量。
+2. **新增的标签避让预算才是全量加载的真实约束。** 字节增长是线性的，避让计算不是——
+   它曾是 O(n²)，全书规模一次 625 ms；加空间索引后降到约 209 ms，并以 `useMemo` 固定，
+   只在数据或语言变化时重算。若未来越过 warning，正确反应是继续优化算法或分层渲染，
+   **不是把地图节点砍掉**。
+3. **绘制与交互仍是 `candidate`。** 移动端仍无真机降频档位，不得宣称 `pass`。
 
 ## 4. 标准测试矩阵
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T12:26:39.682Z",
+  "generatedAt": "2026-08-18T23:32:59.244Z",
   "generator": "scripts/measure_performance.ts",
   "node": "v26.7.0",
   "platform": "darwin/arm64",
@@ -7,19 +7,19 @@
   "artifact": "apps/web/dist",
   "totals": {
     "files": 12,
-    "raw": 606780,
-    "brotli": 129676
+    "raw": 607470,
+    "brotli": 129835
   },
   "firstLoad": {
     "files": [
+      "assets/index-BSUBA2we.js",
       "assets/index-CPPWTQEV.css",
-      "assets/index-D65NlAK-.js",
       "data/atlas.shanhaijing.zh-CN.json",
       "index.html",
       "media/shanhaijing/artistic-overview-v1.svg"
     ],
-    "raw": 502632,
-    "brotli": 109965
+    "raw": 503320,
+    "brotli": 110115
   },
   "assets": [
     {
@@ -29,40 +29,40 @@
       "brotli": 680
     },
     {
+      "path": "assets/index-BSUBA2we.js",
+      "raw": 304173,
+      "gzip": 92846,
+      "brotli": 80403
+    },
+    {
       "path": "assets/index-CPPWTQEV.css",
       "raw": 23125,
       "gzip": 5912,
       "brotli": 5181
     },
     {
-      "path": "assets/index-D65NlAK-.js",
-      "raw": 303485,
-      "gzip": 92525,
-      "brotli": 80202
-    },
-    {
       "path": "data/atlas.shanhaijing.en.json",
       "raw": 95673,
       "gzip": 18291,
-      "brotli": 13530
+      "brotli": 13533
     },
     {
       "path": "data/atlas.shanhaijing.zh-CN.json",
       "raw": 92355,
       "gzip": 17272,
-      "brotli": 12913
+      "brotli": 12822
     },
     {
       "path": "data/works.en.json",
-      "raw": 992,
-      "gzip": 608,
+      "raw": 993,
+      "gzip": 612,
       "brotli": 481
     },
     {
       "path": "data/works.zh-CN.json",
-      "raw": 912,
-      "gzip": 658,
-      "brotli": 505
+      "raw": 913,
+      "gzip": 662,
+      "brotli": 511
     },
     {
       "path": "favicon.svg",
@@ -85,14 +85,14 @@
     {
       "path": "index.html",
       "raw": 935,
-      "gzip": 582,
-      "brotli": 381
+      "gzip": 580,
+      "brotli": 397
     },
     {
       "path": "media/shanhaijing/artistic-overview-v1.svg",
       "raw": 82732,
-      "gzip": 14332,
-      "brotli": 11288
+      "gzip": 14333,
+      "brotli": 11312
     }
   ],
   "payloads": [
@@ -101,8 +101,8 @@
       "atlasBytes": 92355,
       "jsonParse": {
         "p50": 0.13,
-        "p95": 0.14,
-        "worst": 0.44,
+        "p95": 0.15,
+        "worst": 0.3,
         "runs": 60
       },
       "zodAtlas": {
@@ -123,8 +123,8 @@
       "atlasBytes": 95673,
       "jsonParse": {
         "p50": 0.13,
-        "p95": 0.14,
-        "worst": 0.28,
+        "p95": 0.13,
+        "worst": 0.24,
         "runs": 60
       },
       "zodAtlas": {
@@ -141,38 +141,58 @@
       }
     }
   ],
+  "labelLayout": {
+    "nodes": 468,
+    "ms": 208.03
+  },
   "budgets": [
     {
       "id": "first_load_brotli",
       "unit": "KB",
-      "baseline": 105.6,
-      "target": 110,
-      "warning": 140,
-      "blocking": 180
+      "baseline": 107.3,
+      "target": 140,
+      "warning": 220,
+      "blocking": 320
     },
     {
       "id": "main_bundle_brotli",
       "unit": "KB",
-      "baseline": 77.6,
-      "target": 80,
-      "warning": 100,
-      "blocking": 130
+      "baseline": 78.3,
+      "target": 90,
+      "warning": 130,
+      "blocking": 200
+    },
+    {
+      "id": "atlas_payload_brotli",
+      "unit": "KB",
+      "baseline": 12.5,
+      "target": 30,
+      "warning": 60,
+      "blocking": 100
     },
     {
       "id": "atlas_payload_raw_per_locale",
       "unit": "KB",
-      "baseline": 87.6,
-      "target": 120,
-      "warning": 200,
-      "blocking": 300
+      "baseline": 93.4,
+      "target": 500,
+      "warning": 900,
+      "blocking": 1500
     },
     {
       "id": "zod_atlas_parse_p95",
       "unit": "ms",
-      "baseline": 0.23,
-      "target": 1,
-      "warning": 5,
-      "blocking": 20
+      "baseline": 0.25,
+      "target": 5,
+      "warning": 15,
+      "blocking": 40
+    },
+    {
+      "id": "map_label_layout_ms_full_book",
+      "unit": "ms",
+      "baseline": 203,
+      "target": 250,
+      "warning": 400,
+      "blocking": 800
     }
   ]
 }

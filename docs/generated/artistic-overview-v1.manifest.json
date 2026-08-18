@@ -1,7 +1,7 @@
 {
   "version": "artistic-composite-svg-v1",
   "generator": "scripts/generate_overview.ts",
-  "generatedAt": "2026-08-18T06:42:20.971Z",
+  "generatedAt": "2026-08-18T23:26:28.012Z",
   "deterministic": true,
   "inputs": {
     "textualPlaces": 39,
@@ -10,7 +10,7 @@
   "output": {
     "path": "apps/web/public/media/shanhaijing/artistic-overview-v1.svg",
     "bytes": 82732,
-    "sha256": "6e6b4eee30d40944420e8c72f3ed5d09fd6d97ab8f548a9ad433d58b1d89b5b3"
+    "sha256": "b6b4baa119f6d00e92a3b7d115a0d1ca913b7a9d42de51247be7de2d950cece1"
   },
   "rights": {
     "rights_status": "verified",

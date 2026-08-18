@@ -1,6 +1,6 @@
 # 《西山经》执行清单
 
-- 状态：`in_progress`
+- 状态：`in_progress`（3-1～3-4 已完成，见 §5、§6；其余卡在编辑裁决）
 - 日期：2026-08-18
 - 前置：[XISHAN_BASELINE_OPTIONS_2026-08-18.md](XISHAN_BASELINE_OPTIONS_2026-08-18.md)、SJ-D019（X-2 裁定与语料冻结）
 - 已完成前提：`xishan-v1-public-domain-collation` 已冻结入库，82 段 / 4 列山系，逐段 checksum；
@@ -64,7 +64,7 @@
 ## 5. 性能预算重定与加载模型裁决
 
 见 [PERFORMANCE_BUDGETS.md](PERFORMANCE_BUDGETS.md) §3.1 与
-[generated/loading-model-2026-08-18.md](generated/loading-model-2026-08-18.md)。
+[generated/loading-model.md](generated/loading-model.md)。
 
 ## 6. 母图与地图优化
 
