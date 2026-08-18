@@ -48,6 +48,14 @@ cd apps/web && VITE_API_URL=http://localhost:4100 npx vite --port 5180
 3. **权利与解释等级独立且 fail closed。** `rights_status`、`source_attestation`、
    `interpretation_class` 各自成列；不完整的资产不进入 public/build/CDN 路径。
 
+## 线上
+
+- 生产：<https://shanhaijing-atlas.pages.dev>（Cloudflare Pages 项目 `shanhaijing-atlas`，生产分支 `main`）
+- 预览：<https://staging.shanhaijing-atlas.pages.dev>
+- 首个版本 `v1.0.0` 的部署与 smoke 证据见
+  [production-smoke-2026-08-18.md](docs/generated/production-smoke-2026-08-18.md)。
+  站点是纯静态的：运行时零 API 调用，数据与母图随产物分发。
+
 ## 沿革
 
 本项目于 2026-08-18 从多图集 monorepo 抽出为独立仓库，六项计数与全部资产 checksum 迁移前后

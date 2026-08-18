@@ -3,7 +3,7 @@
 - 状态：`review_ready`
 - 证据层级：`local_candidate`
 - 核心蓝图：[memoized-riding-giraffe.md](memoized-riding-giraffe.md)
-- 当前 Gate：`v1.0.0 生产发布已授权；staging 与 production 证据待部署后补记`
+- 当前 Gate：`v1.0.0 已发布至 production；例外项见第 3–5 层`
 
 本清单区分五层证据。低层证据不能宣称高层完成；文档、代码或 staging 交接不自动授权 production 发布。所有结果引用机器生成报告、输入 checksum、revision、环境和 reviewer。
 
@@ -68,29 +68,30 @@
 
 用途：目标部署环境中的候选发布、smoke、缓存和撤回验证。
 
-- [ ] staging deployment revision 与 static manifest 一致。
-- [ ] 首屏、搜索、筛选、drawer、深链、刷新、语言和地图模式 smoke 通过。
-- [ ] 音频显式播放、全局单轨、rights-denied、无音频和文字替代通过。
-- [ ] 390x844、768x1024、1280x800 和宽屏无溢出/重叠。
-- [ ] console/server/network 无未解释错误。
-- [ ] cache/precache/CDN 可达路径与 rights withdrawal 行为通过。
-- [ ] soak、rollback rehearsal 和 artifact retention 记录完成。
-- [ ] 报告路径：`not_implemented`
-- [ ] Gate：`blocked`。
+- [x] staging deployment revision 与产物一致（`staging` 分支 deployment `bd62a8dc`，11/11 文件 SHA-256 与本地 `dist` 相同）。
+- [x] 首屏、搜索、筛选、drawer、深链、刷新、语言和地图模式 smoke 通过（同一批字节的本地产物全项实测；
+  线上复测首屏、深链刷新、生僻字与地图标签）。
+- [ ] 音频：`not_applicable`，V1 无音频资产。
+- [x] 390x844 与 1280x800 无文档级横向溢出；768x1024 未单独抽检。
+- [x] console/network 无未解释错误；线上 0 次 API 调用。
+- [x] CDN 可达路径与 Content-Type 通过；rights withdrawal 行为未测。
+- [ ] soak、rollback rehearsal 和 artifact retention 记录未完成。
+- [x] 报告路径：`docs/generated/production-smoke-2026-08-18.md`
+- [ ] Gate：`passed-with-exceptions`（rollback 未演练；768px 与 rights withdrawal 未测）。
 
 ### 5. production
 
 用途：经明确授权的线上发布与 production smoke。没有单独授权不得执行。
 
-- [ ] production authorization：`not_authorized`
-- [ ] 变更窗口和责任人：`not_assigned`
-- [ ] 版本 manifest、输入 checksum 和源码 commit 已冻结。
-- [ ] rollback 命令/方案已审核并演练。
-- [ ] production deployment result 已记录。
-- [ ] production smoke、静态资源、API/error、搜索、深链、locale、媒体 rights gate 通过。
-- [ ] 监控、日志、告警和撤回联系人已登记。
-- [ ] smoke 报告路径：`not_implemented`
-- [ ] Gate：`blocked`。
+- [x] production authorization：SJ-D015（2026-08-18）
+- [x] 变更窗口和责任人：2026-08-18，主负责人
+- [x] 版本 manifest、输入 checksum 和源码 commit 已冻结（tag `v1.0.0` → `c20af77`）。
+- [ ] rollback 方案已记录但**未演练**（Cloudflare Pages 保留历史 deployment，回滚为重新指向上一个）。
+- [x] production deployment result 已记录（deployment `a7597129`，<https://shanhaijing-atlas.pages.dev>）。
+- [x] production smoke、静态资源、深链、locale、媒体 rights gate 通过；API/error 路径不适用（纯静态，0 API 调用）。
+- [ ] 监控、日志、告警和撤回联系人未登记。
+- [x] smoke 报告路径：`docs/generated/production-smoke-2026-08-18.md`
+- [ ] Gate：`passed-with-exceptions`（rollback 未演练；监控与撤回联系人未登记）。
 
 ## Stop conditions
 

@@ -4,7 +4,7 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T06:42:38.787Z",
+  "generatedAt": "2026-08-18T07:13:36.633Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
@@ -142,8 +142,8 @@
     },
     {
       "path": "docs/RELEASE_CHECKLIST.md",
-      "bytes": 7445,
-      "sha256": "8605fd89c8322e47de29c4f48ae62fd12f35fb91095d2fded78494d39bb6305d"
+      "bytes": 8073,
+      "sha256": "30d69365aa2c44f401ba6f728b4b07b8b4bbab670221f345fcc2e2f0abc1df8f"
     },
     {
       "path": "docs/REVIEWER_ASSIGNMENTS_2026-08-15.md",
