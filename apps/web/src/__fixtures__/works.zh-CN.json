@@ -1,0 +1,32 @@
+{
+ "locale": "zh-CN",
+ "items": [
+  {
+   "slug": "shanhaijing",
+   "authorName": "Anonymous compilers; transmitted and annotated across many periods",
+   "publicationYear": null,
+   "contentMode": "documented_record",
+   "mapLayer": "fictional",
+   "category": "mythography",
+   "originRegion": "Ancient China / textual cosmography",
+   "chronologyStartYear": null,
+   "chronologyEndYear": null,
+   "themeColor": "#B86B3D",
+   "themeColorDark": "#2A2E29",
+   "themeColorLight": "#E6C98D",
+   "title": "山海经 Atlas",
+   "summary": "以原文段落为根，分离异兽概念、文本提及、山系路线、水名证据、学术候选与艺术总览。V2 覆盖《南山经》全部三列山系与结语，异文与计数差异逐条登记。",
+   "alternateTitle": "Shanhaijing Atlas",
+   "resolvedLocale": "zh-CN",
+   "fallbackUsed": false,
+   "translationStatus": "published",
+   "uniqueCreatureConceptCount": 23,
+   "textualOccurrenceCount": 24,
+   "corpusCoverage": {
+    "reviewed": 43,
+    "total": 43
+   },
+   "textualPlaceCount": 39
+  }
+ ]
+}

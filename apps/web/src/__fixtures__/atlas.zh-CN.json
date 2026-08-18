@@ -1,0 +1,839 @@
+{
+ "requestedLocale": "zh-CN",
+ "detail": "full",
+ "work": {
+  "id": "10000000-0000-4000-8000-000000000011",
+  "slug": "shanhaijing",
+  "authorName": "Anonymous compilers; transmitted and annotated across many periods",
+  "publicationYear": null,
+  "contentMode": "documented_record",
+  "mapLayer": "fictional",
+  "default_locale": "zh-CN",
+  "category": "mythography",
+  "originRegion": "Ancient China / textual cosmography",
+  "chronologyStartYear": null,
+  "chronologyEndYear": null,
+  "themeColor": "#B86B3D",
+  "themeColorDark": "#2A2E29",
+  "themeColorLight": "#E6C98D",
+  "title": "山海经 Atlas",
+  "summary": "以原文段落为根，分离异兽概念、文本提及、山系路线、水名证据、学术候选与艺术总览。V2 覆盖《南山经》全部三列山系与结语，异文与计数差异逐条登记。",
+  "resolvedLocale": "zh-CN",
+  "fallbackUsed": false,
+  "translationStatus": "published"
+ },
+ "sources": [
+  {
+   "id": "19000000-0000-4000-8000-000000000001",
+   "title": "中国哲学书电子化计划：《南山经》",
+   "url": "https://ctext.org/shan-hai-jing/nan-shan-jing/zh",
+   "citation": "《山海经·南山经》数字文本，用于逐段交叉核对。",
+   "evidenceGrade": "primary",
+   "sourceType": "primary_text"
+  },
+  {
+   "id": "19000000-0000-4000-8000-000000000002",
+   "title": "国家图书馆《山海经》知识库",
+   "url": "https://www.nlc.cn/pcab/xctg/bd/20240624_2640158.shtml",
+   "citation": "国家图书馆《山海经》知识库发布说明及多版本馆藏方法。",
+   "evidenceGrade": "reference",
+   "sourceType": "reference"
+  },
+  {
+   "id": "19000000-0000-4000-8000-000000000003",
+   "title": "山海经 Atlas V1 编辑校核",
+   "url": "https://www.nlc.cn/pcab/xctg/bd/20241216_2642340.shtml",
+   "citation": "项目原创的 V1 校核、摘要与证据分层。",
+   "evidenceGrade": "scholarly",
+   "sourceType": "reference"
+  }
+ ],
+ "shanhaijing": {
+  "sections": [
+   {
+    "id": "12000000-0000-4000-8000-000000000001",
+    "slug": "queshan-first-route",
+    "sequence": 1,
+    "referenceLabel": "南山经·鹊山首列",
+    "title": "南山经·鹊山首列",
+    "summary": "从招摇之山向东至箕尾之山的首条山系序列；V1 结构化实现以山序、方向与里距为主，保留水名作为原文证据，不把水系关系扩写为完整水文网络，也不映射现代经纬度。",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "12000000-0000-4000-8000-000000000002",
+    "slug": "nanci2-route",
+    "sequence": 2,
+    "referenceLabel": "南山经·南次二经",
+    "title": "南山经·南次二经",
+    "summary": "自柜山东行至漆吴之山的十七山序列；其神龙身鸟首。",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "12000000-0000-4000-8000-000000000003",
+    "slug": "nanci3-route",
+    "sequence": 3,
+    "referenceLabel": "南山经·南次三经",
+    "title": "南山经·南次三经",
+    "summary": "自天虞之山至南禺之山的山列；其神龙身人面。",
+    "reviewStatus": "published"
+   }
+  ],
+  "passages": [
+   {
+    "id": "13000000-0000-4000-8000-000000000001",
+    "slug": "zhaoyao",
+    "referenceKey": "南山经·招摇之山",
+    "sequence": 1,
+    "sectionSlug": "queshan-first-route",
+    "textZh": "南山經之首曰䧿山。其首曰招搖之山，臨于西海之上，多桂，多金玉。有草焉，其狀如韭而青花，其名曰祝餘，食之不飢。有木焉，其狀如穀而黑理，其花四照，其名曰迷穀，佩之不迷。有獸焉，其狀如禺而白耳，伏行人走，其名曰狌狌，食之善走。麗𪊨之水出焉，而西流注于海，其中多育沛，佩之無瘕疾。",
+    "sourceUrl": "https://ctext.org/shan-hai-jing/nan-shan-jing/zh",
+    "checksumSha256": "5dada3a1e3e2184818c72effdde4b34c56be517f1fe78a1bffecf697c701759b",
+    "reviewStatus": "published",
+    "title": "招摇之山",
+    "summary": "鹊山首列起点，临于西海；祝馀、迷谷与狌狌在此。",
+    "editorialNote": "V2 起改用全段落切分（nanshan-full-v2）。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "creatureSlugs": [
+     "xingxing"
+    ],
+    "placeSlugs": [
+     "zhaoyao"
+    ]
+   },
+   {
+    "id": "13000000-0000-4000-8000-000000000002",
+    "slug": "tangting",
+    "referenceKey": "南山经·堂庭之山",
+    "sequence": 2,
+    "sectionSlug": "queshan-first-route",
+    "textZh": "又東三百里，曰堂庭之山，多棪木，多白猿，多水玉，多黃金。",
+    "sourceUrl": "https://ctext.org/shan-hai-jing/nan-shan-jing/zh",
+    "checksumSha256": "4e278da88b10cfa5bbe8cce6a86170582a1dca1462ff0f717e2ee7397afbdcfc",
+    "reviewStatus": "published",
+    "title": "堂庭之山",
+    "summary": "招摇之山东三百里的山。",
+    "editorialNote": "",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "creatureSlugs": [],
+    "placeSlugs": [
+     "tangting"
+    ]
+   },
+   {
+    "id": "13000000-0000-4000-8000-000000000003",
+    "slug": "yuanyi",
+    "referenceKey": "南山经·猨翼之山",
+    "sequence": 3,
+    "sectionSlug": "queshan-first-route",
+    "textZh": "又東三百八十里，曰猨翼之山，其中多怪獸，水多怪魚，多白玉，多蝮虫，多怪蛇，多怪木，不可以上。",
+    "sourceUrl": "https://ctext.org/shan-hai-jing/nan-shan-jing/zh",
+    "checksumSha256": "8ff7a8946e38004a4880fb9201274d33312fad027ad6f4c7707e3f3eb36441b1",
+    "reviewStatus": "published",
+    "title": "猨翼之山",
+    "summary": "堂庭之山东三百八十里的险峻山地。",
+    "editorialNote": "",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "creatureSlugs": [],
+    "placeSlugs": [
+     "yuanyi"
+    ]
+   },
+   {
+    "id": "13000000-0000-4000-8000-000000000004",
+    "slug": "niuyang",
+    "referenceKey": "南山经·杻阳之山",
+    "sequence": 4,
+    "sectionSlug": "queshan-first-route",
+    "textZh": "又東三百七十里，曰杻陽之山，其陽多赤金，其陰多白金。有獸焉，其狀如馬而白首，其文如虎而赤尾，其音如謠，其名曰鹿蜀，佩之宜子孫。怪水出焉，而東流注于憲翼之水。其中多玄龜，其狀如龜而鳥首虺尾，其名曰旋龜，其音如判木，佩之不聾，可以為底。",
+    "sourceUrl": "https://ctext.org/shan-hai-jing/nan-shan-jing/zh",
+    "checksumSha256": "60e917191611bc7711d521e8cb7f5ef754fafaf61152c430716dd9be72d6bef9",
+    "reviewStatus": "published",
+    "title": "杻阳之山",
+    "summary": "鹿蜀、旋龟与怪水所在的山。",
+    "editorialNote": "",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "creatureSlugs": [
+     "lushu",
+     "xuangui"
+    ],
+    "placeSlugs": [
+     "niuyang"
+    ]
+   },
+   {
+    "id": "13000000-0000-4000-8000-000000000005",
+    "slug": "dishan",
+    "referenceKey": "南山经·柢山",
+    "sequence": 5,
+    "sectionSlug": "queshan-first-route",
+    "textZh": "又東三百里，曰柢山，多水，無草木。有魚焉，其狀如牛，陵居，蛇尾有翼，其羽在魼下，其音如留牛，其名曰鯥，冬死而夏生，食之無腫疾。",
+    "sourceUrl": "https://ctext.org/shan-hai-jing/nan-shan-jing/zh",
+    "checksumSha256": "76f7c8c251ad2270259e55f93323f7d90c85e2082565294fa09008a960cb97dd",
+    "reviewStatus": "published",
+    "title": "柢山",
+    "summary": "多水无草木，鯥所在。",
+    "editorialNote": "",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "creatureSlugs": [
+     "lu"
+    ],
+    "placeSlugs": [
+     "dishan"
+    ]
+   },
+   {
+    "id": "13000000-0000-4000-8000-000000000006",
+    "slug": "danyuan",
+    "referenceKey": "南山经·亶爰之山",
+    "sequence": 6,
+    "sectionSlug": "queshan-first-route",
+    "textZh": "又東四百里，曰亶爰之山，多水，無草木，不可以上。有獸焉，其狀如狸而有髦，其名曰類，自為牝牡，食者不妬。",
+    "sourceUrl": "https://ctext.org/shan-hai-jing/nan-shan-jing/zh",
+    "checksumSha256": "02c2129bb2e67a0ed5c14a9e0badcc7561ff19bf195a5cedc02543aa41881431",
+    "reviewStatus": "published",
+    "title": "亶爰之山",
+    "summary": "多水无草木且不可上，类所在。",
+    "editorialNote": "",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "creatureSlugs": [
+     "lei"
+    ],
+    "placeSlugs": [
+     "danyuan"
+    ]
+   }
+  ],
+  "creatures": [
+   {
+    "id": "14000000-0000-4000-8000-000000000008",
+    "slug": "nine-tailed-fox",
+    "conceptStatus": "resolved",
+    "importance": 5,
+    "iconKey": "fox-nine-tails",
+    "name": "九尾狐",
+    "aliases": [
+     "九尾之狐"
+    ],
+    "summary": "狐形九尾，声音像婴儿，并被描述为能食人。",
+    "detail": "这是青丘段落的直接文本形态，不代表现代地望或物种鉴定。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "qingqiu"
+    ],
+    "placeSlugs": [
+     "qingqiu"
+    ],
+    "taxonomy": [
+     {
+      "axis": "behavior",
+      "term": "man_eating",
+      "confidence": "high",
+      "evidenceNote": "能食人"
+     },
+     {
+      "axis": "morphology",
+      "term": "fox_nine_tails",
+      "confidence": "high",
+      "evidenceNote": "其狀如狐而九尾"
+     },
+     {
+      "axis": "sound",
+      "term": "infant_like",
+      "confidence": "high",
+      "evidenceNote": "其音如嬰兒"
+     }
+    ]
+   },
+   {
+    "id": "14000000-0000-4000-8000-000000000020",
+    "slug": "fenghuang",
+    "conceptStatus": "resolved",
+    "importance": 5,
+    "iconKey": "phoenix-five-patterns",
+    "name": "凤皇",
+    "aliases": [
+     "凤凰",
+     "鳳凰"
+    ],
+    "summary": "五采而文之鸟，纹章分别象德义礼仁信。",
+    "detail": "饮食自然、自歌自舞、见则天下安宁均按原文记录；以鳳皇为正名，鳳凰为通行后起写法。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "danxue",
+     "nanyu"
+    ],
+    "placeSlugs": [
+     "danxue",
+     "nanyu"
+    ],
+    "taxonomy": [
+     {
+      "axis": "behavior",
+      "term": "self_singing_dancing",
+      "confidence": "high",
+      "evidenceNote": "自歌自舞"
+     },
+     {
+      "axis": "morphology",
+      "term": "pheasant_five_colours",
+      "confidence": "high",
+      "evidenceNote": "其狀如雞，五采而文"
+     },
+     {
+      "axis": "omen",
+      "term": "peace_omen",
+      "confidence": "high",
+      "evidenceNote": "見則天下安寧"
+     }
+    ]
+   },
+   {
+    "id": "14000000-0000-4000-8000-000000000001",
+    "slug": "xingxing",
+    "conceptStatus": "resolved",
+    "importance": 4,
+    "iconKey": "primate-white-ears",
+    "name": "狌狌",
+    "aliases": [
+     "猩猩"
+    ],
+    "summary": "白耳、伏行而又能像人一样奔走的兽。",
+    "detail": "原文把形态、行动方式与食用效果并列；V1 不将其直接等同于现代物种。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "zhaoyao"
+    ],
+    "placeSlugs": [
+     "zhaoyao"
+    ],
+    "taxonomy": [
+     {
+      "axis": "effect",
+      "term": "swift_movement",
+      "confidence": "high",
+      "evidenceNote": "食之善走"
+     },
+     {
+      "axis": "morphology",
+      "term": "primate_like",
+      "confidence": "high",
+      "evidenceNote": "其狀如禺"
+     }
+    ]
+   },
+   {
+    "id": "14000000-0000-4000-8000-000000000002",
+    "slug": "lushu",
+    "conceptStatus": "resolved",
+    "importance": 4,
+    "iconKey": "horse-tiger-tail",
+    "name": "鹿蜀",
+    "aliases": [],
+    "summary": "马形白首、虎纹赤尾，声音如歌谣。",
+    "detail": "佩其皮毛“宜子孙”属于原文效应描述，不作为现代功效声明。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "niuyang"
+    ],
+    "placeSlugs": [
+     "niuyang"
+    ],
+    "taxonomy": [
+     {
+      "axis": "morphology",
+      "term": "composite_mammal",
+      "confidence": "high",
+      "evidenceNote": "馬形、虎文、赤尾"
+     },
+     {
+      "axis": "sound",
+      "term": "song_like",
+      "confidence": "high",
+      "evidenceNote": "其音如謠"
+     }
+    ]
+   },
+   {
+    "id": "14000000-0000-4000-8000-000000000003",
+    "slug": "xuangui",
+    "conceptStatus": "resolved",
+    "importance": 4,
+    "iconKey": "turtle-bird-head",
+    "name": "旋龟",
+    "aliases": [
+     "玄龟"
+    ],
+    "summary": "龟形、鸟首、虺尾，声音像劈木。",
+    "detail": "V1 同时保留玄龟表记与旋龟概念名的校勘差异。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "niuyang"
+    ],
+    "placeSlugs": [
+     "niuyang"
+    ],
+    "taxonomy": [
+     {
+      "axis": "morphology",
+      "term": "reptile_bird_composite",
+      "confidence": "high",
+      "evidenceNote": "龜身、鳥首、虺尾"
+     },
+     {
+      "axis": "sound",
+      "term": "split_wood_like",
+      "confidence": "high",
+      "evidenceNote": "其音如判木"
+     }
+    ]
+   },
+   {
+    "id": "14000000-0000-4000-8000-000000000004",
+    "slug": "lu",
+    "conceptStatus": "resolved",
+    "importance": 4,
+    "iconKey": "fish-bovine-winged",
+    "name": "鯥",
+    "aliases": [
+     "Lu"
+    ],
+    "summary": "牛形、蛇尾、有翼，虽属鱼却在陆地栖居。",
+    "detail": "“冬死而夏生”按原文记录，不推演现代生物学机制。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "dishan"
+    ],
+    "placeSlugs": [
+     "dishan"
+    ],
+    "taxonomy": [
+     {
+      "axis": "morphology",
+      "term": "aquatic_terrestrial_composite",
+      "confidence": "high",
+      "evidenceNote": "魚而陵居、牛形、蛇尾、有翼"
+     },
+     {
+      "axis": "seasonality",
+      "term": "winter_summer_cycle",
+      "confidence": "high",
+      "evidenceNote": "冬死而夏生"
+     }
+    ]
+   }
+  ],
+  "occurrences": [
+   {
+    "id": "16000000-0000-4000-8000-000000000001",
+    "creatureSlug": "xingxing",
+    "passageSlug": "zhaoyao",
+    "placeSlug": "zhaoyao",
+    "surfaceForm": "狌狌",
+    "quoteZh": "其狀如禺而白耳，伏行人走，其名曰狌狌。",
+    "occurrenceOrder": 1,
+    "sourceAttestation": "text_direct",
+    "interpretationClass": "transcription",
+    "confidence": "high",
+    "evidenceNote": "Named occurrence in the Zhaoyao passage.",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "16000000-0000-4000-8000-000000000002",
+    "creatureSlug": "lushu",
+    "passageSlug": "niuyang",
+    "placeSlug": "niuyang",
+    "surfaceForm": "鹿蜀",
+    "quoteZh": "其狀如馬而白首，其文如虎而赤尾，其音如謠，其名曰鹿蜀。",
+    "occurrenceOrder": 1,
+    "sourceAttestation": "text_direct",
+    "interpretationClass": "transcription",
+    "confidence": "high",
+    "evidenceNote": "Named occurrence in the Niuyang passage.",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "16000000-0000-4000-8000-000000000003",
+    "creatureSlug": "xuangui",
+    "passageSlug": "niuyang",
+    "placeSlug": "niuyang",
+    "surfaceForm": "旋龜",
+    "quoteZh": "其狀如龜而鳥首虺尾，其名曰旋龜，其音如判木。",
+    "occurrenceOrder": 2,
+    "sourceAttestation": "text_direct",
+    "interpretationClass": "transcription",
+    "confidence": "high",
+    "evidenceNote": "The passage also contains the nearby reading 玄龜; the occurrence keeps 旋龜 as the named form and records 玄龜 as a variant candidate.",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "16000000-0000-4000-8000-000000000004",
+    "creatureSlug": "lu",
+    "passageSlug": "dishan",
+    "placeSlug": "dishan",
+    "surfaceForm": "鯥",
+    "quoteZh": "其狀如牛，陵居，蛇尾有翼，其羽在魼下，其音如留牛，其名曰鯥。",
+    "occurrenceOrder": 1,
+    "sourceAttestation": "text_direct",
+    "interpretationClass": "transcription",
+    "confidence": "high",
+    "evidenceNote": "Named occurrence in the Di passage.",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "16000000-0000-4000-8000-000000000005",
+    "creatureSlug": "lei",
+    "passageSlug": "danyuan",
+    "placeSlug": "danyuan",
+    "surfaceForm": "類",
+    "quoteZh": "其狀如狸而有髦，其名曰類，自為牝牡。",
+    "occurrenceOrder": 1,
+    "sourceAttestation": "text_direct",
+    "interpretationClass": "transcription",
+    "confidence": "high",
+    "evidenceNote": "Named occurrence in the Danyuan passage.",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "16000000-0000-4000-8000-000000000006",
+    "creatureSlug": "boyi",
+    "passageSlug": "jishan",
+    "placeSlug": "jishan",
+    "surfaceForm": "猼訑",
+    "quoteZh": "其狀如羊，九尾四耳，其目在背，其名曰猼訑。",
+    "occurrenceOrder": 1,
+    "sourceAttestation": "text_direct",
+    "interpretationClass": "transcription",
+    "confidence": "high",
+    "evidenceNote": "Named occurrence in the Ji passage.",
+    "reviewStatus": "published"
+   }
+  ],
+  "places": [
+   {
+    "id": "15000000-0000-4000-8000-000000000001",
+    "slug": "zhaoyao",
+    "placeKind": "mountain",
+    "layoutX": 8,
+    "layoutY": 14,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "招摇之山",
+    "aliases": [
+     "招摇山"
+    ],
+    "summary": "鹊山首列起点，临于西海；祝馀、迷谷与狌狌在此。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "zhaoyao"
+    ],
+    "creatureSlugs": [
+     "xingxing"
+    ]
+   },
+   {
+    "id": "15000000-0000-4000-8000-000000000002",
+    "slug": "tangting",
+    "placeKind": "mountain",
+    "layoutX": 18.9,
+    "layoutY": 22,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "堂庭之山",
+    "aliases": [
+     "堂庭山"
+    ],
+    "summary": "招摇之山东三百里的山。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "tangting"
+    ],
+    "creatureSlugs": []
+   },
+   {
+    "id": "15000000-0000-4000-8000-000000000003",
+    "slug": "yuanyi",
+    "placeKind": "mountain",
+    "layoutX": 29.8,
+    "layoutY": 14,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "猨翼之山",
+    "aliases": [
+     "猿翼山"
+    ],
+    "summary": "堂庭之山东三百八十里的险峻山地。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "yuanyi"
+    ],
+    "creatureSlugs": []
+   },
+   {
+    "id": "15000000-0000-4000-8000-000000000004",
+    "slug": "niuyang",
+    "placeKind": "mountain",
+    "layoutX": 40.6,
+    "layoutY": 22,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "杻阳之山",
+    "aliases": [
+     "杻阳山"
+    ],
+    "summary": "鹿蜀、旋龟与怪水所在的山。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "niuyang"
+    ],
+    "creatureSlugs": [
+     "lushu",
+     "xuangui"
+    ]
+   },
+   {
+    "id": "15000000-0000-4000-8000-000000000005",
+    "slug": "dishan",
+    "placeKind": "mountain",
+    "layoutX": 51.5,
+    "layoutY": 14,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "柢山",
+    "aliases": [],
+    "summary": "多水无草木，鯥所在。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "dishan"
+    ],
+    "creatureSlugs": [
+     "lu"
+    ]
+   },
+   {
+    "id": "15000000-0000-4000-8000-000000000006",
+    "slug": "danyuan",
+    "placeKind": "mountain",
+    "layoutX": 62.4,
+    "layoutY": 22,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "亶爰之山",
+    "aliases": [
+     "亶爰山"
+    ],
+    "summary": "多水无草木且不可上，类所在。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "danyuan"
+    ],
+    "creatureSlugs": [
+     "lei"
+    ]
+   },
+   {
+    "id": "15000000-0000-4000-8000-000000000007",
+    "slug": "jishan",
+    "placeKind": "mountain",
+    "layoutX": 73.3,
+    "layoutY": 14,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "基山",
+    "aliases": [],
+    "summary": "阳面多玉，阴面多怪木；猼訑与三首之鸟𪁺𩿧所在。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "jishan"
+    ],
+    "creatureSlugs": [
+     "boyi",
+     "changfu"
+    ]
+   },
+   {
+    "id": "15000000-0000-4000-8000-000000000008",
+    "slug": "qingqiu",
+    "placeKind": "mountain",
+    "layoutX": 84.1,
+    "layoutY": 22,
+    "layoutSpace": "textual-layout-v2",
+    "reviewStatus": "published",
+    "name": "青丘之山",
+    "aliases": [
+     "青丘山"
+    ],
+    "summary": "九尾狐、灌灌、赤鱬及英水所在。",
+    "resolvedLocale": "zh-CN",
+    "fallbackUsed": false,
+    "translationStatus": "published",
+    "passageSlugs": [
+     "qingqiu"
+    ],
+    "creatureSlugs": [
+     "chiru",
+     "guanguan",
+     "nine-tailed-fox"
+    ]
+   }
+  ],
+  "topologyEdges": [
+   {
+    "id": "17000000-0000-4000-8000-000000000001",
+    "fromSlug": "zhaoyao",
+    "toSlug": "tangting",
+    "passageSlug": "tangting",
+    "relationKind": "distance_direction",
+    "directionText": "東",
+    "distanceValue": 300,
+    "distanceUnit": "里",
+    "sequence": 1,
+    "interpretationClass": "transcription",
+    "conflictStatus": "none",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "17000000-0000-4000-8000-000000000002",
+    "fromSlug": "tangting",
+    "toSlug": "yuanyi",
+    "passageSlug": "yuanyi",
+    "relationKind": "distance_direction",
+    "directionText": "東",
+    "distanceValue": 380,
+    "distanceUnit": "里",
+    "sequence": 2,
+    "interpretationClass": "transcription",
+    "conflictStatus": "none",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "17000000-0000-4000-8000-000000000003",
+    "fromSlug": "yuanyi",
+    "toSlug": "niuyang",
+    "passageSlug": "niuyang",
+    "relationKind": "distance_direction",
+    "directionText": "東",
+    "distanceValue": 370,
+    "distanceUnit": "里",
+    "sequence": 3,
+    "interpretationClass": "transcription",
+    "conflictStatus": "none",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "17000000-0000-4000-8000-000000000004",
+    "fromSlug": "niuyang",
+    "toSlug": "dishan",
+    "passageSlug": "dishan",
+    "relationKind": "distance_direction",
+    "directionText": "東",
+    "distanceValue": 300,
+    "distanceUnit": "里",
+    "sequence": 4,
+    "interpretationClass": "transcription",
+    "conflictStatus": "none",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "17000000-0000-4000-8000-000000000005",
+    "fromSlug": "dishan",
+    "toSlug": "danyuan",
+    "passageSlug": "danyuan",
+    "relationKind": "distance_direction",
+    "directionText": "東",
+    "distanceValue": 400,
+    "distanceUnit": "里",
+    "sequence": 5,
+    "interpretationClass": "transcription",
+    "conflictStatus": "none",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "17000000-0000-4000-8000-000000000006",
+    "fromSlug": "danyuan",
+    "toSlug": "jishan",
+    "passageSlug": "jishan",
+    "relationKind": "distance_direction",
+    "directionText": "東",
+    "distanceValue": 300,
+    "distanceUnit": "里",
+    "sequence": 6,
+    "interpretationClass": "transcription",
+    "conflictStatus": "none",
+    "reviewStatus": "published"
+   },
+   {
+    "id": "17000000-0000-4000-8000-000000000007",
+    "fromSlug": "jishan",
+    "toSlug": "qingqiu",
+    "passageSlug": "qingqiu",
+    "relationKind": "distance_direction",
+    "directionText": "東",
+    "distanceValue": 300,
+    "distanceUnit": "里",
+    "sequence": 7,
+    "interpretationClass": "transcription",
+    "conflictStatus": "none",
+    "reviewStatus": "published"
+   }
+  ],
+  "artisticOverview": {
+   "id": "1a000000-0000-4000-8000-000000000001",
+   "slug": "fantasy-composite-v1",
+   "status": "published",
+   "interpretationClass": "artistic_interpretation",
+   "coordinateSpace": "artistic-composite-svg-v1",
+   "assetUrl": "/media/shanhaijing/artistic-overview-v1.svg",
+   "promptPath": "scripts/generate_overview.ts",
+   "promptSha256": "9c4dc6736408b27af116fd4fb13da626af80a84897d56b0a6c3be1aab634affa",
+   "title": "山海经幻想总览",
+   "description": "由项目自绘的确定性程序化 SVG 手卷母图：山簇、水流、海面与灵光全部从原文段落与拓扑数据推导，无标签，热点与图例由界面程序叠加。",
+   "disclosure": "艺术总览依据文本主题进行幻想拼接，不代表古代地望或现代坐标定论。"
+  },
+  "coverage": {
+   "passagesTotal": 43,
+   "passagesReviewed": 43,
+   "passagesWithRequestedLocale": 43,
+   "passagesWithFallbackLocale": 43,
+   "creatureConcepts": 23,
+   "textualOccurrences": 24
+  }
+ }
+}
