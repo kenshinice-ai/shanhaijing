@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd apps/api && DATABASE_URL='postgresql://llmacbookpro@localhost:5432/shanhaijing_atlas' API_PORT=4100 npx tsx src/index.ts"],
+      "port": 4100
+    },
+    {
+      "name": "web",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd apps/web && VITE_API_URL=http://localhost:4100 npx vite --port 5180 --strictPort"],
+      "port": 5180
+    }
+  ]
+}

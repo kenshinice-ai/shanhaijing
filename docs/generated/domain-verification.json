@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-08-18T05:46:44.364Z",
+  "command": "npm run verify:domain",
+  "evidenceLevel": "local_candidate",
+  "database": "shanhaijing_atlas",
+  "postgres": "PostgreSQL 18.6 (Homebrew)",
+  "result": "pass",
+  "checks": 196,
+  "errors": 0,
+  "statistics": {
+    "uniqueCreatureConcepts": 23,
+    "textualOccurrences": 24,
+    "corpusCoverage": {
+      "passagesReviewed": 43,
+      "passagesTotal": 43
+    }
+  },
+  "findings": []
+}

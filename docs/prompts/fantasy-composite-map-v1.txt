@@ -1,0 +1,21 @@
+Use case: stylized-concept
+Asset type: ultra-high-resolution zoomable fantasy atlas mother map for a web knowledge product
+
+Create a spectacular, encyclopedic, extremely detailed fantasy composite world map inspired by the cosmology, mountains, seas, strange creatures, divine beings, tribes, plants, minerals, rituals and omens described in the ancient Chinese Classic of Mountains and Seas. This image is an explicitly artistic overview, not a historical geography claim.
+
+Show one vast mythic continent surrounded by four seas. The north contains snowy mountain ranges, ice fields, cold mist and remote sea cliffs. The west contains high plateaus, ochre deserts, red canyons, mineral valleys and colossal sacred trees. The center contains layered mountain chains, river basins, ancient forests, deep caves and ritual settlements. The south contains cloud forests, tropical valleys, marshes, volcanic regions, strange flowers and medicinal plants. The east contains intricate coasts, island realms, sunrise light, sea mountains and mysterious offshore kingdoms. Around the perimeter, show whirlpools, giant aquatic creatures, divine turtles, sea serpents, luminous shoals and floating islands.
+
+Integrate hundreds of small environmental storytelling scenes: diverse strange beasts, divine birds, serpents, aquatic creatures, hybrid animals, gods, human tribes, shamans, ritual processions, ancient settlements, shrines, caves, waterfalls, unusual trees, mineral deposits, omens, storms and celestial phenomena. Use several large visual anchors and many smaller discoveries. Creatures should feel integrated into habitats rather than pasted on top. Vary scale and silhouette; avoid repeated identical creatures.
+
+Style: masterfully hand-painted Chinese mineral-pigment fantasy cartography, refined gongbi detail, blue-green landscape painting, subtle silk and xuan-paper texture, rock-pigment granulation, restrained antique gold linework, museum-quality contemporary illustration. Do not imitate any identifiable living artist.
+
+Composition: wide panoramic top-down oblique atlas, strong readable hierarchy of mountains, rivers, seas and regions, immense micro-detail, clear visual routes through the terrain, controlled negative space for later programmatic labels, hotspots and legends. Reserve breathing room near the upper edge, corners and major water areas. The map should support deep zoom and prolonged exploration.
+
+Lighting and mood: mysterious, sacred, ancient, awe-inspiring; atmospheric mist, luminous mineral color, subtle golden accents, dramatic but readable region transitions.
+
+Palette: deep blue-green, mineral blue, malachite green, ochre, cinnabar accents, ink black, mist white and restrained antique gold.
+
+Constraints: no text, no Chinese characters, no English labels, no pseudo-writing, no watermark, no logo, no legend text, no modern political borders, no latitude-longitude grid, no modern highways, no satellite-image appearance, no claim of geographic accuracy, no direct copy of any existing online map, no modern China-shaped coastline.
+
+Avoid: European medieval parchment-map style, game UI, neon fantasy, clutter without hierarchy, repeated identical icons, illegible micro-text, malformed large creatures, photorealistic satellite terrain, modern buildings, modern vehicles.
+

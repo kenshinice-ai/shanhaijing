@@ -1,0 +1,32 @@
+{
+  "name": "shanhaijing-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @shanhaijing/api & npm run dev -w @shanhaijing/web",
+    "dev:api": "npm run dev -w @shanhaijing/api",
+    "dev:web": "npm run dev -w @shanhaijing/web",
+    "build": "npm run build -w @shanhaijing/api && npm run build -w @shanhaijing/web",
+    "typecheck": "npm run typecheck -w @shanhaijing/api && npm run typecheck -w @shanhaijing/web",
+    "test": "npm run test -w @shanhaijing/api && npm run test -w @shanhaijing/web",
+    "db:migrate": "npm run db:migrate -w @shanhaijing/api",
+    "db:seed": "npm run db:seed -w @shanhaijing/api",
+    "db:bootstrap": "npm run db:bootstrap -w @shanhaijing/api",
+    "bake:static": "npm run bake:static -w @shanhaijing/api",
+    "verify:domain": "tsx scripts/verify_domain.ts",
+    "verify:docs": "tsx scripts/verify_docs.ts",
+    "generate:overview": "tsx scripts/generate_overview.ts",
+    "generate:corpus-seed": "tsx scripts/generate_nanshan_full.ts",
+    "build:static": "npm run bake:static -w @shanhaijing/api -- --api \"${BAKE_API_URL:-http://localhost:4000}\" && VITE_DATA_MODE=static npm run build -w @shanhaijing/web -- --base=./"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

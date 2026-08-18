@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Paradise Production spark-P mark: night ground, candlelight serif P, one spark. -->
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#131C31"/>
+      <stop offset="1" stop-color="#0B1120"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#ground)"/>
+  <!-- Serif P drawn as a path so it renders identically everywhere. -->
+  <path fill="#F5C15D" d="M22 14 h14.5 c8.6 0 14 4.9 14 12.2 c0 7.4 -5.4 12.3 -14 12.3 H29.5 V50 H22 Z M29.5 20.1 v12.3 h6.6 c4.4 0 7 -2.3 7 -6.2 c0 -3.8 -2.6 -6.1 -7 -6.1 Z"/>
+  <!-- The spark: a four-point star riding above the bowl. -->
+  <path fill="#EDE9E0" d="M49 8 l1.9 5.1 5.1 1.9 -5.1 1.9 -1.9 5.1 -1.9 -5.1 -5.1 -1.9 5.1 -1.9 Z"/>
+</svg>

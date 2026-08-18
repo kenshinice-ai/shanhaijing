@@ -1,0 +1,21 @@
+{
+  "version": "artistic-composite-svg-v1",
+  "generator": "scripts/generate_overview.ts",
+  "generatedAt": "2026-08-18T05:25:19.069Z",
+  "deterministic": true,
+  "inputs": {
+    "textualPlaces": 39,
+    "rivers": 15
+  },
+  "output": {
+    "path": "apps/web/public/media/shanhaijing/artistic-overview-v1.svg",
+    "bytes": 82732,
+    "sha256": "6e6b4eee30d40944420e8c72f3ed5d09fd6d97ab8f548a9ad433d58b1d89b5b3"
+  },
+  "rights": {
+    "rights_status": "verified",
+    "note": "Project-authored procedural vector art; no third-party imagery, fonts, or model output."
+  },
+  "interpretation_class": "artistic_interpretation",
+  "disclosure": "Composition is artistic; it is not ancient geography or modern coordinates."
+}
