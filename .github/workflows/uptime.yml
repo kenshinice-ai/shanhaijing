@@ -1,0 +1,53 @@
+name: uptime
+
+# 监控此前是「没有」。这个 workflow 不是完整的可观测性方案,但它把「站点还在不在、
+# 发出去的还是不是我们发的那份」变成一个会失败、会发邮件给仓库所有者的检查,
+# 而不是一句"依赖 Cloudflare dashboard"。
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # 每 6 小时
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SITE: https://shanhaijing-atlas.pages.dev
+
+    steps:
+      - name: the site answers
+        run: |
+          code=$(curl -sS -L -m 30 -o /tmp/home.html -w "%{http_code}" "$SITE/")
+          echo "GET / -> $code"
+          [ "$code" = "200" ] || { echo "首页未返回 200" >&2; exit 1; }
+
+      - name: it is the atlas, not a parked page
+        run: |
+          grep -q "山海经 Atlas" /tmp/home.html || { echo "首页内容不是本图集" >&2; exit 1; }
+
+      - name: the data payload is still served
+        run: |
+          code=$(curl -sS -L -m 30 -o /tmp/atlas.json -w "%{http_code}" "$SITE/data/atlas.shanhaijing.zh-CN.json")
+          [ "$code" = "200" ] || { echo "数据载荷不可达" >&2; exit 1; }
+          node -e '
+            const d = JSON.parse(require("fs").readFileSync("/tmp/atlas.json", "utf8")).shanhaijing;
+            const counts = { passages: d.passages.length, creatures: d.creatures.length, places: d.places.length };
+            console.log("线上载荷:", JSON.stringify(counts));
+            // 空载荷同样是一种故障——首页 200 而图集是空的,肉眼与状态码都看不出来。
+            if (!counts.passages || !counts.creatures || !counts.places) {
+              console.error("线上载荷的领域集合为空"); process.exit(1);
+            }
+          '
+
+      - name: the no-endorsement notice is still shipped
+        run: |
+          bundle=$(grep -o 'assets/index-[A-Za-z0-9_-]*\.js' /tmp/home.html | head -1)
+          curl -sS -L -m 30 "$SITE/$bundle" | grep -q "未经任何学术机构或外部专家签署" \
+            || { echo "线上产物缺少无背书声明" >&2; exit 1; }
+
+      - name: unmatched paths still 404
+        run: |
+          code=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" "$SITE/no-such-page-probe")
+          echo "GET /no-such-page-probe -> $code"
+          [ "$code" = "404" ] || { echo "未命中路径未返回 404" >&2; exit 1; }

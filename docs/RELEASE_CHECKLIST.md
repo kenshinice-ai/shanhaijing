@@ -3,7 +3,7 @@
 - 状态：`review_ready`
 - 证据层级：`local_candidate`
 - 核心蓝图：[memoized-riding-giraffe.md](memoized-riding-giraffe.md)
-- 当前 Gate：`v1.0.0 已发布至 production；例外项见第 3–5 层`
+- 当前 Gate：`v1.0.1 已发布；第 1、2、4 层 passed，第 3、5 层各余一项明确跳过项`
 
 本清单区分五层证据。低层证据不能宣称高层完成；文档、代码或 staging 交接不自动授权 production 发布。所有结果引用机器生成报告、输入 checksum、revision、环境和 reviewer。
 
@@ -40,12 +40,13 @@
 
 - [x] fresh bootstrap 通过（2026-08-18，独立库 `shj_verify_20260818` 现建现删，migration 001–002 + seed 001–004）。
 - [x] repeat bootstrap/idempotency 通过（同日同库，全部 already applied）。
-- [ ] FK、check、enum、索引、删除和权限策略通过（插入路径已由 bootstrap 覆盖；删除/权限策略专项未测）。
+- [x] FK、check、enum、唯一约束、级联删除与权限策略**已专项演练**（[generated/constraints-drill.md](generated/constraints-drill.md)）：
+  八类违规写入逐条被数据库拒绝并记录 SQLSTATE；级联删除无孤儿；API 读路径在仅授予 SELECT 的角色下正常返回，写入被拒。
 - [x] 资产权利闸门 fail closed 已由 `npm run verify:rights` 在事务中演练并进入 CI。
 - [x] corpus、occurrence/concept、taxonomy completeness 通过（`verify:domain` 196 检查 0 错误；geography candidate、chronology 维度在 V1 范围内无数据，待 Scale 阶段补专项检查）。
 - [x] 报告包含数据库、命令和结果（[generated/isolated-bootstrap-2026-08-18.md](generated/isolated-bootstrap-2026-08-18.md)、[generated/domain-verification.json](generated/domain-verification.json)）。
 - [x] 报告路径：`docs/generated/domain-verification.json`
-- [ ] Gate：`passed-with-exceptions`（删除/权限专项未测）。
+- [x] Gate：`passed`。
 
 ### 3. built_static_artifact
 
@@ -68,7 +69,8 @@
   且产物中不含 Markdown。728 KB / 11 文件。
 - [x] 构建报告路径：`docs/generated/static-parity-2026-08-18.md`
 - [x] parity 报告路径：同上
-- [ ] Gate：`passed-with-exceptions`（屏幕阅读器实机、200% 缩放与 forced-colors 未测；移动端性能预算待真机档位）。
+- [x] 200% 缩放已复核（640×512 等效视口：无溢出、标签 0 重叠）；forced-colors 已实装——但**未在真实高对比环境实测**。
+- [ ] Gate：`passed-with-exceptions`——两项**明确跳过**并记录理由：屏幕阅读器实机走查需人耳判断，不作机器门禁；移动端性能预算待真机降频档位。见 [generated/accessibility-2026-08-18.md](generated/accessibility-2026-08-18.md) §6.4。
 
 ### 4. staging
 
@@ -82,9 +84,10 @@
 - [x] console/network 无未解释错误；线上 0 次 API 调用。
 - [x] CDN 可达路径与 Content-Type 通过；rights withdrawal 行为**已演练**——五种非公开状态在事务中真实写入后，API 一律不返回母图（含 assetUrl），见 [generated/rights-gate.md](generated/rights-gate.md)。演练首跑即抓出闸门 fail open 并已修复。
 - [x] rollback rehearsal 已完成并记录；artifact 保留期由 Cloudflare 逐 deployment 保存（v1.0.0 产物 11 文件仍可取回）。
-- [ ] soak 测试未进行。
+- [x] soak：客户端 162 轮约 970 次交互，0 运行时错误，结束堆低于起始堆（无泄漏）；
+  **源站长时 soak 判定不适用**——无自有源站、运行时零 API 调用，可压的只有 Cloudflare 边缘。
 - [x] 报告路径：`docs/generated/production-smoke-2026-08-18.md`
-- [ ] Gate：`passed-with-exceptions`（soak 未做；CDN 缓存清除未演练）。
+- [x] Gate：`passed`。CDN 缓存清除**按设计不需要**：资源全部内容指纹化、`index.html` 为 `max-age=0, must-revalidate`，回滚演练实测传播 ≤ 14 秒。
 
 ### 5. production
 
@@ -92,15 +95,15 @@
 
 - [x] production authorization：SJ-D015（2026-08-18）
 - [x] 变更窗口和责任人：2026-08-18，主负责人
-- [x] 版本 manifest、输入 checksum 和源码 commit 已冻结（tag `v1.0.0` → `c20af77`）。
+- [x] 版本 manifest、输入 checksum 和源码 commit 已冻结（tag `v1.0.0` → `c20af77`；`v1.0.1` → `9056e61`）。
 - [x] rollback 已演练并留下记录（[generated/rollback-rehearsal-2026-08-18.md](generated/rollback-rehearsal-2026-08-18.md)）：
   回滚 13 秒、前滚 14 秒，逐文件校验；演练当场发现并修正了一处会导致「空白站点 + 200」的流程缺陷。步骤见 [RUNBOOK.md](RUNBOOK.md)。
-- [x] production deployment result 已记录（deployment `a7597129`，<https://shanhaijing-atlas.pages.dev>）。
+- [x] production deployment result 已记录（v1.0.0 `a7597129` → v1.0.1 `47d555f9`，<https://shanhaijing-atlas.pages.dev>）。
 - [x] production smoke、静态资源、深链、locale、媒体 rights gate 通过；API/error 路径不适用（纯静态，0 API 调用）。
 - [x] 撤回与发布联系人已登记（[RUNBOOK.md](RUNBOOK.md) §1）。
-- [ ] 监控与告警仍未接入：无外部探针，依赖 Cloudflare dashboard；已在 RUNBOOK 中明写为待办而非既成事实。
+- [x] 监控与告警已接入：`.github/workflows/uptime.yml` 每 6 小时探测生产站点（首页 200、内容确为本图集、数据载荷非空、无背书声明仍在产物、未命中路径仍 404），失败即通知仓库所有者。粒度限制写在 [RUNBOOK.md](RUNBOOK.md) §1。
 - [x] smoke 报告路径：`docs/generated/production-smoke-2026-08-18.md`
-- [ ] Gate：`passed-with-exceptions`（监控与告警未接入；soak 未做）。
+- [ ] Gate：`passed-with-exceptions`——唯一未闭合项是移动端性能预算（待真机档位）；其余已闭合或明确判定不适用。
 
 ## Stop conditions
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T12:03:28.113Z",
+  "generatedAt": "2026-08-18T12:26:39.682Z",
   "generator": "scripts/measure_performance.ts",
   "node": "v26.7.0",
   "platform": "darwin/arm64",
@@ -7,19 +7,19 @@
   "artifact": "apps/web/dist",
   "totals": {
     "files": 12,
-    "raw": 606218,
-    "brotli": 129558
+    "raw": 606780,
+    "brotli": 129676
   },
   "firstLoad": {
     "files": [
-      "assets/index-BKlDzJFy.js",
-      "assets/index-Cb64Q6F_.css",
+      "assets/index-CPPWTQEV.css",
+      "assets/index-D65NlAK-.js",
       "data/atlas.shanhaijing.zh-CN.json",
       "index.html",
       "media/shanhaijing/artistic-overview-v1.svg"
     ],
-    "raw": 502070,
-    "brotli": 109847
+    "raw": 502632,
+    "brotli": 109965
   },
   "assets": [
     {
@@ -29,16 +29,16 @@
       "brotli": 680
     },
     {
-      "path": "assets/index-BKlDzJFy.js",
+      "path": "assets/index-CPPWTQEV.css",
+      "raw": 23125,
+      "gzip": 5912,
+      "brotli": 5181
+    },
+    {
+      "path": "assets/index-D65NlAK-.js",
       "raw": 303485,
       "gzip": 92525,
       "brotli": 80202
-    },
-    {
-      "path": "assets/index-Cb64Q6F_.css",
-      "raw": 22563,
-      "gzip": 5783,
-      "brotli": 5056
     },
     {
       "path": "data/atlas.shanhaijing.en.json",
@@ -85,8 +85,8 @@
     {
       "path": "index.html",
       "raw": 935,
-      "gzip": 583,
-      "brotli": 388
+      "gzip": 582,
+      "brotli": 381
     },
     {
       "path": "media/shanhaijing/artistic-overview-v1.svg",
@@ -100,15 +100,15 @@
       "locale": "zh-CN",
       "atlasBytes": 92355,
       "jsonParse": {
-        "p50": 0.12,
+        "p50": 0.13,
         "p95": 0.14,
-        "worst": 0.28,
+        "worst": 0.44,
         "runs": 60
       },
       "zodAtlas": {
-        "p50": 0.14,
-        "p95": 0.25,
-        "worst": 0.37,
+        "p50": 0.15,
+        "p95": 0.29,
+        "worst": 0.39,
         "runs": 60
       },
       "zodWorks": {
@@ -122,15 +122,15 @@
       "locale": "en",
       "atlasBytes": 95673,
       "jsonParse": {
-        "p50": 0.12,
-        "p95": 0.13,
-        "worst": 0.25,
+        "p50": 0.13,
+        "p95": 0.14,
+        "worst": 0.28,
         "runs": 60
       },
       "zodAtlas": {
         "p50": 0.13,
         "p95": 0.17,
-        "worst": 0.22,
+        "worst": 0.21,
         "runs": 60
       },
       "zodWorks": {

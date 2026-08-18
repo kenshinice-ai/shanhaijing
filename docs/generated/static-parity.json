@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T11:56:11.949Z",
+  "generatedAt": "2026-08-18T12:26:41.699Z",
   "generator": "scripts/verify_parity.ts",
   "api": "http://localhost:4100",
   "artifact": "apps/web/dist/data",

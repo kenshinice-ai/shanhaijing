@@ -295,6 +295,29 @@ footer p { color: var(--muted); max-width: 76ch; font-size: 0.9rem; }
   .source-grid { grid-template-columns: 1fr; }
 }
 
+/*
+ * Windows High Contrast and friends strip author colours and substitute the
+ * user's own. Anything that carried meaning *only* in a background colour
+ * therefore stops carrying it — the selected tab, the active map node, the
+ * no-endorsement notice. Each of those gets a border in this mode, so the
+ * distinction survives in a palette we do not control.
+ */
+@media (forced-colors: active) {
+  .no-endorsement, .shj-reduced-data { border: 1px solid CanvasText; }
+  [role="tab"][aria-selected="true"] { border: 2px solid Highlight; }
+  .search-results li[role="option"].active,
+  .search-results li[role="option"]:hover { border: 1px solid Highlight; }
+  :focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
+  /* SVG fills are forced too: keep the map's strokes explicit so routes and
+     hotspots stay visible rather than dissolving into the canvas. */
+  .shj-route-edge { stroke: CanvasText; }
+  .shj-node-ring { stroke: CanvasText; fill: Canvas; }
+  .shj-map-node.active .shj-node-ring { stroke: Highlight; }
+  .shj-node-label, .shj-route-distance, .shj-node-count, .shj-sea-label {
+    fill: CanvasText; stroke: none; paint-order: normal;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }

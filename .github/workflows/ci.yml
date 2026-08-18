@@ -67,6 +67,10 @@ jobs:
       - name: verify the rights gate
         run: npm run verify:rights
 
+      # 删除、约束与权限:bootstrap 只证明写得进去,证明不了写不进去的写不进去。
+      - name: drill deletes, constraints and privileges
+        run: npm run verify:constraints
+
       - name: verify documents
         run: npm run verify:docs
 

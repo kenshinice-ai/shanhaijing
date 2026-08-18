@@ -20,6 +20,7 @@
     "verify:docs": "tsx scripts/verify_docs.ts",
     "verify:parity": "tsx scripts/verify_parity.ts",
     "verify:rights": "tsx scripts/verify_rights_gate.ts",
+    "verify:constraints": "tsx scripts/verify_constraints.ts",
     "measure:performance": "tsx scripts/measure_performance.ts",
     "generate:overview": "tsx scripts/generate_overview.ts",
     "generate:corpus-seed": "tsx scripts/generate_nanshan_full.ts",

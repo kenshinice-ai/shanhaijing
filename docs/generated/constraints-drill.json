@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-08-18T12:26:38.538Z",
+  "generator": "scripts/verify_constraints.ts",
+  "database": "postgresql://localhost:5432/shanhaijing_atlas",
+  "result": "pass",
+  "checks": 12,
+  "errors": 0,
+  "findings": [
+    {
+      "checkId": "DELETE-CASCADE",
+      "severity": "info",
+      "message": "删除 boyi 级联清除 1 条提及、2 条分类指派，无孤儿"
+    },
+    {
+      "checkId": "CONSTRAINT-FK",
+      "severity": "info",
+      "message": "指派引用词表外的词条：已拒绝（SQLSTATE 23503）"
+    },
+    {
+      "checkId": "CONSTRAINT-CHECK",
+      "severity": "info",
+      "message": "非法 review_status：已拒绝（SQLSTATE 23514）"
+    },
+    {
+      "checkId": "CONSTRAINT-CHECK",
+      "severity": "info",
+      "message": "母图 status 为 published 却无 asset_url：已拒绝（SQLSTATE 23514）"
+    },
+    {
+      "checkId": "CONSTRAINT-CHECK",
+      "severity": "info",
+      "message": "非法 slug 形态：已拒绝（SQLSTATE 23514）"
+    },
+    {
+      "checkId": "CONSTRAINT-CHECK",
+      "severity": "info",
+      "message": "空的双语标签：已拒绝（SQLSTATE 23514）"
+    },
+    {
+      "checkId": "CONSTRAINT-UNIQUE",
+      "severity": "info",
+      "message": "同一轴下重复词条：已拒绝（SQLSTATE 23505）"
+    },
+    {
+      "checkId": "CONSTRAINT-ENUM",
+      "severity": "info",
+      "message": "枚举外的 locale：已拒绝（SQLSTATE 22P02）"
+    },
+    {
+      "checkId": "CONSTRAINT-FK",
+      "severity": "info",
+      "message": "指向不存在作品的异兽：已拒绝（SQLSTATE 23503）"
+    },
+    {
+      "checkId": "PRIVILEGE-READONLY",
+      "severity": "info",
+      "message": "只读角色下 API loader 正常返回（43 段落、23 概念）——读路径不需要写权限"
+    },
+    {
+      "checkId": "PRIVILEGE-READONLY",
+      "severity": "info",
+      "message": "只读角色的写入已被拒绝"
+    },
+    {
+      "checkId": "DRILL-RESTORE",
+      "severity": "info",
+      "message": "演练未留下任何角色或数据变更"
+    }
+  ]
+}

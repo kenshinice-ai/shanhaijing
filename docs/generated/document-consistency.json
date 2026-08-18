@@ -4,14 +4,14 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T12:03:25.346Z",
+  "generatedAt": "2026-08-18T12:26:25.303Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
   "gateStatus": "blocked",
   "counts": {
     "inputs": 30,
-    "checks": 294,
+    "checks": 298,
     "errors": 0,
     "warnings": 0,
     "info": 1
@@ -142,8 +142,8 @@
     },
     {
       "path": "docs/RELEASE_CHECKLIST.md",
-      "bytes": 9454,
-      "sha256": "06c5da81c664be2d8a9eecf11825c4d05ad986465d47ca1b0c6038d5f2f58560"
+      "bytes": 10493,
+      "sha256": "4ea505ce41249f8c4589903416da63121135364d488cd622c89b8ff323f1d19f"
     },
     {
       "path": "docs/REVIEWER_ASSIGNMENTS_2026-08-15.md",
