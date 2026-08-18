@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-08-18T11:14:34.814Z",
+  "generator": "scripts/verify_parity.ts",
+  "api": "http://localhost:4100",
+  "artifact": "apps/web/dist/data",
+  "result": "pass",
+  "checks": 11,
+  "errors": 0,
+  "comparisons": [
+    {
+      "file": "works.zh-CN.json",
+      "bytes": 912,
+      "sha256": "a19e0bddcbe97e28075c2707b1156766b7da0d6c71baba79068135591dac61da",
+      "differences": 0
+    },
+    {
+      "file": "atlas.shanhaijing.zh-CN.json",
+      "bytes": 87297,
+      "sha256": "6ca5c990d05a6be0435ff9c5bb7ec6725cdfa3d7ca25c14ae6e51a4ede44fc86",
+      "differences": 0
+    },
+    {
+      "file": "works.en.json",
+      "bytes": 992,
+      "sha256": "4fd5250eb362ec042405229c666b21186d19ef494cab43909106f538eb45e13e",
+      "differences": 0
+    },
+    {
+      "file": "atlas.shanhaijing.en.json",
+      "bytes": 89691,
+      "sha256": "fa84f45a0fd5671d4b182af9148bc56022df8c3d6b1516583c5c4c17d72d95b2",
+      "differences": 0
+    }
+  ],
+  "findings": [
+    {
+      "checkId": "PARITY-SIZE",
+      "severity": "info",
+      "message": "zh-CN：43 段落、23 概念、39 地点"
+    },
+    {
+      "checkId": "PARITY-SIZE",
+      "severity": "info",
+      "message": "en：43 段落、23 概念、39 地点"
+    }
+  ]
+}

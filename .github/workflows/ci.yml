@@ -1,0 +1,105 @@
+name: verify
+
+# 每一道门禁此前都只在本地手跑过。这个 workflow 的目的就是让它们不再依赖谁记得跑：
+# 空库装载、领域校验、文档一致性、类型、单元测试、生成器确定性、烘焙与 parity，
+# 一次跑完，任何一步失败即失败。
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: shanhaijing_atlas
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shanhaijing_atlas
+      API_PORT: "4100"
+      BAKE_API_URL: http://localhost:4100
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # 空库装载 + 幂等重放:迁移与 seed 必须能从零重建,且重放不产生第二次写入。
+      - name: bootstrap a database from empty
+        run: npm run db:bootstrap
+
+      - name: repeat bootstrap is idempotent
+        run: |
+          npm run db:bootstrap | tee /tmp/repeat.log
+          if grep -qv "already applied" <(grep -E "^(migrate|seed):" /tmp/repeat.log); then
+            echo "重放时有 migration/seed 被再次执行,幂等性被破坏" >&2
+            grep -E "^(migrate|seed):" /tmp/repeat.log >&2
+            exit 1
+          fi
+
+      - name: verify domain
+        run: npm run verify:domain
+
+      - name: verify documents
+        run: npm run verify:docs
+
+      - run: npm run typecheck
+
+      - run: npm test
+
+      # 两个生成器都声明是确定性的。这里当场重跑,产出必须与仓库里的字节相同——
+      # 否则"资产带稳定 checksum"这句话就不成立。
+      - name: generators are deterministic
+        run: |
+          npm run generate:overview
+          npm run generate:corpus-seed
+          git diff --exit-code -- \
+            apps/web/public/media/shanhaijing/artistic-overview-v1.svg \
+            db/seeds/004_nanshan_full.sql
+
+      - name: start the API
+        run: |
+          (cd apps/api && npx tsx src/index.ts &)
+          for i in $(seq 1 40); do
+            curl -sf "http://localhost:${API_PORT}/health" > /dev/null && exit 0
+            sleep 1
+          done
+          echo "API 未能在 40 秒内就绪" >&2
+          exit 1
+
+      # 烘焙 + 静态构建 + 产物断言 + dynamic/static parity。
+      - name: bake, build and check the artifact
+        run: bash deploy/deploy-static.sh
+
+      - name: upload reports and artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-reports
+          path: |
+            docs/generated/
+            apps/web/dist/
+          retention-days: 14

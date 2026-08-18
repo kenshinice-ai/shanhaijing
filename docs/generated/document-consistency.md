@@ -3,11 +3,11 @@
 - 生成命令：`npm run verify:docs`
 - 生成器版本：`1.0.0`
 - 生成器 SHA-256：`af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6`
-- 生成时间：`2026-08-18T07:13:36.633Z`
+- 生成时间：`2026-08-18T11:16:22.654Z`
 - 证据层级：`local_candidate`
 - 检查结果：`pass`
 - 输入文件：30
-- 检查数：278
+- 检查数：281
 - errors / warnings / info：0 / 0 / 1
 - Gate 结论：`blocked`；本报告只证明机械一致性，不替代专家评审、输入冻结或 Gate 0 授权。
 

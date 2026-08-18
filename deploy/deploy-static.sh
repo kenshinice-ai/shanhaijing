@@ -27,7 +27,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-echo "[1/5] 检查本地 API(烘焙数据源):$API_URL"
+echo "[1/6] 检查本地 API(烘焙数据源):$API_URL"
 if ! curl -sf "$API_URL/health" > /dev/null; then
   echo "错误:API 未运行。先启动 API,再重试。" >&2
   exit 1
@@ -35,23 +35,25 @@ fi
 
 # 烘焙暂存目录每次清空。上一代仓库让多个图集共用这个目录且从不清理,
 # 结果任何一个图集的 dist 都会带上其他图集的 JSON 与媒体。
-echo "[2/5] 清空烘焙暂存目录"
+echo "[2/6] 清空烘焙暂存目录"
 rm -rf "$ROOT/apps/web/public/data"
 
-echo "[3/5] 烘焙静态数据(works + full atlas,双语)"
+echo "[3/6] 烘焙静态数据(works + full atlas,双语)"
 npm run bake:static -w @shanhaijing/api -- --api "$API_URL"
 
-echo "[4/5] 静态模式构建(VITE_DATA_MODE=static,相对资源路径)"
+echo "[4/6] 静态模式构建(VITE_DATA_MODE=static,相对资源路径)"
 VITE_DATA_MODE=static npm run build -w @shanhaijing/web -- --base=./
 
 DIST="$ROOT/apps/web/dist"
-echo "[5/5] 产物检查:$DIST"
+echo "[5/6] 产物检查:$DIST"
 test -f "$DIST/index.html"
 test -f "$DIST/data/$PROBE"
 test -f "$DIST/media/shanhaijing/artistic-overview-v1.svg"
 # 生僻字子集:缺了它们,扩展 B 区的异兽名会退回空框。
 test -f "$DIST/fonts/shj-rare-han-ext-a.woff2"
 test -f "$DIST/fonts/shj-rare-han-ext-b.woff2"
+# 未命中路径要落到真 404,而不是 200 + 整个应用。
+test -f "$DIST/404.html"
 if find "$DIST" -name "*.md" | grep -q .; then
   echo "错误:产物中含 Markdown 文档,不应随站点发布。" >&2
   find "$DIST" -name "*.md" >&2
@@ -68,6 +70,10 @@ if ls "$DIST/data" | grep -v "^atlas\.shanhaijing\.\|^works\." > /dev/null 2>&1;
   exit 1
 fi
 du -sh "$DIST"
+
+echo "[6/6] dynamic/static parity"
+npm run verify:parity -- --api "$API_URL" --dist "$DIST/data"
+
 echo "静态站点就绪。本地预览:npx vite preview --outDir apps/web/dist"
 
 case "$PUBLISH" in

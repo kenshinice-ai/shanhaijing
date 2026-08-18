@@ -19,6 +19,13 @@ export interface Box {
   y: number;
   width: number;
   height: number;
+  /**
+   * How much overlapping this box costs, relative to overlapping text. A node
+   * ring is a circle: the corners of its bounding box are empty, so a label
+   * clipping one is far less harmful than a label crossing a name. Defaults
+   * to 1 — full weight — for everything textual.
+   */
+  weight?: number;
 }
 
 export interface RouteLabelInput {
@@ -78,8 +85,19 @@ export function textBox(
   };
 }
 
+const RING_WEIGHT = 0.3;
+
+/** Improvement sweeps after the greedy pass. Two is where the maps stop moving. */
+const REFINEMENT_PASSES = 2;
+
 export function circleBox(cx: number, cy: number, r: number): Box {
-  return { x: cx - r, y: cy - r, width: r * 2, height: r * 2 };
+  return { x: cx - r, y: cy - r, width: r * 2, height: r * 2, weight: RING_WEIGHT };
+}
+
+/** Weighted overlap: what a candidate position actually costs. */
+function penalty(box: Box, other: Box): number {
+  const area = overlapArea(box, other);
+  return area === 0 ? 0 : area * (other.weight ?? 1);
 }
 
 /** Overlapping area of two boxes; 0 when they merely touch. */
@@ -105,7 +123,7 @@ function curvePoint(edge: RouteLabelInput, t: number): { x: number; y: number } 
  * the curve, then further away from it. Earlier entries also carry a small
  * tie-break penalty so a free apex always beats a free outlier.
  */
-const CANDIDATES: { t: number; dy: number }[] = [
+const CANDIDATES: { t: number; dy: number; dx?: number }[] = [
   { t: 0.5, dy: -9 },
   { t: 0.5, dy: 19 },
   { t: 0.36, dy: -9 },
@@ -124,6 +142,20 @@ const CANDIDATES: { t: number; dy: number }[] = [
   { t: 0.78, dy: 19 },
   { t: 0.5, dy: -60 },
   { t: 0.5, dy: 70 },
+  { t: 0.14, dy: -9 },
+  { t: 0.86, dy: -9 },
+  { t: 0.36, dy: -43 },
+  { t: 0.64, dy: -43 },
+  { t: 0.36, dy: 53 },
+  { t: 0.64, dy: 53 },
+  { t: 0.5, dy: -78 },
+  { t: 0.5, dy: 88 },
+  { t: 0.5, dy: -9, dx: -16 },
+  { t: 0.5, dy: -9, dx: 16 },
+  { t: 0.5, dy: 19, dx: -16 },
+  { t: 0.5, dy: 19, dx: 16 },
+  { t: 0.36, dy: -26, dx: -16 },
+  { t: 0.64, dy: -26, dx: 16 },
 ];
 
 export interface NodeLabelOffset {
@@ -159,28 +191,43 @@ function nodeSlots(preferBelow: boolean): { dx: number; dy: number }[] {
   const vertical = preferBelow ? VERTICAL_SLOTS_BELOW : VERTICAL_SLOTS_ABOVE;
   return [
     ...vertical.map((dy) => ({ dx: 0, dy })),
-    ...vertical.slice(0, 4).flatMap((dy) => [{ dx: -26, dy }, { dx: 26, dy }]),
+    ...vertical.flatMap((dy) => [{ dx: -30, dy }, { dx: 30, dy }]),
+    ...vertical.flatMap((dy) => [{ dx: -58, dy }, { dx: 58, dy }]),
   ];
 }
 
 export function placeNodeLabels(nodes: NodeLabelInput[], obstacles: Box[]): Map<string, NodeLabelOffset> {
-  const placed = new Map<string, NodeLabelOffset>();
-  const taken: Box[] = [];
-  for (const node of nodes) {
+  const boxes = new Map<string, Box>();
+  const chosen = new Map<string, NodeLabelOffset>();
+  const pick = (node: NodeLabelInput): NodeLabelOffset => {
     let best: { offset: NodeLabelOffset; cost: number } | null = null;
     for (const [index, slot] of nodeSlots(node.preferBelow).entries()) {
       const box = textBox(node.x + slot.dx, node.y + slot.dy, node.text, node.fontSize);
       let cost = index * 0.5;
-      for (const other of obstacles) cost += overlapArea(box, other);
-      for (const other of taken) cost += overlapArea(box, other);
+      for (const other of obstacles) cost += penalty(box, other);
+      for (const [id, other] of boxes) if (id !== node.id) cost += penalty(box, other);
       if (!best || cost < best.cost) best = { offset: slot, cost };
       if (cost === index * 0.5) break;
     }
-    if (!best) continue;
-    placed.set(node.id, best.offset);
-    taken.push(textBox(node.x + best.offset.dx, node.y + best.offset.dy, node.text, node.fontSize));
+    return best?.offset ?? { dx: 0, dy: 44 };
+  };
+  for (const node of nodes) {
+    const offset = pick(node);
+    chosen.set(node.id, offset);
+    boxes.set(node.id, textBox(node.x + offset.dx, node.y + offset.dy, node.text, node.fontSize));
   }
-  return placed;
+  // Greedy placement is order-dependent: an early name can take the slot a
+  // later, more constrained one needed. Re-picking each name against the
+  // finished layout lets those trades unwind. Two passes settle it; the order
+  // is fixed, so the result stays reproducible.
+  for (let pass = 0; pass < REFINEMENT_PASSES; pass++) {
+    for (const node of nodes) {
+      const offset = pick(node);
+      chosen.set(node.id, offset);
+      boxes.set(node.id, textBox(node.x + offset.dx, node.y + offset.dy, node.text, node.fontSize));
+    }
+  }
+  return chosen;
 }
 
 export function placeRouteLabels(
@@ -189,22 +236,35 @@ export function placeRouteLabels(
   fontSize = 12,
 ): Map<string, PlacedRouteLabel> {
   const placed = new Map<string, PlacedRouteLabel>();
-  const taken: Box[] = [];
-  for (const edge of edges) {
+  const boxes = new Map<string, Box>();
+  const pick = (edge: RouteLabelInput): PlacedRouteLabel | null => {
     let best: { x: number; y: number; cost: number } | null = null;
     for (const [index, candidate] of CANDIDATES.entries()) {
       const point = curvePoint(edge, candidate.t);
+      const x = point.x + (candidate.dx ?? 0);
       const y = point.y + candidate.dy;
-      const box = textBox(point.x, y, edge.text, fontSize, "middle");
+      const box = textBox(x, y, edge.text, fontSize, "middle");
       let cost = index * 0.5;
-      for (const other of obstacles) cost += overlapArea(box, other);
-      for (const other of taken) cost += overlapArea(box, other);
-      if (!best || cost < best.cost) best = { x: point.x, y, cost };
+      for (const other of obstacles) cost += penalty(box, other);
+      for (const [id, other] of boxes) if (id !== edge.id) cost += penalty(box, other);
+      if (!best || cost < best.cost) best = { x, y, cost };
       if (cost === index * 0.5) break; // free slot; no later candidate can win
     }
-    if (!best) continue;
-    placed.set(edge.id, { x: best.x, y: best.y });
-    taken.push(textBox(best.x, best.y, edge.text, fontSize, "middle"));
+    return best;
+  };
+  for (const edge of edges) {
+    const at = pick(edge);
+    if (!at) continue;
+    placed.set(edge.id, { x: at.x, y: at.y });
+    boxes.set(edge.id, textBox(at.x, at.y, edge.text, fontSize, "middle"));
+  }
+  for (let pass = 0; pass < REFINEMENT_PASSES; pass++) {
+    for (const edge of edges) {
+      const at = pick(edge);
+      if (!at) continue;
+      placed.set(edge.id, { x: at.x, y: at.y });
+      boxes.set(edge.id, textBox(at.x, at.y, edge.text, fontSize, "middle"));
+    }
   }
   return placed;
 }

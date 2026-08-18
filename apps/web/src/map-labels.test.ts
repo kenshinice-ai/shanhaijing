@@ -86,6 +86,20 @@ describe("placeRouteLabels", () => {
   });
 });
 
+describe("obstacle weight", () => {
+  it("prefers clipping a node ring over covering a name", () => {
+    // Both slots are blocked; the ring is a circle whose bounding-box corners
+    // are empty, so it should lose to the name.
+    const edge = distance("e1", 100, 300, 300, 300);
+    const free = placeRouteLabels([edge], []).get("e1")!;
+    const name = textBox(free.x - 20, free.y, "Mount Somewhere", 14, "middle");
+    const ring = circleBox(free.x, free.y + 19 + 8, 19);
+    const at = placeRouteLabels([edge], [name, ring]).get("e1")!;
+    const box = textBox(at.x, at.y, edge.text, 12, "middle");
+    expect(overlapArea(box, name)).toBe(0);
+  });
+});
+
 describe("placeNodeLabels", () => {
   const node = (id: string, x: number, text: string, preferBelow: boolean) =>
     ({ id, x, y: 300, text, fontSize: 14, preferBelow });

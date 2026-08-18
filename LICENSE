@@ -1,0 +1,52 @@
+# 版权与授权
+
+Copyright (c) 2026 Lee Liu · A PARADISE PRODUCTION · 天域文创
+
+本仓库混合了四类权利状态不同的内容，请分别对待。默认状态是**保留所有权利**：
+除下列明确开放的部分外，未经书面许可不得复制、修改、再分发或商业使用。
+
+## 1. 代码 — 保留所有权利
+
+`apps/`、`scripts/`、`deploy/`、`db/` 下的源码与构建配置。
+允许为评估、学习与安全审查目的阅读和本地运行；其他用途请先联系。
+
+> 若要改为开源许可（MIT / Apache-2.0 等），替换本节即可——放宽是单向的，
+> 一经发布不可撤回，因此默认取保守值。
+
+## 2. 原文 — 公有领域
+
+`db/seeds/` 与 `scripts/data/` 中的《山海经》原文段落属公有领域，不主张任何权利。
+底稿取自 ctext 并与维基文库交叉核对，两处校核裁定登记为异文；
+逐段 SHA-256 与 edition checksum 见 `docs/generated/domain-verification.json`。
+
+**但**：段落切分、异文裁定、概念归并、分类指派、地望候选与双语翻译是本项目的编辑成果，
+属第 3 节，不随原文一并进入公有领域。
+
+## 3. 编辑成果与艺术演绎 — 保留所有权利
+
+包括但不限于：概念/提及/地点/拓扑的建模与数据、双语译文与摘要、
+`apps/web/public/media/shanhaijing/artistic-overview-v1.svg` 程序化母图及其生成器、
+`docs/` 下的全部文档。
+
+母图是本项目自绘的 `artistic_interpretation`，**不是**古代地图的复制或摹绘，
+也不得被反向用于提取地望坐标或路线结论。
+
+## 4. 第三方内容
+
+| 内容 | 上游 | 许可 |
+|---|---|---|
+| `apps/web/public/fonts/shj-rare-han-ext-{a,b}.woff2` | [Jigmo](https://github.com/kamichikoichi/jigmo) `Jigmo-20250912` 子集 | CC0 1.0 Universal |
+| npm 依赖 | 各自仓库 | 见 `package-lock.json` 与各包 LICENSE |
+
+字形数据源自 GlyphWiki。CC0 对再分发与子集化无附加条件；出处与 checksum 见
+`docs/RARE_GLYPH_FONT.md`。
+
+## 5. 无背书声明
+
+本项目未经任何学术机构或外部专家签署（`docs/DECISION_LOG.md` SJ-D012、SJ-D016）。
+分类、地望候选、声音推演与艺术演绎均为项目自身的编辑判断，不代表学术定论。
+引用时请注明其证据等级，不得表述为机构认可的结论。
+
+## 6. 联系
+
+lee.liu.melbourne@gmail.com
