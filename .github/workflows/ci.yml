@@ -94,6 +94,10 @@ jobs:
       - name: bake, build and check the artifact
         run: bash deploy/deploy-static.sh
 
+      # 预算不被执行就只是愿望。
+      - name: check performance budgets
+        run: npm run measure:performance -- --check
+
       - name: upload reports and artifact
         if: always()
         uses: actions/upload-artifact@v4

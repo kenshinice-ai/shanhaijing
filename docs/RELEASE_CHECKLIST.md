@@ -15,7 +15,7 @@
   子集字体 `831bffe3…9ea75a13` / `b1559655…96d1ae4e`
 - static manifest checksum：`not_implemented`
 - release owner：`R-RELEASE`
-- reviewer：项目责任 reviewer matrix 已指定；外部机构签署 `pending`
+- reviewer：项目责任 reviewer matrix 已指定；外部机构签署 `pending`，按 SJ-D016 以常驻无背书声明披露，不再阻断发布
 - rollback reference：Cloudflare Pages 保留历史 deployment，回滚为重新指向上一个 deployment
 - authorization reference：SJ-D015（2026-08-18，用户在验证通过后授权首版发布）
 - release disposition：`authorized`
@@ -44,7 +44,7 @@
 - [x] corpus、occurrence/concept、taxonomy completeness 通过（`verify:domain` 196 检查 0 错误；geography candidate、chronology 维度在 V1 范围内无数据，待 Scale 阶段补专项检查）。
 - [x] 报告包含数据库、命令和结果（[generated/isolated-bootstrap-2026-08-18.md](generated/isolated-bootstrap-2026-08-18.md)、[generated/domain-verification.json](generated/domain-verification.json)）。
 - [x] 报告路径：`docs/generated/domain-verification.json`
-- [ ] Gate：`passed-with-exceptions`（删除/权限专项未测；外部机构签署仍 `pending`）。
+- [ ] Gate：`passed-with-exceptions`（删除/权限专项未测）。
 
 ### 3. built_static_artifact
 
@@ -56,13 +56,18 @@
 - [x] dynamic 与 static parity 通过（双语逐 key 零差异，见 [generated/static-parity-2026-08-18.md](generated/static-parity-2026-08-18.md)）。
 - [x] media rights/provenance/interpretation 检查通过（母图为项目自绘，生成器 checksum 由 verifier 复核；无外部媒体）；audio 尚未进入范围。
 - [x] 单元测试通过（根级 `npm test`：API 契约 10 项、地图标签几何 14 项）。
-- [ ] performance、a11y 和 reduced-data 报告尚未生成；browser 抽检已完成（桌面/390px 无文档级横向溢出、
-  地图标签重叠中文 0 处英文 2 处、console 零输出、扩展 A/B 区八个生僻字全部成字）。
+- [x] performance 基线已生成并冻结四项预算（[generated/performance-baseline.md](generated/performance-baseline.md)、
+  `PERFORMANCE_BUDGETS.md` §3.1）；运行时观测见
+  [generated/performance-runtime-2026-08-18.md](generated/performance-runtime-2026-08-18.md)。
+- [x] a11y 与 reduced-data 报告已生成（[generated/accessibility-2026-08-18.md](generated/accessibility-2026-08-18.md)）：
+  axe serious/critical 归零（修复 2 处真实缺陷）、键盘全流程可用、11 组对比度达标、reduced-data 实装。
+- [x] browser 抽检：桌面/390px 无文档级横向溢出、地图标签重叠中文 0 英文 1（2×2 px）、console 零输出、
+  扩展 A/B 区八个生僻字全部成字。
 - [x] `dist/` 跨 profile 资产混入问题已解决：烘焙前清空暂存目录，产物断言 `dist/data` 只含本图集数据，
   且产物中不含 Markdown。728 KB / 11 文件。
 - [x] 构建报告路径：`docs/generated/static-parity-2026-08-18.md`
 - [x] parity 报告路径：同上
-- [ ] Gate：`passed-with-exceptions`（性能与无障碍报告仍缺失，按 SJ-D015 以书面授权放行首版）。
+- [ ] Gate：`passed-with-exceptions`（屏幕阅读器实机、200% 缩放与 forced-colors 未测；移动端性能预算待真机档位）。
 
 ### 4. staging
 
@@ -102,7 +107,7 @@
 - 三层地理或四轴 chronology 在数据/API/UI 中混用；
 - rights、provenance、interpretation、alt 或 checksum 缺失；
 - dynamic/static parity、registry completeness、coverage 或撤回检查失败；
-- 专家 review 仍有 blocking 问题或 waiver 过期；
+- 专家 review 仍有 blocking 问题或 waiver 过期（外部机构签署的缺失本身不再是 stop condition，前提是无背书声明在产物中，见 SJ-D016）；
 - 性能、a11y、浏览器或 reduced mode 超预算且无书面批准；
 - staging/production 证据被低层报告替代；
 - 没有明确的发布授权、rollback 和 version manifest。

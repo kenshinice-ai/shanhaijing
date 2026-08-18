@@ -3,7 +3,7 @@ import { getAtlas } from "./api";
 import { EntityDrawer } from "./components/EntityDrawer";
 import { GlobalSearch } from "./components/GlobalSearch";
 import { ShanhaijingWorkspace } from "./components/ShanhaijingWorkspace";
-import { label, originRegionLabel, t } from "./i18n";
+import { label, originRegionLabel, t, NO_ENDORSEMENT } from "./i18n";
 import {
   WORK_SLUG, parseAtlasState, serializeAtlasState,
   type ExploreState, type SelectedEntity, type SelectionSource, type Tab,
@@ -131,10 +131,13 @@ export default function App() {
             <div className="source-grid">
               {atlas.sources.map((source) => <details key={source.id}>
                 <summary>
-                  {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.title}</a> : source.title}
+                  {source.title}
                   {" · "}{label(source.sourceType, locale)}{" · "}{label(source.evidenceGrade, locale)}
                 </summary>
                 <p>{source.citation}</p>
+                {source.url && <p className="source-link">
+                  <a href={source.url} target="_blank" rel="noreferrer">{source.url}</a>
+                </p>}
               </details>)}
             </div>
           </footer>}
@@ -147,6 +150,11 @@ export default function App() {
             onSelect={selectEntity}
           />}
         </>}
+
+    <aside className="no-endorsement" role="note" lang={locale}>
+      <strong>{locale === "zh-CN" ? "无背书声明" : "No endorsement"}</strong>
+      <p>{NO_ENDORSEMENT[locale]}</p>
+    </aside>
 
     <p className="production-credit">A&nbsp;PARADISE&nbsp;PRODUCTION&nbsp;·&nbsp;天域文创出品</p>
   </main>;

@@ -197,6 +197,39 @@
   `RELEASE_CHECKLIST.md` 第 3 层；外部机构签署仍 `pending`（SJ-D012），对外文案不得声称机构或专家认可。
 - 证据：`RELEASE_CHECKLIST.md` 的 release approval record。
 
+### SJ-D016：不等待外部签署，改为在站点上声明其不存在
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户裁定：绕过签署，放免责声明`
+- 输入：SJ-D012（主负责人内部签署，外部机构签署 `pending`）、`EXPERT_REVIEW_QUESTIONS.md`
+- 决策：不再把外部机构签署作为发布前置条件；改为在界面上常驻双语无背书声明，
+  明确本图集为项目自行编纂的候选成果，分类、地望候选、声音推演与艺术演绎均为编辑判断。
+  声明文案由单元测试守护（不得出现"认证/权威结论/peer-reviewed/endorsed"等措辞），
+  并由部署脚本断言其确实进入产物。
+- 理由：外部签署是不可控的外部依赖，把发布无限期挂起并不会让读者更清楚证据等级；
+  **未被声明的"没有背书"，在读者眼里与"有背书"无异**。主动披露比沉默等待更诚实，
+  也与本项目一贯的分层证据规则一致。
+- 影响：`RELEASE_CHECKLIST.md` 中"外部人工签署"由阻断项改为已披露事项；
+  SJ-D012 保持 `pending` 但不再阻断发布；对外文案的约束不变——不得声称机构或专家认可。
+- 证据：`apps/web/src/i18n.ts` 的 `NO_ENDORSEMENT`、`apps/web/src/i18n.test.ts`、
+  `deploy/deploy-static.sh` 的产物断言。
+
+### SJ-D017：冻结四项可复现性能预算，绘制与交互保持 candidate
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户授权本轮关闭发布例外`
+- 输入：`generated/performance-baseline.json`（12 文件、每项 60 次测量）、
+  `generated/performance-runtime-2026-08-18.md`（桌面/生产/移动模拟观测）
+- 决策：冻结首屏 brotli、主 bundle brotli、单 locale payload 原始字节、Zod 校验 p95 四项预算，
+  并在 CI 中以 `--check` 执行；绘制、长任务与交互延迟维持 `candidate`。
+- 理由：这四项在任何机器上都能复现，具备成为 gate 的资格；paint 与交互依赖设备与网络，
+  当前 harness 没有 CPU 降频与真机，任何冻结都会是伪证据。
+- 影响：语料扩量触及 payload warning（200 KB）时触发分片/LOD 决策，而不是放宽阈值；
+  移动端预算的冻结列入下一轮前置条件。
+- 证据：`PERFORMANCE_BUDGETS.md` §3.1。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -213,4 +246,5 @@
 | `SJ-DLOG-004` | 2026-08-18 | 补记 V1 垂直试点授权（SJ-D010）；裁决艺术总览走原创 SVG（SJ-D011） | 主负责人 | `HANDOFF.md` 第 0 节、commit `5591228` |
 | `SJ-DLOG-005` | 2026-08-18 | 记录主负责人内部签署，外部机构签署保持 pending（SJ-D012） | 主负责人 | `REVIEWER_ASSIGNMENTS_2026-08-15.md` 第 5 节 |
 | `SJ-DLOG-006` | 2026-08-18 | 记录生僻字子集字体（SJ-D014）与首版发布授权（SJ-D015） | 主负责人 | `RARE_GLYPH_FONT.md`、`RELEASE_CHECKLIST.md` |
+| `SJ-DLOG-007` | 2026-08-18 | 以无背书声明取代等待外部签署（SJ-D016）；冻结四项性能预算（SJ-D017） | 主负责人 | `PERFORMANCE_BUDGETS.md` §3.1、`i18n.ts` |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |

@@ -1,5 +1,6 @@
 import { label, t } from "../i18n";
 import { circleBox, placeNodeLabels, placeRouteLabels, textBox } from "../map-labels";
+import { prefersReducedData } from "../prefs";
 import type { SelectedEntity, SelectionSource, Tab } from "../state";
 import type { Atlas, Locale, ShanhaijingCreature, ShanhaijingPassage, ShanhaijingPlace } from "../types";
 
@@ -50,7 +51,10 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
       ? domain.creatures.find((item) => item.slug === selected.id)?.placeSlugs ?? []
       : selected?.type === "textual_place" ? [selected.id] : [],
   );
-  const artMaster = overview?.assetUrl ?? null;
+  // On a metered connection the 82 KB master is the one asset worth skipping;
+  // the structured substitute carries the same topology without it.
+  const reducedData = prefersReducedData();
+  const artMaster = reducedData ? null : (overview?.assetUrl ?? null);
   // Rank each place within its own route band (west to east) so labels can be
   // staggered against their immediate neighbours rather than globally.
   const labelRank = new Map<string, number>();
@@ -117,6 +121,11 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
       </div>
       <span className={`shj-generation-state ${overview?.status ?? "planned"}`}>{label(overview?.status ?? "planned", locale)}</span>
     </div>
+    {reducedData && overview?.assetUrl && <p className="shj-reduced-data" role="note">
+      {locale === "zh-CN"
+        ? "已按你的省流量偏好省略 82 KB 艺术母图，改用结构化替代视图；拓扑、热点与图例不受影响。"
+        : "Your reduced-data preference is on, so the 82 KB artistic master was skipped in favour of the structured substitute. Topology, hotspots and legend are unaffected."}
+    </p>}
     <div className="shj-atlas-frame">
       <svg className="shj-atlas-canvas" viewBox="0 0 1000 600" role="group" aria-labelledby="shj-map-title shj-map-desc">
         <title id="shj-map-title">{locale === "zh-CN" ? "南山经三列山系文本拓扑" : "Textual topology of the three Nanshan Jing routes"}</title>

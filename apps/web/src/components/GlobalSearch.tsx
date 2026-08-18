@@ -74,26 +74,42 @@ export function GlobalSearch({ locale, atlas, onSelectEntity }: Props) {
     textual_place: t("textualPlaces", locale),
   };
 
+  // The ARIA combobox pattern: focus stays in the input and
+  // `aria-activedescendant` points at the highlighted option. Options are not
+  // buttons — a control nested inside an option is both invalid and a second,
+  // conflicting way to move focus.
+  const expanded = open && query.trim().length > 0;
+  const optionId = (index: number) => `search-option-${index}`;
+
   return <div className="global-search" ref={box}>
     <input
       type="search"
+      role="combobox"
       value={query}
       aria-label={t("searchEverything", locale)}
       placeholder={t("searchEverything", locale)}
-      aria-expanded={open && query.trim().length > 0}
+      aria-autocomplete="list"
+      aria-expanded={expanded}
       aria-controls="search-results"
+      aria-activedescendant={expanded && hits[active] ? optionId(active) : undefined}
       onFocus={() => setOpen(true)}
       onChange={(event) => { setQuery(event.target.value); setOpen(true); }}
       onKeyDown={onKeyDown}
     />
-    {open && query.trim().length > 0 && <ul className="search-results" id="search-results" role="listbox">
+    {expanded && <ul className="search-results" id="search-results" role="listbox" aria-label={t("searchEverything", locale)}>
       {hits.length === 0 && <li className="empty" role="status">{t("noResults", locale)}</li>}
-      {hits.map((hit, index) => <li key={`${hit.type}:${hit.slug}`} role="option" aria-selected={index === active}>
-        <button type="button" className={index === active ? "active" : ""} onClick={() => choose(hit)}>
-          <span className="kind">{kindLabel[hit.type]}</span>
-          <strong>{hit.label}</strong>
-          <small>{hit.context}</small>
-        </button>
+      {hits.map((hit, index) => <li
+        key={`${hit.type}:${hit.slug}`}
+        id={optionId(index)}
+        role="option"
+        aria-selected={index === active}
+        className={index === active ? "active" : ""}
+        onPointerDown={(event) => { event.preventDefault(); choose(hit); }}
+        onPointerEnter={() => setActive(index)}
+      >
+        <span className="kind">{kindLabel[hit.type]}</span>
+        <strong>{hit.label}</strong>
+        <small>{hit.context}</small>
       </li>)}
     </ul>}
   </div>;

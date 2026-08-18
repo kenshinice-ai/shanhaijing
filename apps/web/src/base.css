@@ -128,14 +128,13 @@ main { max-width: 1280px; margin: 0 auto; padding: var(--gap-l) var(--gap-m) 64p
   background: var(--overlay); border: 1px solid var(--line);
   border-radius: var(--radius-m); box-shadow: var(--shadow-pop);
 }
-.search-results li { margin: 0; }
-.search-results .empty { padding: 12px; color: var(--muted); font-size: 0.9rem; }
-.search-results button {
-  display: grid; gap: 2px; width: 100%; padding: 10px 12px; text-align: left;
-  background: transparent; border: 0; border-radius: var(--radius-s);
-  color: var(--text); font: inherit; cursor: pointer;
+.search-results li[role="option"] {
+  display: grid; gap: 2px; margin: 0; padding: 10px 12px;
+  border-radius: var(--radius-s); color: var(--text); cursor: pointer;
 }
-.search-results button:hover, .search-results button.active { background: var(--panel-raise); }
+.search-results li[role="option"]:hover,
+.search-results li[role="option"].active { background: var(--panel-raise); }
+.search-results .empty { padding: 12px; color: var(--muted); font-size: 0.9rem; }
 .search-results .kind { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--accent); }
 .search-results small { color: var(--muted); font-size: 0.82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -223,6 +222,34 @@ main { max-width: 1280px; margin: 0 auto; padding: var(--gap-l) var(--gap-m) 64p
   border-radius: 999px; color: var(--violet-soft); font: inherit; font-size: 0.85rem; cursor: pointer;
 }
 .drawer-link:hover { border-color: var(--accent); color: var(--accent); }
+
+.shj-reduced-data {
+  margin: 0 0 12px; padding: 8px 12px; border-radius: var(--radius-s);
+  background: rgba(169, 216, 210, 0.08); border: 1px solid var(--line-soft);
+  color: var(--text-dim); font-size: 0.85rem;
+}
+
+.source-link { margin-top: 4px; }
+.source-link a { font-size: 0.82rem; word-break: break-all; }
+
+/* ---- no-endorsement notice ---- */
+.no-endorsement {
+  margin: 40px 0 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid #C9A227;
+  border-radius: 10px;
+  background: rgba(201, 162, 39, 0.06);
+}
+.no-endorsement strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #E7C97A;
+}
+.no-endorsement p { margin: 0; max-width: 76ch; font-size: 0.88rem; line-height: 1.7; color: var(--text-dim); }
 
 /* ---- footer + states ---- */
 footer { margin-top: 48px; padding-top: var(--gap-l); border-top: 1px solid var(--line-soft); }

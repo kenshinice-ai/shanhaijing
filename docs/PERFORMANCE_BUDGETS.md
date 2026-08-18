@@ -56,6 +56,29 @@
 
 预算至少定义：target、warning、blocking 三档。若只冻结 blocking，可先运行，但必须在 Gate 0 记录为何暂缺 target/warning。测试噪声不得通过放宽阈值处理，应先固定环境、增加重复次数并报告置信区间或离散程度。
 
+## 3.1 已冻结预算（2026-08-18）
+
+基线先于阈值：下列四项由 `npm run measure:performance` 在固定方法下测出，随后按余量冻结，
+并由 `npm run measure:performance -- --check` 在 CI 中执行——越过 blocking 直接失败。
+方法与逐文件数据见 [generated/performance-baseline.md](generated/performance-baseline.md)。
+
+| 预算 | 状态 | 基线 | target | warning | blocking |
+|---|---|---|---|---|---|
+| 首屏传输（brotli，中文，不含按需字体） | `frozen` | 105.6 KB | 110 KB | 140 KB | 180 KB |
+| 主 JS bundle（brotli） | `frozen` | 77.6 KB | 80 KB | 100 KB | 130 KB |
+| 单 locale atlas payload（原始字节） | `frozen` | 87.6 KB | 120 KB | 200 KB | 300 KB |
+| Zod atlas 校验 p95（Node 26 / darwin-arm64） | `frozen` | 0.23 ms | 1 ms | 5 ms | 20 ms |
+
+三点说明，免得这四行被过度解读：
+
+1. **Zod 那一项是回归闸，不是设备承诺。** 它固定在生成报告的宿主上测量，用来拦住让校验成本
+   突然抬高一个数量级的 schema 改动；蓝图里「p95 < 150 ms」针对的是终端设备，仍是 `candidate`。
+2. **payload 预算按 locale 计。** 语料扩量会推高它；触及 warning（200 KB）即为分片/LOD 的技术
+   演进触发器，而不是把阈值调大。
+3. **绘制与交互仍是 `candidate`。** 首次观测见
+   [generated/performance-runtime-2026-08-18.md](generated/performance-runtime-2026-08-18.md)；
+   在接入真机档位与 CPU 降频之前，移动端不得宣称 `pass`。
+
 ## 4. 标准测试矩阵
 
 ### 4.1 Feature 规模

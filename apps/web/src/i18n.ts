@@ -66,6 +66,22 @@ export const UI = {
 export type UIKey = keyof typeof UI;
 export function t(key: UIKey, locale: Locale): string { return pick(UI[key], locale); }
 
+/**
+ * No external body has signed off on this atlas (SJ-D012 stayed `pending`).
+ * Rather than wait for a signature that may never come, the site says so
+ * itself — an absent endorsement that is never stated reads, to a visitor,
+ * exactly like an endorsement that exists. Decision: SJ-D016.
+ */
+export const NO_ENDORSEMENT: Record<Locale, string> = {
+  "zh-CN":
+    "本图集为项目自行编纂的候选成果，未经任何学术机构或外部专家签署。分类、地望候选、" +
+    "声音推演与艺术演绎均为本项目的编辑判断，不代表学术定论；引用时请一并注明其证据等级。",
+  en:
+    "This atlas is candidate work authored by the project. It carries no institutional or expert " +
+    "endorsement: classifications, location candidates, sound reconstructions and artistic renderings " +
+    "are the project's own editorial judgements, not scholarly conclusions. Cite them at that level.",
+};
+
 /** Origin region strings are authored in English in the database. */
 export function originRegionLabel(region: string, locale: Locale): string {
   if (locale !== "zh-CN") return region;

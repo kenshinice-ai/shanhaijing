@@ -19,6 +19,7 @@
     "verify:domain": "tsx scripts/verify_domain.ts",
     "verify:docs": "tsx scripts/verify_docs.ts",
     "verify:parity": "tsx scripts/verify_parity.ts",
+    "measure:performance": "tsx scripts/measure_performance.ts",
     "generate:overview": "tsx scripts/generate_overview.ts",
     "generate:corpus-seed": "tsx scripts/generate_nanshan_full.ts",
     "build:static": "npm run bake:static -w @shanhaijing/api -- --api \"${BAKE_API_URL:-http://localhost:4000}\" && VITE_DATA_MODE=static npm run build -w @shanhaijing/web -- --base=./"

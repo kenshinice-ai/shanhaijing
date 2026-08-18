@@ -1,0 +1,178 @@
+{
+  "generatedAt": "2026-08-18T11:23:26.596Z",
+  "generator": "scripts/measure_performance.ts",
+  "node": "v26.7.0",
+  "platform": "darwin/arm64",
+  "iterations": 60,
+  "artifact": "apps/web/dist",
+  "totals": {
+    "files": 12,
+    "raw": 592848,
+    "brotli": 126924
+  },
+  "firstLoad": {
+    "files": [
+      "assets/index-DXAZ8B5p.js",
+      "assets/index-K4dRpTAB.css",
+      "data/atlas.shanhaijing.zh-CN.json",
+      "index.html",
+      "media/shanhaijing/artistic-overview-v1.svg"
+    ],
+    "raw": 494682,
+    "brotli": 108142
+  },
+  "assets": [
+    {
+      "path": "404.html",
+      "raw": 1667,
+      "gzip": 952,
+      "brotli": 680
+    },
+    {
+      "path": "assets/index-DXAZ8B5p.js",
+      "raw": 301832,
+      "gzip": 91744,
+      "brotli": 79469
+    },
+    {
+      "path": "assets/index-K4dRpTAB.css",
+      "raw": 21886,
+      "gzip": 5630,
+      "brotli": 4923
+    },
+    {
+      "path": "data/atlas.shanhaijing.en.json",
+      "raw": 89691,
+      "gzip": 17033,
+      "brotli": 12601
+    },
+    {
+      "path": "data/atlas.shanhaijing.zh-CN.json",
+      "raw": 87297,
+      "gzip": 16183,
+      "brotli": 12070
+    },
+    {
+      "path": "data/works.en.json",
+      "raw": 992,
+      "gzip": 608,
+      "brotli": 481
+    },
+    {
+      "path": "data/works.zh-CN.json",
+      "raw": 912,
+      "gzip": 658,
+      "brotli": 505
+    },
+    {
+      "path": "favicon.svg",
+      "raw": 828,
+      "gzip": 491,
+      "brotli": 431
+    },
+    {
+      "path": "fonts/shj-rare-han-ext-a.woff2",
+      "raw": 1960,
+      "gzip": 1983,
+      "brotli": 1964
+    },
+    {
+      "path": "fonts/shj-rare-han-ext-b.woff2",
+      "raw": 2116,
+      "gzip": 2139,
+      "brotli": 2120
+    },
+    {
+      "path": "index.html",
+      "raw": 935,
+      "gzip": 584,
+      "brotli": 392
+    },
+    {
+      "path": "media/shanhaijing/artistic-overview-v1.svg",
+      "raw": 82732,
+      "gzip": 14332,
+      "brotli": 11288
+    }
+  ],
+  "payloads": [
+    {
+      "locale": "zh-CN",
+      "atlasBytes": 87297,
+      "jsonParse": {
+        "p50": 0.12,
+        "p95": 0.13,
+        "worst": 0.28,
+        "runs": 60
+      },
+      "zodAtlas": {
+        "p50": 0.14,
+        "p95": 0.23,
+        "worst": 0.29,
+        "runs": 60
+      },
+      "zodWorks": {
+        "p50": 0,
+        "p95": 0,
+        "worst": 0.01,
+        "runs": 60
+      }
+    },
+    {
+      "locale": "en",
+      "atlasBytes": 89691,
+      "jsonParse": {
+        "p50": 0.12,
+        "p95": 0.13,
+        "worst": 0.32,
+        "runs": 60
+      },
+      "zodAtlas": {
+        "p50": 0.13,
+        "p95": 0.17,
+        "worst": 0.19,
+        "runs": 60
+      },
+      "zodWorks": {
+        "p50": 0,
+        "p95": 0.01,
+        "worst": 0.02,
+        "runs": 60
+      }
+    }
+  ],
+  "budgets": [
+    {
+      "id": "first_load_brotli",
+      "unit": "KB",
+      "baseline": 105.6,
+      "target": 110,
+      "warning": 140,
+      "blocking": 180
+    },
+    {
+      "id": "main_bundle_brotli",
+      "unit": "KB",
+      "baseline": 77.6,
+      "target": 80,
+      "warning": 100,
+      "blocking": 130
+    },
+    {
+      "id": "atlas_payload_raw_per_locale",
+      "unit": "KB",
+      "baseline": 87.6,
+      "target": 120,
+      "warning": 200,
+      "blocking": 300
+    },
+    {
+      "id": "zod_atlas_parse_p95",
+      "unit": "ms",
+      "baseline": 0.23,
+      "target": 1,
+      "warning": 5,
+      "blocking": 20
+    }
+  ]
+}

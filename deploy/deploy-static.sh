@@ -54,6 +54,11 @@ test -f "$DIST/fonts/shj-rare-han-ext-a.woff2"
 test -f "$DIST/fonts/shj-rare-han-ext-b.woff2"
 # 未命中路径要落到真 404,而不是 200 + 整个应用。
 test -f "$DIST/404.html"
+# 无背书声明必须随产物发布(SJ-D016);它被摇树掉或改文案都应当在这里失败。
+if ! grep -q "未经任何学术机构或外部专家签署" "$DIST/assets/"*.js; then
+  echo "错误:产物中缺少无背书声明。" >&2
+  exit 1
+fi
 if find "$DIST" -name "*.md" | grep -q .; then
   echo "错误:产物中含 Markdown 文档,不应随站点发布。" >&2
   find "$DIST" -name "*.md" >&2
