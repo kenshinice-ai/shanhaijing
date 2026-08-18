@@ -3,4 +3,5 @@ dist/
 apps/web/public/data/
 backup/
 *.log
+*.tsbuildinfo
 .DS_Store

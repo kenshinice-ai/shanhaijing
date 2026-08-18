@@ -4,14 +4,14 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T05:45:57.809Z",
+  "generatedAt": "2026-08-18T06:42:38.787Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
   "gateStatus": "blocked",
   "counts": {
     "inputs": 30,
-    "checks": 276,
+    "checks": 278,
     "errors": 0,
     "warnings": 0,
     "info": 1
@@ -117,8 +117,8 @@
     },
     {
       "path": "docs/HANDOFF.md",
-      "bytes": 21987,
-      "sha256": "10b84bd53615a9f58902f4c07da8b050e4608b8a22cd5d22f261d255efec9f4a"
+      "bytes": 23262,
+      "sha256": "2dd1db78dbf6280c1e8e5bb3d4f9b7f7dc888c9b5eaa956e58a2768e48da6800"
     },
     {
       "path": "docs/HANDOFF_TEMPLATE.md",
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/DECISION_LOG.md",
-      "bytes": 15004,
-      "sha256": "de63035e10e7784028bc0be65a3b5c6754c4b0585813eb021a02914e9892a981"
+      "bytes": 17298,
+      "sha256": "91514988450e7fd8836350edb1b89a3695e0068b8413d5716c30510de9bb39cd"
     },
     {
       "path": "docs/RISK_REGISTER.md",
@@ -142,8 +142,8 @@
     },
     {
       "path": "docs/RELEASE_CHECKLIST.md",
-      "bytes": 6244,
-      "sha256": "4622d7fea0588c78ba54c156c348c9a63fa8bd4d9e6cfb50db1d96238752ef78"
+      "bytes": 7445,
+      "sha256": "8605fd89c8322e47de29c4f48ae62fd12f35fb91095d2fded78494d39bb6305d"
     },
     {
       "path": "docs/REVIEWER_ASSIGNMENTS_2026-08-15.md",

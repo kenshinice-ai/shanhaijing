@@ -1,4 +1,5 @@
 import { label, t } from "../i18n";
+import { circleBox, placeNodeLabels, placeRouteLabels, textBox } from "../map-labels";
 import type { SelectedEntity, SelectionSource, Tab } from "../state";
 import type { Atlas, Locale, ShanhaijingCreature, ShanhaijingPassage, ShanhaijingPlace } from "../types";
 
@@ -62,6 +63,49 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
     [...band].sort((a, b) => a.layoutX - b.layoutX).forEach((place, index) => labelRank.set(place.slug, index));
   }
   const dense = domain.places.length > 20;
+  const nodeLabelSize = dense ? 14 : 17;
+  // Node geometry is computed once so the route-distance placement below sees
+  // exactly the boxes the nodes will render into.
+  const geometry = domain.places.map((place) => ({
+    place,
+    x: place.layoutX * 8.6 + 65,
+    y: place.layoutY * 5 + 60,
+    creatures: domain.creatures.filter((creature) => creature.placeSlugs.includes(place.slug)),
+  }));
+  // Rings and creature counts live inside the node group and cannot move, so
+  // they are fixed obstacles; names and route distances are placed around them.
+  const fixedObstacles = geometry.flatMap((node) => [
+    circleBox(node.x, node.y, 19),
+    ...(node.creatures.length > 0 ? [textBox(node.x, node.y + 5, String(node.creatures.length), 12, "middle")] : []),
+  ]);
+  // Names are offered their band-alternating slot first, so an uncrowded map
+  // still reads the way it always has.
+  const nodeSlots = placeNodeLabels(
+    geometry.map((node) => ({
+      id: node.place.slug,
+      x: node.x,
+      y: node.y,
+      text: node.place.name,
+      fontSize: nodeLabelSize,
+      preferBelow: (labelRank.get(node.place.slug) ?? 0) % 2 === 0,
+    })),
+    fixedObstacles,
+  );
+  const nodes = geometry.map((node) => ({ ...node, labelAt: nodeSlots.get(node.place.slug) ?? { dx: 0, dy: 44 } }));
+  const routeLabels = placeRouteLabels(
+    domain.topologyEdges.flatMap((edge) => {
+      const from = placeBySlug.get(edge.fromSlug);
+      const to = placeBySlug.get(edge.toSlug);
+      if (!from || !to) return [];
+      return [{
+        id: edge.id,
+        x1: from.layoutX * 8.6 + 65, y1: from.layoutY * 5 + 60,
+        x2: to.layoutX * 8.6 + 65, y2: to.layoutY * 5 + 60,
+        text: `${edge.directionText}${edge.distanceValue ?? ""}${edge.distanceUnit}`,
+      }];
+    }),
+    [...fixedObstacles, ...nodes.map((node) => textBox(node.x + node.labelAt.dx, node.y + node.labelAt.dy, node.place.name, nodeLabelSize))],
+  );
   return <section className="shj-overview">
     <div className="shj-overview-heading">
       <div>
@@ -98,21 +142,14 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
           const y1 = from.layoutY * 5 + 60;
           const x2 = to.layoutX * 8.6 + 65;
           const y2 = to.layoutY * 5 + 60;
+          const at = routeLabels.get(edge.id);
           return <g key={edge.id}>
             <path className="shj-route-edge" d={`M${x1} ${y1} Q${(x1 + x2) / 2} ${Math.min(y1, y2) - 24} ${x2} ${y2}`} />
-            <text className="shj-route-distance" x={(x1 + x2) / 2} y={(y1 + y2) / 2 - 14}>{edge.directionText}{edge.distanceValue}{edge.distanceUnit}</text>
+            {at && <text className="shj-route-distance" x={at.x} y={at.y}>{edge.directionText}{edge.distanceValue}{edge.distanceUnit}</text>}
           </g>;
         })}
-        {domain.places.map((place, index) => {
-          const x = place.layoutX * 8.6 + 65;
-          const y = place.layoutY * 5 + 60;
+        {nodes.map(({ place, x, y, labelAt, creatures }, index) => {
           const active = selectedPlaces.has(place.slug);
-          const creatures = domain.creatures.filter((creature) => creature.placeSlugs.includes(place.slug));
-          // Labels on a crowded route would overlap, so alternate them above
-          // and below the node and drop a step in size once a band fills up.
-          const rank = labelRank.get(place.slug) ?? 0;
-          const below = rank % 2 === 0;
-          const labelY = below ? 44 : -40;
           return <g
             key={place.slug}
             className={`shj-map-node${active ? " active" : ""}`}
@@ -130,7 +167,7 @@ function ArtisticOverview({ atlas, locale, selected, onSelect }: Pick<Props, "at
           >
             {!artMaster && <path className="shj-mountain" d={`M-28 20 L-4 -${42 + index % 3 * 8} L12 -12 L30 20Z`} />}
             <circle className="shj-node-ring" r={active ? 26 : 19} filter={active ? "url(#shj-glow)" : undefined} />
-            <text className={`shj-node-label${dense ? " dense" : ""}`} y={labelY}>{place.name}</text>
+            <text className={`shj-node-label${dense ? " dense" : ""}`} x={labelAt.dx} y={labelAt.dy}>{place.name}</text>
             {creatures.length > 0 && <text className="shj-node-count" y="5">{creatures.length}</text>}
           </g>;
         })}

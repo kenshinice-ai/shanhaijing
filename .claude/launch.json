@@ -12,6 +12,12 @@
       "runtimeExecutable": "bash",
       "runtimeArgs": ["-c", "cd apps/web && VITE_API_URL=http://localhost:4100 npx vite --port 5180 --strictPort"],
       "port": 5180
+    },
+    {
+      "name": "static",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd apps/web && npx vite preview --outDir dist --port 5190 --strictPort"],
+      "port": 5190
     }
   ]
 }

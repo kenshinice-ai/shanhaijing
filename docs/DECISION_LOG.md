@@ -169,6 +169,34 @@
   段落排序与烘焙目录污染两个缺陷，前者仍存在于原仓库。
 - 证据：`MIGRATION_RECORD_2026-08-18.md`。
 
+### SJ-D014：为语料实际使用的生僻字随站点分发子集字体
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户授权先修复再发布`
+- 输入：烘焙产物中扫出的八个码位（Ext-A `U+437A,U+44D8,U+49FF,U+4A3C`；Ext-B `U+28D2F,U+29FE7,U+2A07A,U+2A2A8`）
+- 决策：从 Jigmo（`Jigmo-20250912`，字体文件 CC0 1.0）子集出两枚仅含这八个字形的 woff2（合计 4 KB），
+  以 `unicode-range` 精确挂在字体栈最前；其余字符仍走系统字体。
+- 理由：macOS/iOS/Android 出厂字体均不含扩展 B 区这四个字，异兽概念「𪁺𩿧」在首版界面上是两个空框。
+  以生僻异兽名为主体的图集不能在最该显示的地方丢字；整套 CJK 字体则违反性能预算。
+- 影响：新增受权利约束的二进制资产一类，出处、上游与产物 checksum、重新生成命令登记于
+  [RARE_GLYPH_FONT.md](RARE_GLYPH_FONT.md)；语料扩量后需重扫码位并重做子集。
+- 证据：`RARE_GLYPH_FONT.md`；部署脚本对两枚 woff2 的产物断言。
+
+### SJ-D015：授权发布首个公开版本
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户（仓库所有者）在迁移验证通过后授权`
+- 输入：全新空库 fresh/repeat bootstrap、`verify:domain` 196 检查 0 错误、`verify:docs` 277 检查 0 错误、
+  两个生成器 checksum 与迁移前逐字节一致、dynamic/static parity 双语零差异、根级 `npm test` 24 项通过
+- 决策：以 v1.0.0 发布静态站点至 Cloudflare Pages 项目 `shanhaijing-atlas`，解除 SJ-D006 的发布封锁。
+- 理由：迁移证据完整且可复现；发布前发现的三项缺陷（测试套件未随迁移带过来、扩展 B 区空框、
+  地图标签重叠）已修复并各自留下机器可验证的证据。
+- 影响：性能、无障碍与 reduced-data 报告仍未生成，属书面放行的例外，记在
+  `RELEASE_CHECKLIST.md` 第 3 层；外部机构签署仍 `pending`（SJ-D012），对外文案不得声称机构或专家认可。
+- 证据：`RELEASE_CHECKLIST.md` 的 release approval record。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -184,4 +212,5 @@
 | `SJ-DLOG-003` | 2026-08-15 | 采用艺术总览 + 四类权威证据视图的双轨地图 | 主负责人 | `MAP_IMPLEMENTATION_STRATEGY_2026-08-15.md`、`FANTASY_COMPOSITE_MAP_ART_DIRECTION_2026-08-15.md` |
 | `SJ-DLOG-004` | 2026-08-18 | 补记 V1 垂直试点授权（SJ-D010）；裁决艺术总览走原创 SVG（SJ-D011） | 主负责人 | `HANDOFF.md` 第 0 节、commit `5591228` |
 | `SJ-DLOG-005` | 2026-08-18 | 记录主负责人内部签署，外部机构签署保持 pending（SJ-D012） | 主负责人 | `REVIEWER_ASSIGNMENTS_2026-08-15.md` 第 5 节 |
+| `SJ-DLOG-006` | 2026-08-18 | 记录生僻字子集字体（SJ-D014）与首版发布授权（SJ-D015） | 主负责人 | `RARE_GLYPH_FONT.md`、`RELEASE_CHECKLIST.md` |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |

@@ -49,6 +49,14 @@ echo "[5/5] 产物检查:$DIST"
 test -f "$DIST/index.html"
 test -f "$DIST/data/$PROBE"
 test -f "$DIST/media/shanhaijing/artistic-overview-v1.svg"
+# 生僻字子集:缺了它们,扩展 B 区的异兽名会退回空框。
+test -f "$DIST/fonts/shj-rare-han-ext-a.woff2"
+test -f "$DIST/fonts/shj-rare-han-ext-b.woff2"
+if find "$DIST" -name "*.md" | grep -q .; then
+  echo "错误:产物中含 Markdown 文档,不应随站点发布。" >&2
+  find "$DIST" -name "*.md" >&2
+  exit 1
+fi
 if grep -rl "localhost:" "$DIST/assets" > /dev/null 2>&1; then
   echo "错误:产物中残留 localhost API 地址,静态模式未生效。" >&2
   exit 1
