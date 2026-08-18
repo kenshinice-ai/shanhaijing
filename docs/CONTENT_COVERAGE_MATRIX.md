@@ -79,16 +79,24 @@ section tree 与 segmentation **全未冻结**，因此本文件不给出任何�
 以下标记之间的内容只能由 coverage verifier 重写：`npm run verify:domain` 每次运行都会以数据库现状覆盖它。手工修改会在下次运行时被抹掉，这是有意的。
 
 <!-- SHANHAIJING_COVERAGE:BEGIN -->
-> 由 `npm run verify:domain` 于 `2026-08-18T11:55:05.080Z` 生成；底本 `nanshan-v1-public-domain-collation`，
-> checksum `824c1e36104b9886…`；证据层级 `local_candidate`。
+> 由 `npm run verify:domain` 于 `2026-08-18T13:10:17.798Z` 生成；证据层级 `local_candidate`。
+
+> 底本（每篇各一个 baseline）：
+> - `nanshan` → `nanshan-v1-public-domain-collation`，checksum `824c1e36104b9886…`，状态 `published`
+> - `xishan` → `xishan-v1-public-domain-collation`，checksum `f844f27636426077…`，状态 `reviewed`
 
 | 山系 | 段落 | 已审核 | 文本提及 | 出现的异兽概念 |
 |---|---|---|---|---|
 | 南山经·鹊山首列 | 10 | 10 | 10 | 10 |
 | 南山经·南次二经 | 18 | 18 | 7 | 7 |
 | 南山经·南次三经 | 15 | 15 | 7 | 6 |
-| **合计** | **43** | **43** | **24** | **23（归并后独立概念）** |
+| 西山经·华山首列 | 20 | 0 | 0 | 0 |
+| 西山经·西次二经 | 18 | 0 | 0 | 0 |
+| 西山经·西次三经 | 23 | 0 | 0 | 0 |
+| 西山经·西次四经 | 21 | 0 | 0 | 0 |
+| **合计** | **125** | **43** | **24** | **23（归并后独立概念）** |
 
+> 「已审核」为 0 的山系表示**文本已冻结、内容尚未逐段审核**——不进 API，也不计入覆盖率分子。
 > 合计列的「异兽概念」是**归并后的独立概念数**，不是各行相加——同一异兽在多个山系出现只计一次。
 > 三项统计彼此独立，禁止相加或互相替代。
 <!-- SHANHAIJING_COVERAGE:END -->

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T12:26:41.699Z",
+  "generatedAt": "2026-08-18T13:10:50.802Z",
   "generator": "scripts/verify_parity.ts",
   "api": "http://localhost:4100",
   "artifact": "apps/web/dist/data",
@@ -9,26 +9,26 @@
   "comparisons": [
     {
       "file": "works.zh-CN.json",
-      "bytes": 912,
-      "sha256": "a19e0bddcbe97e28075c2707b1156766b7da0d6c71baba79068135591dac61da",
+      "bytes": 913,
+      "sha256": "5da86b624e8ac619459cc866da695c992cf43f48e50630d52e8fa1f5c493bd1d",
       "differences": 0
     },
     {
       "file": "atlas.shanhaijing.zh-CN.json",
-      "bytes": 92355,
-      "sha256": "7db196ff36ce9ad80ba1d706f3572887940ce9aa24830a3788429e9e3a027ded",
+      "bytes": 92356,
+      "sha256": "339eb636ac24049e0ee1fa779528325a4c7c13c4476dc54124e91cf785248172",
       "differences": 0
     },
     {
       "file": "works.en.json",
-      "bytes": 992,
-      "sha256": "4fd5250eb362ec042405229c666b21186d19ef494cab43909106f538eb45e13e",
+      "bytes": 993,
+      "sha256": "5999629df2c03093b64f932e44c5e48a1169017b788c9262beb7b319cb4e1adf",
       "differences": 0
     },
     {
       "file": "atlas.shanhaijing.en.json",
-      "bytes": 95673,
-      "sha256": "b8bcec47702b2836e8dc5594470410293df6b59f1b53104ab70b2cf149acc755",
+      "bytes": 95674,
+      "sha256": "36ea871bafdf821ac7cde777a35cac111d8da76cb231d1cdc464d6feb4118b40",
       "differences": 0
     }
   ],

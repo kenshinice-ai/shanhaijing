@@ -1,19 +1,32 @@
 {
-  "generatedAt": "2026-08-18T11:55:05.080Z",
+  "generatedAt": "2026-08-18T13:10:17.798Z",
   "command": "npm run verify:domain",
   "evidenceLevel": "local_candidate",
-  "editionSlug": "nanshan-v1-public-domain-collation",
-  "editionChecksum": "824c1e36104b9886ea3498d7742e6cc1ff4a61c17712c4da0044a2214dc0a6a3",
+  "editions": [
+    {
+      "scope": "nanshan",
+      "slug": "nanshan-v1-public-domain-collation",
+      "checksum": "824c1e36104b9886ea3498d7742e6cc1ff4a61c17712c4da0044a2214dc0a6a3",
+      "reviewStatus": "published"
+    },
+    {
+      "scope": "xishan",
+      "slug": "xishan-v1-public-domain-collation",
+      "checksum": "f844f2763642607708424cfa825cf4e4c61034aa4bf1443b4bc1d5c84fd312a1",
+      "reviewStatus": "reviewed"
+    }
+  ],
   "totals": {
     "uniqueCreatureConcepts": 23,
     "textualOccurrences": 24,
     "passagesReviewed": 43,
-    "passagesTotal": 43
+    "passagesTotal": 125
   },
   "sections": [
     {
       "slug": "queshan-first-route",
       "title": "南山经·鹊山首列",
+      "scope": "nanshan",
       "sequence": 1,
       "passages": 10,
       "passagesReviewed": 10,
@@ -23,6 +36,7 @@
     {
       "slug": "nanci2-route",
       "title": "南山经·南次二经",
+      "scope": "nanshan",
       "sequence": 2,
       "passages": 18,
       "passagesReviewed": 18,
@@ -32,11 +46,52 @@
     {
       "slug": "nanci3-route",
       "title": "南山经·南次三经",
+      "scope": "nanshan",
       "sequence": 3,
       "passages": 15,
       "passagesReviewed": 15,
       "textualOccurrences": 7,
       "creatureConceptsMentioned": 6
+    },
+    {
+      "slug": "xishan-first-route",
+      "title": "西山经·华山首列",
+      "scope": "xishan",
+      "sequence": 1,
+      "passages": 20,
+      "passagesReviewed": 0,
+      "textualOccurrences": 0,
+      "creatureConceptsMentioned": 0
+    },
+    {
+      "slug": "xici2-route",
+      "title": "西山经·西次二经",
+      "scope": "xishan",
+      "sequence": 2,
+      "passages": 18,
+      "passagesReviewed": 0,
+      "textualOccurrences": 0,
+      "creatureConceptsMentioned": 0
+    },
+    {
+      "slug": "xici3-route",
+      "title": "西山经·西次三经",
+      "scope": "xishan",
+      "sequence": 3,
+      "passages": 23,
+      "passagesReviewed": 0,
+      "textualOccurrences": 0,
+      "creatureConceptsMentioned": 0
+    },
+    {
+      "slug": "xici4-route",
+      "title": "西山经·西次四经",
+      "scope": "xishan",
+      "sequence": 4,
+      "passages": 21,
+      "passagesReviewed": 0,
+      "textualOccurrences": 0,
+      "creatureConceptsMentioned": 0
     }
   ]
 }

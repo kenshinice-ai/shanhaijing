@@ -48,14 +48,20 @@ async function main(): Promise<void> {
   const workId = work.id;
 
   // --- Corpus: edition and passage checksums --------------------------------
-  const editions = await rows<{ id: string; slug: string; rights_status: string; checksum_sha256: string | null; is_baseline: boolean; review_status: string }>(
-    "SELECT id, slug, rights_status, checksum_sha256, is_baseline, review_status FROM shj_text_editions WHERE work_id=$1",
+  const editions = await rows<{ id: string; slug: string; scope: string; rights_status: string; checksum_sha256: string | null; is_baseline: boolean; review_status: string }>(
+    "SELECT id, slug, scope, rights_status, checksum_sha256, is_baseline, review_status FROM shj_text_editions WHERE work_id=$1",
     [workId],
   );
-  checks += 1;
-  if (editions.filter((edition) => edition.is_baseline).length !== 1) {
-    fail("edition-baseline", `expected exactly one baseline edition, found ${editions.filter((e) => e.is_baseline).length}`);
+  // baseline 的唯一性按 scope 判定：每篇各有底本，不是谁替换谁（migration 004）。
+  const scopes = [...new Set(editions.map((edition) => edition.scope))].sort();
+  for (const scope of scopes) {
+    checks += 1;
+    const baselines = editions.filter((edition) => edition.scope === scope && edition.is_baseline);
+    if (baselines.length !== 1) {
+      fail("edition-baseline", `scope ${scope} expected exactly one baseline edition, found ${baselines.length}`);
+    }
   }
+  info("edition-scope", `底本范围：${scopes.map((scope) => `${scope}（${editions.filter((e) => e.scope === scope).length} 个版本）`).join("、")}`);
   for (const edition of editions) {
     checks += 1;
     if (edition.rights_status !== "verified") {
@@ -80,11 +86,14 @@ async function main(): Promise<void> {
     }
   }
 
-  // --- Audits: every passage carries an audit whose input checksum matches ---
+  // --- Audits: every passage past draft carries an audit whose input checksum matches ---
+  // 冻结的原文本身就是审核的输入，要求它在审核之前先有审核记录是循环的。
+  // 一旦离开 draft，这条就必须成立。
   const auditGaps = await rows<{ slug: string }>(
     `SELECT p.slug FROM shj_text_passages p
       LEFT JOIN shj_passage_audits a ON a.passage_id=p.id
-      WHERE a.passage_id IS NULL OR a.input_checksum_sha256 <> p.checksum_sha256`,
+      WHERE p.review_status <> 'draft'
+        AND (a.passage_id IS NULL OR a.input_checksum_sha256 <> p.checksum_sha256)`,
   );
   checks += 1;
   for (const gap of auditGaps) fail("passage-audit", `passage ${gap.slug}: missing audit or audit input checksum mismatch`);
@@ -180,11 +189,15 @@ async function main(): Promise<void> {
        FROM shj_textual_places p LEFT JOIN shj_textual_place_translations tr ON tr.place_id=p.id AND tr.status='published'
       WHERE p.work_id=$1 GROUP BY p.slug HAVING count(DISTINCT tr.locale) < 2
      UNION ALL
+     -- 只约束已发布的段落。刚冻结、尚未逐段审核的语料（如《西山经》）本就没有译文，
+     -- 把它算作"双语缺口"会把一个正常的中间状态报成错误，久而久之让人学会忽略这条检查。
+     -- 真正的缺陷是：已经对外发布的段落却没有译文。
      SELECT 'passage', p.slug, string_agg(tr.locale::text, ',' ORDER BY tr.locale::text)
        FROM shj_text_passages p
        JOIN shj_text_sections s ON s.id=p.section_id JOIN shj_text_editions e ON e.id=s.edition_id
        LEFT JOIN shj_passage_translations tr ON tr.passage_id=p.id AND tr.status='published'
-      WHERE e.work_id=$1 GROUP BY p.slug HAVING count(DISTINCT tr.locale) < 2`,
+      WHERE e.work_id=$1 AND p.review_status='published'
+      GROUP BY p.slug HAVING count(DISTINCT tr.locale) < 2`,
     [workId],
   );
   checks += 1;
@@ -267,11 +280,12 @@ async function main(): Promise<void> {
   // 在此之前它一直写着"未生成"，而语料早已冻结——文档因此比数据落后了两个版本。
   // 三项统计分开出，不合并成一个"异兽数"，这是 SJ-R002 的要求。
   const coverageRows = await rows<{
-    section_slug: string; section_title: string; sequence: string;
+    section_slug: string; section_title: string; scope: string; sequence: string;
     passages: string; reviewed: string; occurrences: string; concepts: string;
   }>(
     `SELECT s.slug AS section_slug,
             s.title_zh AS section_title,
+            e.scope AS scope,
             s.sequence::text AS sequence,
             count(DISTINCT p.id)::text AS passages,
             count(DISTINCT p.id) FILTER (
@@ -284,17 +298,19 @@ async function main(): Promise<void> {
        LEFT JOIN shj_text_passages p ON p.section_id=s.id
        LEFT JOIN shj_passage_audits a ON a.passage_id=p.id
        LEFT JOIN shj_creature_occurrences o ON o.passage_id=p.id
-      GROUP BY s.slug, s.title_zh, s.sequence
-      ORDER BY s.sequence`,
+      GROUP BY e.scope, s.slug, s.title_zh, s.sequence
+      -- 两篇各有底本，按 scope 再按篇内次序排；否则表里南、西交错。
+      ORDER BY e.scope <> 'nanshan', e.scope, s.sequence`,
     [workId],
   );
-  const baselineEdition = editions.find((edition) => edition.is_baseline);
+  const baselines = editions.filter((edition) => edition.is_baseline).sort((a, b) => a.scope.localeCompare(b.scope));
   const coverage = {
     generatedAt: new Date().toISOString(),
     command: "npm run verify:domain",
     evidenceLevel: EVIDENCE_LEVEL,
-    editionSlug: baselineEdition?.slug ?? null,
-    editionChecksum: baselineEdition?.checksum_sha256 ?? null,
+    editions: baselines.map((edition) => ({
+      scope: edition.scope, slug: edition.slug, checksum: edition.checksum_sha256, reviewStatus: edition.review_status,
+    })),
     totals: {
       uniqueCreatureConcepts: Number(stats.concepts),
       textualOccurrences: Number(stats.occurrences),
@@ -304,6 +320,7 @@ async function main(): Promise<void> {
     sections: coverageRows.map((row) => ({
       slug: row.section_slug,
       title: row.section_title,
+      scope: row.scope,
       sequence: Number(row.sequence),
       passages: Number(row.passages),
       passagesReviewed: Number(row.reviewed),
@@ -322,11 +339,15 @@ async function main(): Promise<void> {
   ].join("\n");
   const coverageBlock = [
     "",
-    `> 由 \`${coverage.command}\` 于 \`${coverage.generatedAt}\` 生成；底本 \`${coverage.editionSlug}\`，`,
-    `> checksum \`${(coverage.editionChecksum ?? "").slice(0, 16)}…\`；证据层级 \`${coverage.evidenceLevel}\`。`,
+    `> 由 \`${coverage.command}\` 于 \`${coverage.generatedAt}\` 生成；证据层级 \`${coverage.evidenceLevel}\`。`,
+    "",
+    "> 底本（每篇各一个 baseline）：",
+    ...coverage.editions.map((edition) =>
+      `> - \`${edition.scope}\` → \`${edition.slug}\`，checksum \`${(edition.checksum ?? "").slice(0, 16)}…\`，状态 \`${edition.reviewStatus}\``),
     "",
     coverageTable,
     "",
+    "> 「已审核」为 0 的山系表示**文本已冻结、内容尚未逐段审核**——不进 API，也不计入覆盖率分子。",
     "> 合计列的「异兽概念」是**归并后的独立概念数**，不是各行相加——同一异兽在多个山系出现只计一次。",
     "> 三项统计彼此独立，禁止相加或互相替代。",
     "",
@@ -342,6 +363,26 @@ async function main(): Promise<void> {
     const rewritten = `${matrix.slice(0, matrix.indexOf(begin) + begin.length)}${coverageBlock}${matrix.slice(matrix.indexOf(end))}`;
     if (rewritten !== matrix) await writeFile(matrixPath, rewritten);
     info("COVERAGE-MATRIX", `覆盖矩阵统计区已更新：${coverage.sections.length} 个山系`);
+  }
+
+  // 冻结与已审核是两件事。把「文本已冻结、内容未审核」的规模显式报出来，
+  // 否则它既不出现在覆盖统计（那里只数已审核）也不出现在错误里，等于消失。
+  const frozenNotReviewed = await rows<{ scope: string; total: string; drafted: string }>(
+    `SELECT e.scope,
+            count(p.id)::text AS total,
+            count(p.id) FILTER (WHERE p.review_status='draft')::text AS drafted
+       FROM shj_text_editions e
+       JOIN shj_text_sections s ON s.edition_id=e.id
+       JOIN shj_text_passages p ON p.section_id=s.id
+      WHERE e.work_id=$1
+      GROUP BY e.scope ORDER BY e.scope`,
+    [workId],
+  );
+  checks += 1;
+  for (const row of frozenNotReviewed) {
+    if (Number(row.drafted) > 0) {
+      info("corpus-frozen-unreviewed", `${row.scope}：${row.drafted}/${row.total} 段已冻结但未审核（不进 API、不计入覆盖率）`);
+    }
   }
 
   const errors = findings.filter((finding) => finding.severity === "error");

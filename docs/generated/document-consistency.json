@@ -4,7 +4,7 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T12:26:25.303Z",
+  "generatedAt": "2026-08-18T13:11:32.759Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
@@ -47,8 +47,8 @@
     },
     {
       "path": "docs/CONTENT_COVERAGE_MATRIX.md",
-      "bytes": 8899,
-      "sha256": "e8c4ea6f1a3ff9de14658126cb9eef70397fe4e20a6c20a4509e921687de0f84"
+      "bytes": 9390,
+      "sha256": "90d156c7ef9e41fdbee77a8cf60b86f2fa8548ad4b6645db19c3a8bbee0003fb"
     },
     {
       "path": "docs/ENTITY_AND_DATA_DICTIONARY.md",
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/DECISION_LOG.md",
-      "bytes": 21029,
-      "sha256": "f0584ade27b226c630da3f74865d815a1e88762d4803a04d763269b2d133a9b8"
+      "bytes": 23028,
+      "sha256": "0c2b47c43bcab50b44061c2495ca00dabbe30aed186d15cb9ba397711265cd73"
     },
     {
       "path": "docs/RISK_REGISTER.md",

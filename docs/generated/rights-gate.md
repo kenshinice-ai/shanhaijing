@@ -1,7 +1,7 @@
 # 《山海经 Atlas》权利闸门演练
 
 - 生成命令：`npm run verify:rights`
-- 生成时间：`2026-08-18T12:26:38.828Z`
+- 生成时间：`2026-08-18T13:10:53.518Z`
 - 数据库：`postgresql://localhost:5432/shanhaijing_atlas`
 - 检查结果：`pass`（7 检查，0 错误）
 

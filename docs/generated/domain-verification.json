@@ -1,21 +1,26 @@
 {
-  "generatedAt": "2026-08-18T11:55:05.081Z",
+  "generatedAt": "2026-08-18T13:10:17.801Z",
   "command": "npm run verify:domain",
   "evidenceLevel": "local_candidate",
   "database": "shanhaijing_atlas",
   "postgres": "PostgreSQL 18.6 (Homebrew)",
   "result": "pass",
-  "checks": 200,
+  "checks": 286,
   "errors": 0,
   "statistics": {
     "uniqueCreatureConcepts": 23,
     "textualOccurrences": 24,
     "corpusCoverage": {
       "passagesReviewed": 43,
-      "passagesTotal": 43
+      "passagesTotal": 125
     }
   },
   "findings": [
+    {
+      "checkId": "edition-scope",
+      "severity": "info",
+      "message": "底本范围：nanshan（1 个版本）、xishan（1 个版本）"
+    },
     {
       "checkId": "TAXONOMY-VOCABULARY",
       "severity": "info",
@@ -24,7 +29,12 @@
     {
       "checkId": "COVERAGE-MATRIX",
       "severity": "info",
-      "message": "覆盖矩阵统计区已更新：3 个山系"
+      "message": "覆盖矩阵统计区已更新：7 个山系"
+    },
+    {
+      "checkId": "corpus-frozen-unreviewed",
+      "severity": "info",
+      "message": "xishan：82/82 段已冻结但未审核（不进 API、不计入覆盖率）"
     }
   ]
 }

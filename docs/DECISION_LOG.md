@@ -245,6 +245,29 @@
   比"英文兜底"更早暴露问题；词表随语料扩量增补，新词条必须同时给出双语定义。
 - 证据：`TAXONOMY.md` §5.0、`verify:domain` 的 TAXONOMY-* 检查、`generated/domain-verification.json`。
 
+### SJ-D019：X-2 裁定「异体字不算异文」，并据此冻结《西山经》语料
+
+- 状态：`accepted`
+- 日期：2026-08-18
+- 批准者：`用户裁定 X-2；并授权据此冻结`
+- 输入：`XISHAN_BASELINE_OPTIONS_2026-08-18.md`；ctext 白文与维基文库本（含郭璞注）当日抓取
+- 决策：
+  1. **异体字不算异文**。底本照 ctext 印出的字形录入，异体差异不产生 variant 记录。
+  2. 据此冻结《西山经》语料为 `xishan-v1-public-domain-collation`，切分版本 `xishan-full-v1`，
+     82 段、4 列山系，逐段 SHA-256 与 edition checksum 入库。
+  3. 段落一律以 `draft` 入库：**文本已冻结 ≠ 内容已审核**，因此不进 API、不进产物、不计入覆盖率分子。
+- 理由：X-2 若不先裁，这一篇会凭空产生数十条无意义 variant，把真正的分歧淹掉——
+  实测 ctext 与维基文库有 52/82 段存在文字差异，其中 42 处属异体（33 对字形）。
+  异体对照表逐条列出并附理由，**表外的一切差异一律进入待裁，不做猜测**：现存 50 处。
+- 影响：
+  - baseline 唯一性由「每作品一个」下沉为「每篇一个」（migration `004`），
+    南山经底本除多一列 `scope` 外分毫未动，其 checksum 不受影响。
+  - 两条验证不变量按状态收窄：双语齐备与逐段审核记录只约束**离开 draft 的段落**——
+    对刚冻结的语料强求译文与审核记录是循环要求，且会训练人忽略这两条检查。
+  - 郭璞注 280 条与维基文库「一作X」校语 10 条已登记，均不进 baseline。
+- 证据：`scripts/data/xishan_corpus_v1.json`、`db/seeds/006_xishan_corpus.sql`、
+  `generated/domain-verification.json`（286 检查 0 错误）、`CONTENT_COVERAGE_MATRIX.md` §5。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -263,4 +286,5 @@
 | `SJ-DLOG-006` | 2026-08-18 | 记录生僻字子集字体（SJ-D014）与首版发布授权（SJ-D015） | 主负责人 | `RARE_GLYPH_FONT.md`、`RELEASE_CHECKLIST.md` |
 | `SJ-DLOG-007` | 2026-08-18 | 以无背书声明取代等待外部签署（SJ-D016）；冻结四项性能预算（SJ-D017） | 主负责人 | `PERFORMANCE_BUDGETS.md` §3.1、`i18n.ts` |
 | `SJ-DLOG-008` | 2026-08-18 | 分类词表入库并双语化（SJ-D018） | 主负责人 | `TAXONOMY.md` §5.0 |
+| `SJ-DLOG-009` | 2026-08-18 | 裁定 X-2 并冻结《西山经》语料（SJ-D019） | 主负责人 | `XISHAN_BASELINE_OPTIONS_2026-08-18.md`、`scripts/data/xishan_corpus_v1.json` |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |
