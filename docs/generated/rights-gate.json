@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-08-18T11:37:18.513Z",
+  "generator": "scripts/verify_rights_gate.ts",
+  "database": "postgresql://localhost:5432/shanhaijing_atlas",
+  "result": "pass",
+  "checks": 7,
+  "errors": 0,
+  "withheldStatuses": [
+    "planned",
+    "blocked_missing_api_key",
+    "generated",
+    "reviewed",
+    "withdrawn"
+  ],
+  "findings": [
+    {
+      "checkId": "RIGHTS-BASELINE",
+      "severity": "info",
+      "message": "published 母图正常返回:/media/shanhaijing/artistic-overview-v1.svg"
+    },
+    {
+      "checkId": "RIGHTS-GATE",
+      "severity": "info",
+      "message": "status=planned:未返回,闸门关闭"
+    },
+    {
+      "checkId": "RIGHTS-GATE",
+      "severity": "info",
+      "message": "status=blocked_missing_api_key:未返回,闸门关闭"
+    },
+    {
+      "checkId": "RIGHTS-GATE",
+      "severity": "info",
+      "message": "status=generated:未返回,闸门关闭"
+    },
+    {
+      "checkId": "RIGHTS-GATE",
+      "severity": "info",
+      "message": "status=reviewed:未返回,闸门关闭"
+    },
+    {
+      "checkId": "RIGHTS-GATE",
+      "severity": "info",
+      "message": "status=withdrawn:未返回,闸门关闭"
+    },
+    {
+      "checkId": "RIGHTS-RESTORE",
+      "severity": "info",
+      "message": "演练后状态已复原为 published"
+    }
+  ]
+}

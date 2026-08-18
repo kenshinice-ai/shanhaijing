@@ -139,7 +139,13 @@ export async function loadShanhaijingAtlas(
         CASE WHEN $2='zh-CN' THEN title_zh ELSE title_en END AS title,
         CASE WHEN $2='zh-CN' THEN description_zh ELSE description_en END AS description,
         CASE WHEN $2='zh-CN' THEN disclosure_zh ELSE disclosure_en END AS disclosure
-       FROM shj_artistic_overviews WHERE work_id=$1 ORDER BY slug LIMIT 1`,
+       FROM shj_artistic_overviews
+        WHERE work_id=$1
+          -- 权利闸门 fail closed:只有 published 的母图才对外可见。
+          -- 撤回、未审、未生成的记录一律不出 API,连 asset_url 都不给——
+          -- 撤回一张图的动作必须在下一次请求就生效,而不是等重新烘焙。
+          AND status='published'
+        ORDER BY slug LIMIT 1`,
       [workId, requestedLocale],
     ),
     db.query(

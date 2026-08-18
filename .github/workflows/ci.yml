@@ -63,6 +63,10 @@ jobs:
       - name: verify domain
         run: npm run verify:domain
 
+      # 撤回一张图的权利,必须在下一次请求就生效——这条在事务里真实演练。
+      - name: verify the rights gate
+        run: npm run verify:rights
+
       - name: verify documents
         run: npm run verify:docs
 

@@ -15,7 +15,7 @@
 | SJ-R004 | 现代坐标被误读为古代地望定论 | medium | critical | UI 省略 geography layer 或 confidence | 艺术总览与四类证据视图分离；candidate set、图例和字段级来源 | `R-GEO` | open |
 | SJ-R005 | 多轴 taxonomy 被实现为单选树 | medium | high | 复合实体或未定项无法表达 | axis/term 多值 assignment，保留 unknown 和 evidence | 内容模型 owner | open |
 | SJ-R006 | registry 漏接 kind 导致 search/drawer/media/bake 静默缺口 | medium | critical | 新 kind 缺少 required cell | registry completeness contract + 构建失败测试 | Atlas Core owner | open |
-| SJ-R007 | 未核权或 provenance 不全的媒体进入发布路径 | medium | critical | rights 为 pending/unknown 仍暴露 URL | manifest verifier fail closed；撤回并检查 build/precache/CDN | 媒体/版权 owner | open |
+| SJ-R007 | 未核权或 provenance 不全的媒体进入发布路径 | medium | critical | rights 为 pending/unknown 仍暴露 URL | **2026-08-18：首次演练即证实 API 闸门 fail open（撤回状态仍返回 assetUrl），已修为仅 `published` 可见，并由 `verify:rights` 在事务中每次 CI 演练**；撤回后需另查 CDN 缓存 | 媒体/版权 owner | mitigated |
 | SJ-R008 | 声音推演被描述成真实录音或确定复原 | medium | high | UI 缺少 interpretation/disclaimer/transcript | 三等级披露、显式单轨、音频 verifier 和专家审查 | 声学 owner | open |
 | SJ-R009 | 100/500/1000+ 地图规模超过移动端性能预算 | medium | high | payload、长任务、FPS 或内存超限 | Phase 0 baseline；partition/LOD/cluster/renderer 决策并记录豁免 | 性能 owner | open |
 | SJ-R010 | 双语 fallback 掩盖未审核或未发布翻译 | medium | high | locale 返回 draft translation | published-only fallback 与语言 coverage report | 双语编辑 | open |

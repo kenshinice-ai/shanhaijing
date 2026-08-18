@@ -41,6 +41,7 @@
 - [x] fresh bootstrap 通过（2026-08-18，独立库 `shj_verify_20260818` 现建现删，migration 001–002 + seed 001–004）。
 - [x] repeat bootstrap/idempotency 通过（同日同库，全部 already applied）。
 - [ ] FK、check、enum、索引、删除和权限策略通过（插入路径已由 bootstrap 覆盖；删除/权限策略专项未测）。
+- [x] 资产权利闸门 fail closed 已由 `npm run verify:rights` 在事务中演练并进入 CI。
 - [x] corpus、occurrence/concept、taxonomy completeness 通过（`verify:domain` 196 检查 0 错误；geography candidate、chronology 维度在 V1 范围内无数据，待 Scale 阶段补专项检查）。
 - [x] 报告包含数据库、命令和结果（[generated/isolated-bootstrap-2026-08-18.md](generated/isolated-bootstrap-2026-08-18.md)、[generated/domain-verification.json](generated/domain-verification.json)）。
 - [x] 报告路径：`docs/generated/domain-verification.json`
@@ -77,12 +78,12 @@
 - [x] 首屏、搜索、筛选、drawer、深链、刷新、语言和地图模式 smoke 通过（同一批字节的本地产物全项实测；
   线上复测首屏、深链刷新、生僻字与地图标签）。
 - [ ] 音频：`not_applicable`，V1 无音频资产。
-- [x] 390x844 与 1280x800 无文档级横向溢出；768x1024 未单独抽检。
+- [x] 390x844、768x1024 与 1280x800 均无文档级横向溢出；768 宽下地图标签重叠 0 处。
 - [x] console/network 无未解释错误；线上 0 次 API 调用。
-- [x] CDN 可达路径与 Content-Type 通过；rights withdrawal 行为未测。
+- [x] CDN 可达路径与 Content-Type 通过；rights withdrawal 行为**已演练**——五种非公开状态在事务中真实写入后，API 一律不返回母图（含 assetUrl），见 [generated/rights-gate.md](generated/rights-gate.md)。演练首跑即抓出闸门 fail open 并已修复。
 - [ ] soak、rollback rehearsal 和 artifact retention 记录未完成。
 - [x] 报告路径：`docs/generated/production-smoke-2026-08-18.md`
-- [ ] Gate：`passed-with-exceptions`（rollback 未演练；768px 与 rights withdrawal 未测）。
+- [ ] Gate：`passed-with-exceptions`（rollback 未演练；soak 与 artifact retention 未记录）。
 
 ### 5. production
 

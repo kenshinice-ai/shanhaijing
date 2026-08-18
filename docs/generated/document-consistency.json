@@ -4,14 +4,14 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T11:34:24.334Z",
+  "generatedAt": "2026-08-18T11:39:41.093Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
   "gateStatus": "blocked",
   "counts": {
     "inputs": 30,
-    "checks": 287,
+    "checks": 288,
     "errors": 0,
     "warnings": 0,
     "info": 1
@@ -132,8 +132,8 @@
     },
     {
       "path": "docs/RISK_REGISTER.md",
-      "bytes": 4701,
-      "sha256": "9ae0ce9ac9f05dc806d1a067cd79bc70b3c35757eae078797ff1bd202a513500"
+      "bytes": 4855,
+      "sha256": "bd0e5507e61065081580c57f2779512ab12ec6b50595021e7081a92ed6167574"
     },
     {
       "path": "docs/EXPERT_REVIEW_QUESTIONS.md",
@@ -142,8 +142,8 @@
     },
     {
       "path": "docs/RELEASE_CHECKLIST.md",
-      "bytes": 8729,
-      "sha256": "803a54b9636cecf8d2c74b05baf8381ed2184a2aae8e9a27ab9de312062c9501"
+      "bytes": 9077,
+      "sha256": "ebea1282e8fd7239b46ddead8b57f8b2fb08c381667f622d603905e4189b41d6"
     },
     {
       "path": "docs/REVIEWER_ASSIGNMENTS_2026-08-15.md",
