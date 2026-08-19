@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T23:32:57.832Z",
+  "generatedAt": "2026-08-19T04:55:29.062Z",
   "generator": "scripts/verify_constraints.ts",
   "database": "postgresql://localhost:5432/shanhaijing_atlas",
   "result": "pass",

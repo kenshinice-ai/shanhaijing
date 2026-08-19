@@ -1,0 +1,524 @@
+{
+  "version": "xishan-rulings-v1",
+  "date": "2026-08-19",
+  "ruledBy": "Claude Opus 5，经仓库所有者指派；双方均非古籍专家",
+  "decision": "SJ-D022",
+  "policy": {
+    "evidenceAdmitted": [
+      "arithmetic",
+      "internal_parallel",
+      "formulaic",
+      "character_sense",
+      "defective_variant"
+    ],
+    "evidenceRefused": "无出处的『通行本作』『一般认为』之类说法一律不采信",
+    "default": "依 X-2，未裁决与未决项一律保留 ctext 印出的字形",
+    "caveat": "本表为候选裁决，未经古籍专家复核；任何一条都可被推翻"
+  },
+  "arithmeticFinding": {
+    "note": "各列山系的段内里程相加与其结语自称不符——在采纳任何异读之前即如此。因此结语不能作为校验和，只能作为『哪一读更接近』的弱证据。",
+    "routes": [
+      {
+        "route": "西山经之首",
+        "legSum": 2817,
+        "colophon": 2957,
+        "delta": -140
+      },
+      {
+        "route": "西次二经",
+        "legSum": 4670,
+        "colophon": 4140,
+        "delta": 530
+      },
+      {
+        "route": "西次三经",
+        "legSum": 6440,
+        "colophon": 6744,
+        "delta": -304
+      },
+      {
+        "route": "西次四经",
+        "legSum": 3585,
+        "colophon": 3680,
+        "delta": -95
+      }
+    ]
+  },
+  "rulings": [
+    {
+      "paragraph": 13,
+      "pair": "百八十里 / 四百八里",
+      "decision": "keep_base",
+      "basis": "defective_variant",
+      "confidence": "medium",
+      "note": "维基作『四百八里』，缺『十』，非里程记数常式；算术上采此读会使本列由短 140 变为长 160，未见改善。",
+      "signatures": [
+        "ins:四",
+        "del:十"
+      ]
+    },
+    {
+      "paragraph": 13,
+      "pair": "穀 / 榖",
+      "decision": "adopt_cross",
+      "basis": "character_sense",
+      "confidence": "high",
+      "find": "上多穀柞",
+      "replace": "上多榖柞",
+      "note": "『穀』为谷物，『榖』为构树。此句与『柞』『杻』『橿』并列，皆木名，当作『榖』。"
+    },
+    {
+      "paragraph": 16,
+      "pair": "皋塗之山 / 塗途之山",
+      "decision": "keep_base",
+      "basis": "defective_variant",
+      "confidence": "high",
+      "note": "维基作『塗途之山』，与其下文『涂水出焉』重复且山名不成词；该本自身校语亦作『一作臯塗』。",
+      "signatures": [
+        "sub:皋→途",
+        "del:皋",
+        "ins:途"
+      ],
+      "signatureNote": "对齐器可能把同一处差异factor成 sub，也可能拆成 del+ins，两种形态都记上"
+    },
+    {
+      "paragraph": 16,
+      "pair": "足 / 腳",
+      "decision": "keep_base",
+      "basis": "character_sense",
+      "confidence": "medium",
+      "note": "『馬足人手』与下句『人手』对举，『足』为古语常用；『腳』为后起口语字。",
+      "signatures": [
+        "sub:足→腳"
+      ]
+    },
+    {
+      "paragraph": 17,
+      "pair": "名 / 狀",
+      "decision": "keep_base",
+      "basis": "formulaic",
+      "confidence": "high",
+      "note": "全书定式为『其狀如…其名曰…』。此句上文已有『其狀如牛』，作『其狀曰』则句式重复且不成文。",
+      "signatures": [
+        "sub:名→狀"
+      ]
+    },
+    {
+      "paragraph": 18,
+      "pair": "西首 / 兩首",
+      "decision": "adopt_cross",
+      "basis": "internal_parallel",
+      "confidence": "high",
+      "find": "赤黑而西首四足",
+      "replace": "赤黑而兩首四足",
+      "note": "『西首』于此无义；『兩首四足』与全书『三首六目』『四足三翼』一类记数式相合。"
+    },
+    {
+      "paragraph": 19,
+      "pair": "西流注于海 / 西流于於海",
+      "decision": "keep_base",
+      "basis": "defective_variant",
+      "confidence": "high",
+      "note": "维基作『于於』连用，明显讹脱；全书定式为『X流注于Y』。",
+      "signatures": [
+        "sub:注→於",
+        "del:注",
+        "ins:於"
+      ],
+      "signatureNote": "对齐器可能把同一处差异factor成 sub，也可能拆成 del+ins，两种形态都记上"
+    },
+    {
+      "paragraph": 20,
+      "pair": "白蒂采等純之 / 白席采等純之",
+      "decision": "adopt_cross",
+      "basis": "internal_parallel",
+      "confidence": "medium",
+      "find": "白蒂采等純之",
+      "replace": "白席采等純之",
+      "note": "同篇段38、段81 两处祠礼皆作『白菅為席』，『席』于祠礼文脉有据；『蒂』（花蒂）于此无所系。"
+    },
+    {
+      "paragraph": 22,
+      "pair": "其陽多金 / 其陽多玉",
+      "decision": "unresolved",
+      "basis": "none",
+      "confidence": "none",
+      "note": "『其陽多金』与『其陽多玉』在本书皆为习见句式，篇内无可资判别的平行证据。需版本学依据方能定案。",
+      "signatures": [
+        "sub:金→玉"
+      ]
+    },
+    {
+      "paragraph": 23,
+      "pair": "多珠 / 多白珠",
+      "decision": "unresolved",
+      "basis": "none",
+      "confidence": "none",
+      "note": "两读皆通，篇内无旁证。需版本学依据。",
+      "signatures": [
+        "ins:白"
+      ]
+    },
+    {
+      "paragraph": 24,
+      "pair": "百五十里 / 北五十里",
+      "decision": "unresolved",
+      "basis": "arithmetic",
+      "confidence": "none",
+      "note": "『又西百五十里』与『又西北五十里』句式皆见于本书。本列（西次二经）里程本已超出结语 530，采任一读均不能弥合，算术无法定案。",
+      "signatures": [
+        "sub:百→北"
+      ]
+    },
+    {
+      "paragraph": 24,
+      "pair": "曰高山 / 高山",
+      "decision": "keep_base",
+      "basis": "formulaic",
+      "confidence": "high",
+      "note": "本篇每段皆作『…里，曰X之山』，『曰』为定式，维基此处脱字。",
+      "signatures": [
+        "del:曰"
+      ]
+    },
+    {
+      "paragraph": 26,
+      "pair": "其陰多鐵 / 其陽多鐵",
+      "decision": "keep_base",
+      "basis": "defective_variant",
+      "confidence": "high",
+      "note": "维基作『其陽多黃金，其陽多鐵』，同句两言『其陽』，自相抵牾。",
+      "signatures": [
+        "sub:陰→陽"
+      ]
+    },
+    {
+      "paragraph": 27,
+      "pair": "其名自叫 / 其鳴自叫",
+      "decision": "adopt_cross",
+      "basis": "internal_parallel",
+      "confidence": "medium",
+      "find": "其名自叫也",
+      "replace": "其鳴自叫也",
+      "note": "上文已有『名曰鳧徯』，再言『其名自叫』则重复；本书『其鳴自詨』『其鳴自號』一类以鸣声自呼其名为常式。惟『其名自號』亦有其例，故置信度中等。"
+    },
+    {
+      "paragraph": 32,
+      "pair": "稷柟 / 㮨枏",
+      "decision": "adopt_cross",
+      "basis": "character_sense",
+      "confidence": "high",
+      "find": "其木多稷、柟、豫章",
+      "replace": "其木多㮨、柟、豫章",
+      "note": "『稷』为谷物，此句冠以『其木多』并与『柟』『豫章』并列，皆木名，当作『㮨』。（柟/枏 为异体，依 X-2 不计。）"
+    },
+    {
+      "paragraph": 36,
+      "pair": "其陽多金 / 其陽多黃金",
+      "decision": "unresolved",
+      "basis": "none",
+      "confidence": "none",
+      "note": "『多金』与『多黃金』本书皆习见，篇内无旁证。",
+      "signatures": [
+        "ins:黃"
+      ]
+    },
+    {
+      "paragraph": 37,
+      "pair": "三百五十里 / 三百裏五十里",
+      "decision": "keep_base",
+      "basis": "defective_variant",
+      "confidence": "high",
+      "note": "维基衍一『裏』字，数不成读。",
+      "signatures": [
+        "ins:裏"
+      ]
+    },
+    {
+      "paragraph": 38,
+      "pair": "人面牛身 / 人面而牛身",
+      "decision": "unresolved",
+      "basis": "internal_parallel",
+      "confidence": "none",
+      "note": "同段上句作『皆人面而馬身』，有『而』；此句底本无『而』。维基两句皆有『而』，可能是后人整齐化，也可能底本脱字。两说皆可，不裁。",
+      "signatures": [
+        "ins:而"
+      ]
+    },
+    {
+      "paragraph": 41,
+      "pair": "源 / 原",
+      "decision": "orthographic",
+      "basis": "character_sense",
+      "confidence": "medium",
+      "note": "『原』为『源』之古字，同词异写，依 X-2 不计为异文。",
+      "signatures": []
+    },
+    {
+      "paragraph": 42,
+      "pair": "飢 / 饑",
+      "decision": "keep_base",
+      "basis": "character_sense",
+      "confidence": "high",
+      "note": "『飢』谓腹饿，『饑』谓年荒。此作『食之不飢』，言食之则不饿，当作『飢』。",
+      "signatures": [
+        "sub:飢→饑"
+      ]
+    },
+    {
+      "paragraph": 42,
+      "pair": "源 / 原",
+      "decision": "orthographic",
+      "basis": "character_sense",
+      "confidence": "medium",
+      "note": "同上，古今字。",
+      "signatures": []
+    },
+    {
+      "paragraph": 42,
+      "pair": "四百六十里 / 四百六十裏",
+      "decision": "keep_base",
+      "basis": "character_sense",
+      "confidence": "high",
+      "note": "『里』为里程之单位，『裏』为内外之裏，二字义别；此处计程，当作『里』。",
+      "signatures": [
+        "sub:里→裏"
+      ]
+    },
+    {
+      "paragraph": 43,
+      "pair": "見即 / 見則",
+      "decision": "adopt_cross",
+      "basis": "formulaic",
+      "confidence": "high",
+      "find": "見即其邑大旱",
+      "replace": "見則其邑大旱",
+      "note": "全书兆应定式为『見則…』，同段上文亦作『見則有大兵』，此处『即』当为『則』之讹。"
+    },
+    {
+      "paragraph": 44,
+      "pair": "常行西海，遊於東海 / 常從西海遊于東海",
+      "decision": "unresolved",
+      "basis": "none",
+      "confidence": "none",
+      "note": "『常行…遊於…』与『常從…遊于…』皆可通读，篇内无旁证可判。",
+      "signatures": [
+        "sub:行→從"
+      ]
+    },
+    {
+      "paragraph": 45,
+      "pair": "其上多青雄黃 / 其上金青雄黃",
+      "decision": "keep_base",
+      "basis": "formulaic",
+      "confidence": "high",
+      "note": "全书定式为『其上多X』；维基作『其上金青雄黃』不成句。",
+      "signatures": [
+        "sub:多→金"
+      ]
+    },
+    {
+      "paragraph": 46,
+      "pair": "華黃赤實 / 黃華赤實",
+      "decision": "adopt_cross",
+      "basis": "internal_parallel",
+      "confidence": "high",
+      "find": "其狀如棠，華黃赤實",
+      "replace": "其狀如棠，黃華赤實",
+      "note": "本书草木定式为『[色]華…[色]實』（如段8『白華而赤實』）。底本『華黃赤實』当为『黃華赤實』之倒。"
+    },
+    {
+      "paragraph": 46,
+      "pair": "南流東注 / 南流注",
+      "decision": "keep_base",
+      "basis": "internal_parallel",
+      "confidence": "medium",
+      "note": "同段下文有『而東南流注于』，可见本书用复合流向；『南流東注』谓南出而东入，文可通，维基疑脱『東』。",
+      "signatures": [
+        "del:東"
+      ]
+    },
+    {
+      "paragraph": 48,
+      "pair": "二百里 / 二百裏",
+      "decision": "keep_base",
+      "basis": "character_sense",
+      "confidence": "high",
+      "note": "同段42，计程当作『里』。",
+      "signatures": [
+        "sub:里→裏"
+      ]
+    },
+    {
+      "paragraph": 56,
+      "pair": "其毫 / 其豪",
+      "decision": "keep_base",
+      "basis": "character_sense",
+      "confidence": "high",
+      "note": "『毫』谓细毛，与『如披蓑』相应；『豪』为豪猪、豪杰之豪，于此为借字。",
+      "signatures": [
+        "sub:毫→豪"
+      ]
+    },
+    {
+      "paragraph": 58,
+      "pair": "實惟帝江 / 實為帝江",
+      "decision": "keep_base",
+      "basis": "internal_parallel",
+      "confidence": "high",
+      "note": "本篇段45『實惟帝之平圃』、段46『是實惟帝之下都』皆作『實惟』，为同篇定式。",
+      "signatures": [
+        "sub:惟→為"
+      ]
+    },
+    {
+      "paragraph": 59,
+      "pair": "嬰短之玉 / 嬰垣之玉",
+      "decision": "unresolved",
+      "basis": "none",
+      "confidence": "none",
+      "note": "『嬰短』与『嬰垣』于篇内均仅一见，无平行文例；二字于此皆难以字义判定。需版本学依据。",
+      "signatures": [
+        "sub:短→垣"
+      ]
+    },
+    {
+      "paragraph": 60,
+      "pair": "𡙸 / 奪",
+      "decision": "unresolved",
+      "basis": "none",
+      "confidence": "none",
+      "note": "底本作生僻字『𡙸』，维基作『奪』。二者是否同字异写，篇内无从判定，故不裁；baseline 依 X-2 保留底本字形。",
+      "signatures": [
+        "sub:𡙸→奪"
+      ]
+    },
+    {
+      "paragraph": 62,
+      "pair": "茆 / 𦮉",
+      "decision": "unresolved",
+      "basis": "none",
+      "confidence": "none",
+      "note": "『茆』与『𦮉』是否同字异写无从判定，不作异体处理，亦不改底本。",
+      "signatures": [
+        "sub:茆→𦮉"
+      ]
+    },
+    {
+      "paragraph": 65,
+      "pair": "北百七十里 / 北七十里",
+      "decision": "keep_base",
+      "basis": "arithmetic",
+      "confidence": "medium",
+      "note": "本列（西次四经）里程相加较结语短 95；若并采段65、67、68 三处脱『百』之读，将再少 300，去结语更远。三处同为『百X十』脱『百』，形近致脱之迹一致。",
+      "signatures": [
+        "del:百"
+      ]
+    },
+    {
+      "paragraph": 65,
+      "pair": "穀柞 / 榖柞",
+      "decision": "adopt_cross",
+      "basis": "character_sense",
+      "confidence": "high",
+      "find": "其上多穀柞",
+      "replace": "其上多榖柞",
+      "note": "同段13，与『柞』『杻』『橿』并列皆木名，当作『榖』。"
+    },
+    {
+      "paragraph": 65,
+      "pair": "而東流注于河 / 而江流注于河",
+      "decision": "keep_base",
+      "basis": "defective_variant",
+      "confidence": "high",
+      "note": "『江流注于河』不成文；全书定式为『而東流注于X』。",
+      "signatures": [
+        "sub:東→江"
+      ]
+    },
+    {
+      "paragraph": 66,
+      "pair": "北二百里 / 北百二百里",
+      "decision": "keep_base",
+      "basis": "defective_variant",
+      "confidence": "high",
+      "note": "维基作『北百二百里』，数不成读，显系衍文。",
+      "signatures": [
+        "ins:百"
+      ]
+    },
+    {
+      "paragraph": 67,
+      "pair": "又北百二十里 / 又北二十里",
+      "decision": "keep_base",
+      "basis": "arithmetic",
+      "confidence": "medium",
+      "note": "同段65，脱『百』则本列里程更短。",
+      "signatures": [
+        "del:百"
+      ]
+    },
+    {
+      "paragraph": 68,
+      "pair": "又北百八十里 / 又北八十里",
+      "decision": "keep_base",
+      "basis": "arithmetic",
+      "confidence": "medium",
+      "note": "同段65，脱『百』则本列里程更短。",
+      "signatures": [
+        "del:百"
+      ]
+    },
+    {
+      "paragraph": 74,
+      "pair": "多柴木 / 多柒木",
+      "decision": "adopt_cross",
+      "basis": "internal_parallel",
+      "confidence": "medium",
+      "find": "多柴木",
+      "replace": "多柒木",
+      "note": "同列段69『其木多漆』、段76『上多漆木』，可见本列多记漆木；『柒』为『漆』之异写，与邻段相合。『柴木』（薪木）亦可通，故置信度中等。"
+    },
+    {
+      "paragraph": 76,
+      "pair": "而北注于 / 而北流注于",
+      "decision": "adopt_cross",
+      "basis": "formulaic",
+      "confidence": "high",
+      "find": "而北注于陵羊之澤",
+      "replace": "而北流注于陵羊之澤",
+      "note": "全书定式为『而X流注于Y』，底本此处脱『流』。"
+    },
+    {
+      "paragraph": 77,
+      "pair": "瓜 / 𤓰",
+      "decision": "orthographic",
+      "basis": "character_sense",
+      "confidence": "high",
+      "note": "『𤓰』为『瓜』之异体，依 X-2 不计为异文。",
+      "signatures": []
+    },
+    {
+      "paragraph": 81,
+      "pair": "其祠祀禮 / 其神祠禮",
+      "decision": "unresolved",
+      "basis": "internal_parallel",
+      "confidence": "none",
+      "note": "本篇他处作『其祠之禮』（段20、段61），底本『其祠祀禮』与维基『其神祠禮』皆与之不合，两读均可疑，故不裁。",
+      "signatures": [
+        "ins:神",
+        "del:祀"
+      ]
+    },
+    {
+      "paragraph": 81,
+      "pair": "白管為席 / 白菅為席",
+      "decision": "adopt_cross",
+      "basis": "internal_parallel",
+      "confidence": "high",
+      "find": "白管為席",
+      "replace": "白菅為席",
+      "note": "同篇段38 作『白菅為席』，两处同为祠礼用语；『菅』为可织席之草，『管』则无所取义。"
+    }
+  ]
+}

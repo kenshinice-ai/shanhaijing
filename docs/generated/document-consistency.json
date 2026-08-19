@@ -4,14 +4,14 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-18T23:36:51.626Z",
+  "generatedAt": "2026-08-19T04:54:44.293Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
   "gateStatus": "blocked",
   "counts": {
     "inputs": 30,
-    "checks": 301,
+    "checks": 302,
     "errors": 0,
     "warnings": 0,
     "info": 1
@@ -42,13 +42,13 @@
     },
     {
       "path": "docs/CORPUS_AND_EDITORIAL_POLICY.md",
-      "bytes": 9308,
-      "sha256": "fde5ebf08fd63e8d71bc7ab60b7b6e1af0495549bf144bb4ecdb822d8d6d6f22"
+      "bytes": 11598,
+      "sha256": "1200cb5689a061db5328750565161d5694966228f6a7f74ca338e5c36919de4b"
     },
     {
       "path": "docs/CONTENT_COVERAGE_MATRIX.md",
       "bytes": 9390,
-      "sha256": "365faaf50820517e70f3225334cfdf9b18101fc6ebc7e7e43f5e3d335a55a3b9"
+      "sha256": "53a11d3f9731bdfa08dff12e892465dcf70372f99c835dd97d1095ae6d61ec0e"
     },
     {
       "path": "docs/ENTITY_AND_DATA_DICTIONARY.md",
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/DECISION_LOG.md",
-      "bytes": 25443,
-      "sha256": "fb0f4061577b72a586e9fa03f5de3ac5af00f5f85d41d760b1fb775773b97b03"
+      "bytes": 27528,
+      "sha256": "2a36790dc5d09569d4df72d3dc7d8f7598c6921b87b349ff6bd1a0f8082c4843"
     },
     {
       "path": "docs/RISK_REGISTER.md",

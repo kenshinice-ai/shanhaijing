@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T23:32:59.244Z",
+  "generatedAt": "2026-08-19T04:55:30.122Z",
   "generator": "scripts/measure_performance.ts",
   "node": "v26.7.0",
   "platform": "darwin/arm64",
@@ -7,19 +7,19 @@
   "artifact": "apps/web/dist",
   "totals": {
     "files": 12,
-    "raw": 607470,
-    "brotli": 129835
+    "raw": 607766,
+    "brotli": 129975
   },
   "firstLoad": {
     "files": [
-      "assets/index-BSUBA2we.js",
+      "assets/index-BSBM9Hhi.js",
       "assets/index-CPPWTQEV.css",
       "data/atlas.shanhaijing.zh-CN.json",
       "index.html",
       "media/shanhaijing/artistic-overview-v1.svg"
     ],
-    "raw": 503320,
-    "brotli": 110115
+    "raw": 503616,
+    "brotli": 110255
   },
   "assets": [
     {
@@ -29,10 +29,10 @@
       "brotli": 680
     },
     {
-      "path": "assets/index-BSUBA2we.js",
-      "raw": 304173,
-      "gzip": 92846,
-      "brotli": 80403
+      "path": "assets/index-BSBM9Hhi.js",
+      "raw": 304469,
+      "gzip": 93021,
+      "brotli": 80562
     },
     {
       "path": "assets/index-CPPWTQEV.css",
@@ -85,8 +85,8 @@
     {
       "path": "index.html",
       "raw": 935,
-      "gzip": 580,
-      "brotli": 397
+      "gzip": 582,
+      "brotli": 378
     },
     {
       "path": "media/shanhaijing/artistic-overview-v1.svg",
@@ -102,13 +102,13 @@
       "jsonParse": {
         "p50": 0.13,
         "p95": 0.15,
-        "worst": 0.3,
+        "worst": 0.32,
         "runs": 60
       },
       "zodAtlas": {
-        "p50": 0.15,
-        "p95": 0.29,
-        "worst": 0.39,
+        "p50": 0.14,
+        "p95": 0.23,
+        "worst": 0.29,
         "runs": 60
       },
       "zodWorks": {
@@ -123,14 +123,14 @@
       "atlasBytes": 95673,
       "jsonParse": {
         "p50": 0.13,
-        "p95": 0.13,
-        "worst": 0.24,
+        "p95": 0.14,
+        "worst": 0.28,
         "runs": 60
       },
       "zodAtlas": {
         "p50": 0.13,
-        "p95": 0.17,
-        "worst": 0.21,
+        "p95": 0.18,
+        "worst": 0.19,
         "runs": 60
       },
       "zodWorks": {
@@ -143,7 +143,7 @@
   ],
   "labelLayout": {
     "nodes": 468,
-    "ms": 208.03
+    "ms": 213.96
   },
   "budgets": [
     {

@@ -2,10 +2,10 @@
 --
 -- 底本:https://ctext.org/shan-hai-jing/xi-shan-jing/zh
 -- 取回:2026-08-18    原始文件 SHA-256:913ef2534ea3cd9fe1b4ce4a121ae64ab99849944d4857ab7fad5b188510d664
--- 切分:xishan-full-v1    edition checksum:f844f2763642607708424cfa825cf4e4c61034aa4bf1443b4bc1d5c84fd312a1
+-- 切分:xishan-full-v1    edition checksum:40468036bb53209ffd4f17330f447c0530237c3bebde31f98fc1eca44660388e
 --
 -- 依 X-2 裁定:异体字不算异文,底本照 ctext 印出的字形录入;
--- 已丢弃异体差异 42 处,登记待裁差异 50 处。
+-- 已丢弃异体差异 45 处,登记待裁差异 11 处。
 -- 段落以 draft 入库:文本已冻结,尚未逐段审核,因此不进 API 与产物。
 
 BEGIN;
@@ -13,8 +13,8 @@ BEGIN;
 INSERT INTO shj_text_editions (id, work_id, scope, slug, title, source_url, source_note, rights_status, checksum_sha256, is_baseline, review_status)
 SELECT '21000000-0000-4000-8000-000000000001', w.id, 'xishan', 'xishan-v1-public-domain-collation', '《西山经》公版校勘本 v1',
   'https://ctext.org/shan-hai-jing/xi-shan-jing/zh',
-  '白文底本取自 ctext（2026-08-18），与维基文库本（含郭璞注）逐段校核。依 X-2：异体字不算异文，底本照印出字形录入；待裁差异 50 处登记于 scripts/data/xishan_corpus_v1.json。',
-  'verified', 'f844f2763642607708424cfa825cf4e4c61034aa4bf1443b4bc1d5c84fd312a1', true, 'reviewed'
+  '白文底本取自 ctext（2026-08-18），与维基文库本（含郭璞注）逐段校核。依 X-2：异体字不算异文，底本照印出字形录入；待裁差异 11 处登记于 scripts/data/xishan_corpus_v1.json。',
+  'verified', '40468036bb53209ffd4f17330f447c0530237c3bebde31f98fc1eca44660388e', true, 'reviewed'
   FROM works w WHERE w.slug='shanhaijing'
 ON CONFLICT (work_id, slug) DO UPDATE SET checksum_sha256=EXCLUDED.checksum_sha256, source_note=EXCLUDED.source_note;
 
@@ -120,8 +120,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000013', '22000000-0000-4000-8000-000000000001', 'xishan-p013', '西山经·大時', 13,
-  '又西百八十里，曰大時之山，上多穀柞，下多杻橿，陰多銀，陽多白玉。涔水出焉，北流注于渭，清水出焉，南流注于漢水。', '又西百八十里曰大時之山上多穀柞下多杻橿陰多銀陽多白玉涔水出焉北流注于渭清水出焉南流注于漢水',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 13 段', '88d0b4cc95751dab381bc2427cd721b59f48db729d61c1279e833165d6c0875a', 'draft', 'punctuation-stripped-v1')
+  '又西百八十里，曰大時之山，上多榖柞，下多杻橿，陰多銀，陽多白玉。涔水出焉，北流注于渭，清水出焉，南流注于漢水。', '又西百八十里曰大時之山上多榖柞下多杻橿陰多銀陽多白玉涔水出焉北流注于渭清水出焉南流注于漢水',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 13 段', '2e57f2b745769377e367cd27b49921d9ee235012f9867fb6c6626c2cb20862aa', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -155,8 +155,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000018', '22000000-0000-4000-8000-000000000001', 'xishan-p018', '西山经·翠', 18,
-  '又西二百里，曰翠山，其上多椶枏，其下多竹箭，其陽多黃金、玉，其陰多旄牛，麢、麝；其鳥多鸓，其狀如鵲，赤黑而西首四足，可以禦火。', '又西二百里曰翠山其上多椶枏其下多竹箭其陽多黃金玉其陰多旄牛麢麝其鳥多鸓其狀如鵲赤黑而西首四足可以禦火',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 18 段', 'f868c62524b2f5913d35a4e416015d2a54b68cca7a5c9a4d6095ec0f417f495a', 'draft', 'punctuation-stripped-v1')
+  '又西二百里，曰翠山，其上多椶枏，其下多竹箭，其陽多黃金、玉，其陰多旄牛，麢、麝；其鳥多鸓，其狀如鵲，赤黑而兩首四足，可以禦火。', '又西二百里曰翠山其上多椶枏其下多竹箭其陽多黃金玉其陰多旄牛麢麝其鳥多鸓其狀如鵲赤黑而兩首四足可以禦火',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 18 段', '02d4bdfcb9bbdb750810803f8c609e7d50e0fbcf1ff04e5051b746c2d4cdcb17', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -169,8 +169,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000020', '22000000-0000-4000-8000-000000000001', 'xishan-p020', '西山经·西山经之首·祠礼', 20,
-  '凡《西經》之首，自錢來之山至于騩山，凡十九山，二千九百五十七里。華山冢也，其祠之禮：太牢。羭山神也，祠之用燭，齋百日以百犧，瘞用百瑜，湯其酒百樽，嬰以百珪百璧。其餘十七山之屬，皆毛牷用一羊祠之。燭者百草之未灰，白蒂采等純之。', '凡西經之首自錢來之山至于騩山凡十九山二千九百五十七里華山冢也其祠之禮太牢羭山神也祠之用燭齋百日以百犧瘞用百瑜湯其酒百樽嬰以百珪百璧其餘十七山之屬皆毛牷用一羊祠之燭者百草之未灰白蒂采等純之',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 20 段', 'ad3fb31614a771c21962cfd5e8c5b7410f132241b65d17db8e55b8f48080f3ec', 'draft', 'punctuation-stripped-v1')
+  '凡《西經》之首，自錢來之山至于騩山，凡十九山，二千九百五十七里。華山冢也，其祠之禮：太牢。羭山神也，祠之用燭，齋百日以百犧，瘞用百瑜，湯其酒百樽，嬰以百珪百璧。其餘十七山之屬，皆毛牷用一羊祠之。燭者百草之未灰，白席采等純之。', '凡西經之首自錢來之山至于騩山凡十九山二千九百五十七里華山冢也其祠之禮太牢羭山神也祠之用燭齋百日以百犧瘞用百瑜湯其酒百樽嬰以百珪百璧其餘十七山之屬皆毛牷用一羊祠之燭者百草之未灰白席采等純之',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 20 段', '9e7afec5a607022a6c78011202c9e71e746583bd33b2d8ae8f15a8c34f1159ba', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -218,8 +218,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000027', '22000000-0000-4000-8000-000000000002', 'xishan-p027', '西山经·鹿臺', 7,
-  '又西二百里，曰鹿臺之山，其上多白玉，其下多銀，其獸多㸲牛、羬羊、白豪。有鳥焉，其狀如雄雞而人面，名曰鳧徯，其名自叫也，見則有兵。', '又西二百里曰鹿臺之山其上多白玉其下多銀其獸多㸲牛羬羊白豪有鳥焉其狀如雄雞而人面名曰鳧徯其名自叫也見則有兵',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 27 段', 'c774fc220e929023c786d424901c3858dc481f44198390d8a411fba13d295126', 'draft', 'punctuation-stripped-v1')
+  '又西二百里，曰鹿臺之山，其上多白玉，其下多銀，其獸多㸲牛、羬羊、白豪。有鳥焉，其狀如雄雞而人面，名曰鳧徯，其鳴自叫也，見則有兵。', '又西二百里曰鹿臺之山其上多白玉其下多銀其獸多㸲牛羬羊白豪有鳥焉其狀如雄雞而人面名曰鳧徯其鳴自叫也見則有兵',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 27 段', '96c2d1de00fb03ffc7c6935d30a8552ac174b74d6f6d652f53044e8ffbd7930d', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -253,8 +253,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000032', '22000000-0000-4000-8000-000000000002', 'xishan-p032', '西山经·㕄陽', 12,
-  '又西四百里，曰㕄陽之山，其木多稷、柟、豫章，其獸多犀、兕、虎、犳、㸲牛。', '又西四百里曰㕄陽之山其木多稷柟豫章其獸多犀兕虎犳㸲牛',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 32 段', '6735d87838661578bbe5c9e414fbc8cafdc9d056da3634f7e35a2fde9d72fc0a', 'draft', 'punctuation-stripped-v1')
+  '又西四百里，曰㕄陽之山，其木多㮨、柟、豫章，其獸多犀、兕、虎、犳、㸲牛。', '又西四百里曰㕄陽之山其木多㮨柟豫章其獸多犀兕虎犳㸲牛',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 32 段', 'eefc1c7ecce86da43cbc9c13dc6582febd8160557fcd15c6b194e50c9ad0f247', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -330,8 +330,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000043', '22000000-0000-4000-8000-000000000003', 'xishan-p043', '西山经·鍾', 5,
-  '又西北四百二十里，曰鍾山，其子曰鼓，其狀如人面而龍身，是與欽䲹殺葆江于崑崙之陽，帝乃戮之鍾山之東曰𡺯崖，欽䲹化為大鶚，其狀如鵰而黑文白首，赤喙而虎爪，其音如晨鵠，見則有大兵；鼓亦化為鵔鳥，其狀如鴟，赤足而直喙，黃文而白首，其音如鵠，見即其邑大旱。', '又西北四百二十里曰鍾山其子曰鼓其狀如人面而龍身是與欽䲹殺葆江于崑崙之陽帝乃戮之鍾山之東曰𡺯崖欽䲹化為大鶚其狀如鵰而黑文白首赤喙而虎爪其音如晨鵠見則有大兵鼓亦化為鵔鳥其狀如鴟赤足而直喙黃文而白首其音如鵠見即其邑大旱',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 43 段', '1d92dd0294ce9a21b7f11558efbd185b100528c175792c2088b233c6b614d713', 'draft', 'punctuation-stripped-v1')
+  '又西北四百二十里，曰鍾山，其子曰鼓，其狀如人面而龍身，是與欽䲹殺葆江于崑崙之陽，帝乃戮之鍾山之東曰𡺯崖，欽䲹化為大鶚，其狀如鵰而黑文白首，赤喙而虎爪，其音如晨鵠，見則有大兵；鼓亦化為鵔鳥，其狀如鴟，赤足而直喙，黃文而白首，其音如鵠，見則其邑大旱。', '又西北四百二十里曰鍾山其子曰鼓其狀如人面而龍身是與欽䲹殺葆江于崑崙之陽帝乃戮之鍾山之東曰𡺯崖欽䲹化為大鶚其狀如鵰而黑文白首赤喙而虎爪其音如晨鵠見則有大兵鼓亦化為鵔鳥其狀如鴟赤足而直喙黃文而白首其音如鵠見則其邑大旱',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 43 段', '47a3bbc6ad94eb3458c4514b8243d60bec482311c5bd1adddcb75231598698ec', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -351,8 +351,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000046', '22000000-0000-4000-8000-000000000003', 'xishan-p046', '西山经·崑崙', 8,
-  '西南四百里，曰崑崙之丘，是實惟帝之下都，神陸吾司之。其神狀虎身而九尾，人面而虎爪；是神也，司天之九部及帝之囿時。有獸焉，其狀如羊而四角，名曰土螻，是食人。有鳥焉，其狀如蜂，大如鴛鴦，名曰欽原，蠚鳥獸則死，蠚木則枯。有鳥焉，其名曰鶉鳥，是司帝之百服。有木焉，其狀如棠，華黃赤實，其味如李而無核，名曰沙棠，可以禦水，食之使人不溺。有草焉，名曰薲草，其狀如葵，其味如葱，食之已勞。河水出焉，而南流東注于無達。赤水出焉，而東南流注于氾天之水。洋水出焉，而西南流注于醜塗之水。黑水出焉，而西流于大杅。是多怪鳥獸。', '西南四百里曰崑崙之丘是實惟帝之下都神陸吾司之其神狀虎身而九尾人面而虎爪是神也司天之九部及帝之囿時有獸焉其狀如羊而四角名曰土螻是食人有鳥焉其狀如蜂大如鴛鴦名曰欽原蠚鳥獸則死蠚木則枯有鳥焉其名曰鶉鳥是司帝之百服有木焉其狀如棠華黃赤實其味如李而無核名曰沙棠可以禦水食之使人不溺有草焉名曰薲草其狀如葵其味如葱食之已勞河水出焉而南流東注于無達赤水出焉而東南流注于氾天之水洋水出焉而西南流注于醜塗之水黑水出焉而西流于大杅是多怪鳥獸',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 46 段', '8dba293accd3e9498c46eeeee5def5c407595a522e6e1818bf46b7dc3da3b3df', 'draft', 'punctuation-stripped-v1')
+  '西南四百里，曰崑崙之丘，是實惟帝之下都，神陸吾司之。其神狀虎身而九尾，人面而虎爪；是神也，司天之九部及帝之囿時。有獸焉，其狀如羊而四角，名曰土螻，是食人。有鳥焉，其狀如蜂，大如鴛鴦，名曰欽原，蠚鳥獸則死，蠚木則枯。有鳥焉，其名曰鶉鳥，是司帝之百服。有木焉，其狀如棠，黃華赤實，其味如李而無核，名曰沙棠，可以禦水，食之使人不溺。有草焉，名曰薲草，其狀如葵，其味如葱，食之已勞。河水出焉，而南流東注于無達。赤水出焉，而東南流注于氾天之水。洋水出焉，而西南流注于醜塗之水。黑水出焉，而西流于大杅。是多怪鳥獸。', '西南四百里曰崑崙之丘是實惟帝之下都神陸吾司之其神狀虎身而九尾人面而虎爪是神也司天之九部及帝之囿時有獸焉其狀如羊而四角名曰土螻是食人有鳥焉其狀如蜂大如鴛鴦名曰欽原蠚鳥獸則死蠚木則枯有鳥焉其名曰鶉鳥是司帝之百服有木焉其狀如棠黃華赤實其味如李而無核名曰沙棠可以禦水食之使人不溺有草焉名曰薲草其狀如葵其味如葱食之已勞河水出焉而南流東注于無達赤水出焉而東南流注于氾天之水洋水出焉而西南流注于醜塗之水黑水出焉而西流于大杅是多怪鳥獸',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 46 段', 'e3efbfe5485134f2eede9911d3be28fc76dc9b86e228e58c3bea346c054b25fc', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -484,8 +484,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000065', '22000000-0000-4000-8000-000000000004', 'xishan-p065', '西山经·申', 4,
-  '北百七十里，曰申山，其上多穀柞，其下多杻橿，其陽多金玉。區水出焉，而東流注于河。', '北百七十里曰申山其上多穀柞其下多杻橿其陽多金玉區水出焉而東流注于河',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 65 段', '0fcd0a3a2f56d7c89ea462dfe2a4f3083ffd913a6fca2335087fb9e40cccb1f6', 'draft', 'punctuation-stripped-v1')
+  '北百七十里，曰申山，其上多榖柞，其下多杻橿，其陽多金玉。區水出焉，而東流注于河。', '北百七十里曰申山其上多榖柞其下多杻橿其陽多金玉區水出焉而東流注于河',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 65 段', 'a89eafc20d503fd57cf1db63fabf2e5ab2a791fb1064ffeb887d6ee28f9372c1', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -547,8 +547,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000074', '22000000-0000-4000-8000-000000000004', 'xishan-p074', '西山经·剛', 13,
-  '又西百二十里，曰剛山，多柴木，多㻬琈之玉。剛水出焉，北流注于渭，是多神𩳁，其狀人面獸身，一足一手，其音如欽。', '又西百二十里曰剛山多柴木多㻬琈之玉剛水出焉北流注于渭是多神𩳁其狀人面獸身一足一手其音如欽',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 74 段', '2e93f7e528e79633d533342167f74d8bac6d3d48bd1c28e5c3744edd403f0d8f', 'draft', 'punctuation-stripped-v1')
+  '又西百二十里，曰剛山，多柒木，多㻬琈之玉。剛水出焉，北流注于渭，是多神𩳁，其狀人面獸身，一足一手，其音如欽。', '又西百二十里曰剛山多柒木多㻬琈之玉剛水出焉北流注于渭是多神𩳁其狀人面獸身一足一手其音如欽',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 74 段', '5578e699f95d059d2f79da45024a5a8136f2e315fd0418881651a9baefc696e3', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -561,8 +561,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000076', '22000000-0000-4000-8000-000000000004', 'xishan-p076', '西山经·英鞮', 15,
-  '又西三百五十里，曰英鞮之山，上多漆木，下多金玉，鳥獸盡白，涴水出焉，而北注于陵羊之澤。是多冉遺之魚，魚身蛇首、六足，其目如馬耳，食之使人不眯，可以禦凶。', '又西三百五十里曰英鞮之山上多漆木下多金玉鳥獸盡白涴水出焉而北注于陵羊之澤是多冉遺之魚魚身蛇首六足其目如馬耳食之使人不眯可以禦凶',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 76 段', '19c275a0a5fb81aac47a0f728434f51867e86249880be0043d1d37f2247f9f9b', 'draft', 'punctuation-stripped-v1')
+  '又西三百五十里，曰英鞮之山，上多漆木，下多金玉，鳥獸盡白，涴水出焉，而北流注于陵羊之澤。是多冉遺之魚，魚身蛇首、六足，其目如馬耳，食之使人不眯，可以禦凶。', '又西三百五十里曰英鞮之山上多漆木下多金玉鳥獸盡白涴水出焉而北流注于陵羊之澤是多冉遺之魚魚身蛇首六足其目如馬耳食之使人不眯可以禦凶',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 76 段', '1afa12c30fd5f38cc4d40c59ad62761388a6a26d629783e058c90c7ee9534177', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 
@@ -596,8 +596,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000081', '22000000-0000-4000-8000-000000000004', 'xishan-p081', '西山经·西次四经·祠礼', 20,
-  '凡《西次四經》自陰山以下，至於崦嵫之山，凡十九山，三千六百八十里。其祠祀禮，皆用一白鷄祈。糈以稻米，白管為席。', '凡西次四經自陰山以下至於崦嵫之山凡十九山三千六百八十里其祠祀禮皆用一白鷄祈糈以稻米白管為席',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 81 段', 'ec9a87466c07463bba2d2cb9aa300fd3d69437784a57fa220a049ada739df5ad', 'draft', 'punctuation-stripped-v1')
+  '凡《西次四經》自陰山以下，至於崦嵫之山，凡十九山，三千六百八十里。其祠祀禮，皆用一白鷄祈。糈以稻米，白菅為席。', '凡西次四經自陰山以下至於崦嵫之山凡十九山三千六百八十里其祠祀禮皆用一白鷄祈糈以稻米白菅為席',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 81 段', '90f5eff3f1d045ea712483f4b9dabfa04b6c0e261d8761285bee2c2cf63373b5', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 

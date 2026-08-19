@@ -300,6 +300,30 @@
   不是削减地图内容。
 - 证据：`PERFORMANCE_BUDGETS.md` §3.1、`generated/loading-model.md`、`generated/performance-baseline.md`。
 
+### SJ-D022：《西山经》异文逐条裁决，未决者留白，并声明校勘无专家复核
+
+- 状态：`accepted`
+- 日期：2026-08-19
+- 批准者：`用户指派本轮由 AI 裁决，并要求无法确认者标出、政策中作免责声明`
+- 输入：50 处待裁差异；各山系结语里程与山数；`XISHAN_COLLATION_PLAN.md` 所定方法
+- 决策：
+  1. 逐条裁决 50 处差异：**23 处判定沿用底本、11 处采校核本、3 处归入异体、11 处标为未决**。
+  2. 每条附依据类别与置信度，载于 `scripts/data/xishan_rulings_v1.json`，可逐条推翻。
+  3. `CORPUS_AND_EDITORIAL_POLICY.md` §4.5 增设「校勘执行者资质与免责」：
+     明确允许采信的四类依据、禁止采信的说法、依据不足时必须留白、以及对外披露义务。
+  4. 站点无背书声明补入「原文校勘未经古籍专家复核」。
+- 理由：无限期挂起不会让文本更可靠；有依据、可复核、明确标注不确定性的候选裁决，
+  比一份「50 处待裁」的空白更有用，也比不加区分地采信任一版本更诚实。
+  **执行者不是专家，所以规则比结论更重要**：禁止以「通行本作」这类无出处的记忆充当证据，
+  正是为了防止非专业执行者把记忆包装成学术。
+- 影响：
+  - 语料 checksum 更新（`40468036…`）；11 处未决差异保留在册，随时可继续裁定。
+  - **证据层级不因本轮上升**，仍为 `local_candidate`；段落仍为 `draft`，不进 API 与产物。
+  - 算术副产物：四列山系的段内里程相加与其结语**在采纳任何异读之前即不相符**
+    （−140、+530、−304、−95），此发现是 X-4 的直接输入。
+- 证据：`scripts/data/xishan_rulings_v1.json`、`scripts/data/xishan_corpus_v1.json`、
+  `CORPUS_AND_EDITORIAL_POLICY.md` §4.5。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -320,4 +344,5 @@
 | `SJ-DLOG-008` | 2026-08-18 | 分类词表入库并双语化（SJ-D018） | 主负责人 | `TAXONOMY.md` §5.0 |
 | `SJ-DLOG-009` | 2026-08-18 | 裁定 X-2 并冻结《西山经》语料（SJ-D019） | 主负责人 | `XISHAN_BASELINE_OPTIONS_2026-08-18.md`、`scripts/data/xishan_corpus_v1.json` |
 | `SJ-DLOG-010` | 2026-08-18 | 母图改水墨（SJ-D020）；预算重定与全量加载裁决（SJ-D021） | 主负责人 | `generated/map-variants-2026-08-18.md`、`generated/loading-model.md` |
+| `SJ-DLOG-011` | 2026-08-19 | 《西山经》异文逐条裁决，11 处留为未决；增设非专家校勘免责（SJ-D022） | 主负责人 | `xishan_rulings_v1.json`、`CORPUS_AND_EDITORIAL_POLICY.md` §4.5 |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |

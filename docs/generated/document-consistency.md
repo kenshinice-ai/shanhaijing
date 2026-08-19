@@ -3,11 +3,11 @@
 - 生成命令：`npm run verify:docs`
 - 生成器版本：`1.0.0`
 - 生成器 SHA-256：`af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6`
-- 生成时间：`2026-08-18T23:36:51.626Z`
+- 生成时间：`2026-08-19T04:54:44.293Z`
 - 证据层级：`local_candidate`
 - 检查结果：`pass`
 - 输入文件：30
-- 检查数：301
+- 检查数：302
 - errors / warnings / info：0 / 0 / 1
 - Gate 结论：`blocked`；本报告只证明机械一致性，不替代专家评审、输入冻结或 Gate 0 授权。
 
@@ -36,8 +36,8 @@
 | docs/memoized-riding-giraffe.md | 41872 | `76fa12e9ee9626fea899a1e60d5addfd5894cb9205c15c5623a726a8590eeff9` |
 | docs/README.md | 6964 | `5d0d409d58e2df5fc6b53d74167f5e3ada1be8941bce249552297027985d79da` |
 | docs/PRODUCT_BLUEPRINT.md | 9667 | `77f1e099f0c0f6569b8d14c3c37fbec46ebaec11896c3b990876fc38a2b13b79` |
-| docs/CORPUS_AND_EDITORIAL_POLICY.md | 9308 | `fde5ebf08fd63e8d71bc7ab60b7b6e1af0495549bf144bb4ecdb822d8d6d6f22` |
-| docs/CONTENT_COVERAGE_MATRIX.md | 9390 | `365faaf50820517e70f3225334cfdf9b18101fc6ebc7e7e43f5e3d335a55a3b9` |
+| docs/CORPUS_AND_EDITORIAL_POLICY.md | 11598 | `1200cb5689a061db5328750565161d5694966228f6a7f74ca338e5c36919de4b` |
+| docs/CONTENT_COVERAGE_MATRIX.md | 9390 | `53a11d3f9731bdfa08dff12e892465dcf70372f99c835dd97d1095ae6d61ec0e` |
 | docs/ENTITY_AND_DATA_DICTIONARY.md | 15229 | `9435dfe990b2577c4121212fc1813e9fc0908faab51a1e4485d1d5ec439b9eba` |
 | docs/TAXONOMY.md | 11704 | `82a73817b917e58bf328f23f8a38bb2d87956f5dc2c15c96e0ded198067db9a3` |
 | docs/GEOGRAPHY_AND_MAPS.md | 10526 | `47bc6d6c057a42b36f6da277a57fc6a14d9820d2a1d7fe0a465ce4d0355bae73` |
@@ -53,7 +53,7 @@
 | docs/TEST_AND_VERIFICATION_PLAN.md | 34936 | `f7e2d5faf312cdd41e57e0c0d2fee22d3fd60846e24d50de7869be69fa1cca64` |
 | docs/HANDOFF.md | 23262 | `2dd1db78dbf6280c1e8e5bb3d4f9b7f7dc888c9b5eaa956e58a2768e48da6800` |
 | docs/HANDOFF_TEMPLATE.md | 8060 | `5f5dcdb36f7b659b4710be10b9eb56e7a39c576bbbcf4dc7cbfe6b570dbc3a2e` |
-| docs/DECISION_LOG.md | 25443 | `fb0f4061577b72a586e9fa03f5de3ac5af00f5f85d41d760b1fb775773b97b03` |
+| docs/DECISION_LOG.md | 27528 | `2a36790dc5d09569d4df72d3dc7d8f7598c6921b87b349ff6bd1a0f8082c4843` |
 | docs/RISK_REGISTER.md | 4855 | `bd0e5507e61065081580c57f2779512ab12ec6b50595021e7081a92ed6167574` |
 | docs/EXPERT_REVIEW_QUESTIONS.md | 5779 | `08d14b6cd490694db13c1534103c3cc9148eb67047c9395a553197f8adf0045c` |
 | docs/RELEASE_CHECKLIST.md | 10495 | `e7c9942d40a9e940b392551a420b2f1a94d28545e9c1058de0b3f5bf74a9338b` |

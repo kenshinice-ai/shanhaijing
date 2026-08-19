@@ -17,6 +17,7 @@ import { join, resolve } from "node:path";
 const ROOT = resolve(process.env.ATLAS_PROJECT_ROOT ?? process.cwd());
 const OUT = join(ROOT, "scripts/data/xishan_corpus_v1.json");
 
+const RULINGS = join(ROOT, "scripts/data/xishan_rulings_v1.json");
 const BASE_URL = "https://ctext.org/shan-hai-jing/xi-shan-jing/zh";
 const CROSS_URL = "https://zh.wikisource.org/wiki/山海經/西山經";
 
@@ -56,6 +57,9 @@ const ORTHOGRAPHIC: Record<string, { with: string; kind: string; note: string }>
   "窮": { with: "藭", kind: "compound", note: "芎藭，联绵词内写法" },
   "冡": { with: "塚", kind: "variant", note: "冢之异体" },
   "滑": { with: "䱻", kind: "compound", note: "滑魚／䱻魚，鱼名写法" },
+  // 以下两对由 SJ-D022 逐条裁定为同词异写，并入本表。
+  "源": { with: "原", kind: "orthographic", note: "『原』为『源』之古字（SJ-D022）" },
+  "瓜": { with: "𤓰", kind: "variant", note: "同字异形（SJ-D022）" },
 };
 /** 同一个 ctext 字在不同段落可能对到不止一种写法。 */
 const ORTHOGRAPHIC_EXTRA: [string, string][] = [["冡", "冢"], ["柟", "㮨"], ["于", "於"], ["於", "于"]];
@@ -149,19 +153,53 @@ function isOrthographic(from: string, to: string): { kind: string; note: string 
   return null;
 }
 
+interface Ruling {
+  paragraph: number;
+  pair: string;
+  decision: "keep_base" | "adopt_cross" | "unresolved" | "orthographic";
+  basis: string;
+  confidence: string;
+  note: string;
+  find?: string;
+  replace?: string;
+  signatures?: string[];
+}
+
+
 async function main(): Promise<void> {
   const [baseRaw, crossRaw] = await Promise.all([
     readFile(join(ROOT, process.env.XISHAN_BASE_HTML ?? "scripts/data/.cache/xishan-ctext.html")),
     readFile(join(ROOT, process.env.XISHAN_CROSS_HTML ?? "scripts/data/.cache/xishan-wikisource.html")),
   ]);
-  const base = extractCtext(baseRaw.toString("utf8"));
+  const baseRawText = extractCtext(baseRaw.toString("utf8"));
   const cross = extractWikisource(crossRaw.toString("utf8"));
+  const rulings = (JSON.parse(await readFile(RULINGS, "utf8")) as { rulings: Ruling[] }).rulings;
+
+  /*
+   * 裁决落地（SJ-D022）。
+   *
+   * `adopt_cross` 用显式的 find/replace 落到底本上，并断言在该段中恰好出现一次——
+   * 位置靠上下文锚定，不靠字符偏移，因为偏移会随前面的改动漂移。
+   */
+  const base = [...baseRawText];
+  for (const ruling of rulings) {
+    if (ruling.decision !== "adopt_cross") continue;
+    const index = ruling.paragraph - 1;
+    const paragraph = base[index];
+    if (paragraph === undefined) throw new Error(`裁决指向不存在的段落 ${ruling.paragraph}`);
+    const hits = paragraph.split(ruling.find!).length - 1;
+    if (hits !== 1) throw new Error(`段${ruling.paragraph} 的锚点「${ruling.find}」出现 ${hits} 次，无法安全替换`);
+    base[index] = paragraph.replace(ruling.find!, ruling.replace!);
+  }
   if (base.length !== 82) throw new Error(`底本段落数应为 82,实得 ${base.length}`);
   if (cross.length !== base.length) throw new Error(`校核本段落数 ${cross.length} 与底本 ${base.length} 不一致,无法逐段对齐`);
 
   const orthographic: Record<string, { count: number; kind: string; note: string }> = {};
   const embeddedNotes: { paragraph: number; note: string }[] = [];
   const embeddedCollationNotes: { paragraph: number; note: string }[] = [];
+  const settled: { paragraph: number; signature: string; decision: string; basis: string; confidence: string; note: string }[] = [];
+  const matchedSignatures = new Set<string>();
+  const unmatched: string[] = [];
   const pendingRulings: { paragraph: number; base: string; cross: string; context: string }[] = [];
 
   for (const [index, paragraph] of base.entries()) {
@@ -174,23 +212,52 @@ async function main(): Promise<void> {
     let position = 0;
     for (const op of align(a, b)) {
       if (op.t === "same") { position++; continue; }
+      const signature = op.t === "sub" ? `sub:${op.a}→${op.b}` : op.t === "ins" ? `ins:${op.b}` : `del:${op.a}`;
       if (op.t === "sub") {
         const known = isOrthographic(op.a!, op.b!);
-        const key = `${op.a}→${op.b}`;
         if (known) {
+          const key = `${op.a}→${op.b}`;
           orthographic[key] = { count: (orthographic[key]?.count ?? 0) + 1, kind: known.kind, note: known.note };
-        } else {
-          pendingRulings.push({ paragraph: index + 1, base: op.a!, cross: op.b!, context: aPoints.slice(Math.max(0, position - 10), position + 10).join("") });
+          position++;
+          continue;
         }
-        position++;
-      } else if (op.t === "ins") {
-        // 维基文库多出的字:多为「一作X」校语,按段登记,不改 baseline。
-        pendingRulings.push({ paragraph: index + 1, base: "", cross: op.b!, context: aPoints.slice(Math.max(0, position - 10), position + 10).join("") });
-      } else {
-        pendingRulings.push({ paragraph: index + 1, base: op.a!, cross: "", context: aPoints.slice(Math.max(0, position - 10), position + 10).join("") });
-        position++;
       }
+      // 残留差异必须能对上一条裁决。对不上就是漏网,宁可让生成失败,
+      // 也不能让一处未经裁决的异文悄悄留在册子里。
+      const ruling = rulings.find((r) => r.paragraph === index + 1 && (r.signatures ?? []).includes(signature));
+      if (!ruling) {
+        unmatched.push(`段${index + 1} ${signature}`);
+        position += op.t === "ins" ? 0 : 1;
+        continue;
+      }
+      matchedSignatures.add(`${index + 1}|${signature}`);
+      if (ruling.decision === "unresolved") {
+        pendingRulings.push({
+          paragraph: index + 1, base: op.a ?? "", cross: op.b ?? "",
+          context: aPoints.slice(Math.max(0, position - 10), position + 10).join(""),
+          note: ruling.note,
+        });
+      } else {
+        settled.push({ paragraph: index + 1, signature, decision: ruling.decision, basis: ruling.basis, confidence: ruling.confidence, note: ruling.note });
+      }
+      if (op.t !== "ins") position++;
     }
+  }
+
+  // 双向覆盖:既不许有差异没被裁决,也不许裁决表里有条目从未命中——
+  // 后者说明裁决表已经与文本脱节。
+  if (unmatched.length > 0) {
+    console.error(`以下差异没有对应裁决（共 ${unmatched.length} 处）：`);
+    for (const item of unmatched) console.error(`  ${item}`);
+    throw new Error("裁决表未覆盖全部差异");
+  }
+  const unusedRulings = rulings.filter((r) =>
+    r.decision !== "adopt_cross" && (r.signatures ?? []).length > 0
+    && !(r.signatures ?? []).some((sig) => [...matchedSignatures].some((m) => m.endsWith(`|${sig}`) && m.startsWith(`${r.paragraph}|`))));
+  if (unusedRulings.length > 0) {
+    console.error("以下裁决从未命中任何差异（裁决表与文本脱节）：");
+    for (const r of unusedRulings) console.error(`  段${r.paragraph} ${r.pair}`);
+    throw new Error("裁决表存在失效条目");
   }
 
   const corpus = {
@@ -199,7 +266,10 @@ async function main(): Promise<void> {
     segmentation: "xishan-full-v1",
     retrievedAt: "2026-08-18",
     policy: {
-      decision: "X-2 (2026-08-18)：异体字不算异文",
+      decision: "X-2 (2026-08-18)：异体字不算异文；SJ-D022 (2026-08-19)：逐条裁决，未决者标明",
+      rulings: "scripts/data/xishan_rulings_v1.json",
+      caveat: "裁决由非古籍专家作出，未经专家复核；每条附依据与置信度，可被推翻",
+      legacyDecision: "X-2 (2026-08-18)：异体字不算异文",
       baseline: "底本照 ctext 印出的字形录入；异体差异不产生 variant 记录",
       pending: "对照表之外的一切差异进入 pendingRulings，等待古籍编辑逐条裁定，不做猜测",
     },
@@ -213,6 +283,9 @@ async function main(): Promise<void> {
         .sort((a, b) => b.count - a.count || a.pair.localeCompare(b.pair)),
       orthographicOccurrences: Object.values(orthographic).reduce((sum, value) => sum + value.count, 0),
       compoundForms: COMPOUND_FORMS.map(([from, to, note]) => ({ from, to, note })),
+      // 已裁决的差异连同依据与置信度留在册子里——裁决必须可复核、可推翻。
+      settled,
+      settledCount: settled.length,
       guoPuAnnotations: embeddedNotes.length,
       embeddedCollationNotes,
       pendingRulings,
@@ -226,7 +299,8 @@ async function main(): Promise<void> {
   console.log(`  异体字差异:${corpus.collation.orthographicPairs.length} 对 / ${corpus.collation.orthographicOccurrences} 处 —— 按 X-2 丢弃,不入 variant`);
   console.log(`  郭璞注条目:${embeddedNotes.length}（不进 baseline）`);
   console.log(`  维基文库「一作X」校语:${embeddedCollationNotes.length} 条（登记,不改 baseline）`);
-  console.log(`  待裁差异:${pendingRulings.length} 处`);
+  console.log(`  已裁决:${settled.length} 处（keep_base ${settled.filter((x) => x.decision === "keep_base").length}、adopt_cross ${rulings.filter((r) => r.decision === "adopt_cross").length}）`);
+  console.log(`  仍未决:${pendingRulings.length} 处`);
   console.log(`written: ${OUT}`);
 }
 
