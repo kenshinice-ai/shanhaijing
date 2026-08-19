@@ -1,7 +1,7 @@
 # 《山海经 Atlas》dynamic/static parity 报告
 
 - 生成命令：`npm run verify:parity`
-- 生成时间：`2026-08-19T11:00:32.465Z`
+- 生成时间：`2026-08-19T11:03:40.068Z`
 - 动态源：`http://localhost:4100`
 - 比对产物：`apps/web/dist/data`
 - 检查结果：`pass`（11 检查，0 错误）
