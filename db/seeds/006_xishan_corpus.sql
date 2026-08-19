@@ -2,10 +2,10 @@
 --
 -- 底本:https://ctext.org/shan-hai-jing/xi-shan-jing/zh
 -- 取回:2026-08-18    原始文件 SHA-256:913ef2534ea3cd9fe1b4ce4a121ae64ab99849944d4857ab7fad5b188510d664
--- 切分:xishan-full-v1    edition checksum:40468036bb53209ffd4f17330f447c0530237c3bebde31f98fc1eca44660388e
+-- 切分:xishan-full-v1    edition checksum:d02f302913a23683e23f13171d9c866736954ed9b7b38e4c55062c565c786c78
 --
 -- 依 X-2 裁定:异体字不算异文,底本照 ctext 印出的字形录入;
--- 已丢弃异体差异 45 处,登记待裁差异 11 处。
+-- 已丢弃异体差异 45 处,登记待裁差异 0 处。
 -- 段落以 draft 入库:文本已冻结,尚未逐段审核,因此不进 API 与产物。
 
 BEGIN;
@@ -13,8 +13,8 @@ BEGIN;
 INSERT INTO shj_text_editions (id, work_id, scope, slug, title, source_url, source_note, rights_status, checksum_sha256, is_baseline, review_status)
 SELECT '21000000-0000-4000-8000-000000000001', w.id, 'xishan', 'xishan-v1-public-domain-collation', '《西山经》公版校勘本 v1',
   'https://ctext.org/shan-hai-jing/xi-shan-jing/zh',
-  '白文底本取自 ctext（2026-08-18），与维基文库本（含郭璞注）逐段校核。依 X-2：异体字不算异文，底本照印出字形录入；待裁差异 11 处登记于 scripts/data/xishan_corpus_v1.json。',
-  'verified', '40468036bb53209ffd4f17330f447c0530237c3bebde31f98fc1eca44660388e', true, 'reviewed'
+  '白文底本取自 ctext（2026-08-18），与维基文库本（含郭璞注）逐段校核。依 X-2：异体字不算异文，底本照印出字形录入；待裁差异 0 处登记于 scripts/data/xishan_corpus_v1.json。',
+  'verified', 'd02f302913a23683e23f13171d9c866736954ed9b7b38e4c55062c565c786c78', true, 'reviewed'
   FROM works w WHERE w.slug='shanhaijing'
 ON CONFLICT (work_id, slug) DO UPDATE SET checksum_sha256=EXCLUDED.checksum_sha256, source_note=EXCLUDED.source_note;
 
@@ -442,8 +442,8 @@ ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCL
 
 INSERT INTO shj_text_passages (id, section_id, slug, reference_key, sequence, text_zh, normalized_text_zh, source_url, source_locator, checksum_sha256, review_status, normalization_version)
 VALUES ('23000000-0000-4000-8000-000000000059', '22000000-0000-4000-8000-000000000003', 'xishan-p059', '西山经·泑', 21,
-  '又西二百九十里，曰泑山，神蓐收居之。其上多嬰短之玉，其陽多瑾瑜之玉，其陰多青雄黃。是山也，西望日之所入，其氣員，神紅光之所司也。', '又西二百九十里曰泑山神蓐收居之其上多嬰短之玉其陽多瑾瑜之玉其陰多青雄黃是山也西望日之所入其氣員神紅光之所司也',
-  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 59 段', 'ebdf555a23b3d7600beded6f9d0a795408701b62510ab381d3bbf653360e0abe', 'draft', 'punctuation-stripped-v1')
+  '又西二百九十里，曰泑山，神蓐收居之。其上多嬰垣之玉，其陽多瑾瑜之玉，其陰多青雄黃。是山也，西望日之所入，其氣員，神紅光之所司也。', '又西二百九十里曰泑山神蓐收居之其上多嬰垣之玉其陽多瑾瑜之玉其陰多青雄黃是山也西望日之所入其氣員神紅光之所司也',
+  'https://ctext.org/shan-hai-jing/xi-shan-jing/zh', '第 59 段', 'e78aa3f56d9f8e88fb157261c9835cf634ba8b7794c569cea6af021db113fb0a', 'draft', 'punctuation-stripped-v1')
 ON CONFLICT (id) DO UPDATE SET text_zh=EXCLUDED.text_zh, normalized_text_zh=EXCLUDED.normalized_text_zh,
   reference_key=EXCLUDED.reference_key, checksum_sha256=EXCLUDED.checksum_sha256;
 

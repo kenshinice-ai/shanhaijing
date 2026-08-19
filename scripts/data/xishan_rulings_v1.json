@@ -13,7 +13,9 @@
     ],
     "evidenceRefused": "无出处的『通行本作』『一般认为』之类说法一律不采信",
     "default": "依 X-2，未裁决与未决项一律保留 ctext 印出的字形",
-    "caveat": "本表为候选裁决，未经古籍专家复核；任何一条都可被推翻"
+    "caveat": "本表为候选裁决，未经古籍专家复核；任何一条都可被推翻",
+    "provisionalTier": "SJ-D023 增设 `provisional`：内部证据有倾向但不足以定案者，取倾向读法作工作底本，置信度记 low，另一读保留在册。它弱于 keep_base/adopt_cross，专家复核应优先重看这一档。",
+    "numericCaveat": "古书数字记载本难求全书自洽（本篇四列里程与其结语即各差 −140/+530/−304/−95）。因此数字类差异不以『能否弥合结语』为定案标准，只取内部证据较优者。"
   },
   "arithmeticFinding": {
     "note": "各列山系的段内里程相加与其结语自称不符——在采纳任何异读之前即如此。因此结语不能作为校验和，只能作为『哪一读更接近』的弱证据。",
@@ -140,10 +142,10 @@
     {
       "paragraph": 22,
       "pair": "其陽多金 / 其陽多玉",
-      "decision": "unresolved",
-      "basis": "none",
-      "confidence": "none",
-      "note": "『其陽多金』与『其陽多玉』在本书皆为习见句式，篇内无可资判别的平行证据。需版本学依据方能定案。",
+      "decision": "provisional",
+      "basis": "internal_parallel",
+      "confidence": "low",
+      "note": "共现统计：全书与『其陰多鐵』对举者为 其陽多銅 1、其陽多金 2、其陽多黃金 1，**『其陽多玉』从不与『其陰多鐵』对举**。样本仅 4 例，倾向底本而不足以定案。",
       "signatures": [
         "sub:金→玉"
       ]
@@ -151,10 +153,10 @@
     {
       "paragraph": 23,
       "pair": "多珠 / 多白珠",
-      "decision": "unresolved",
-      "basis": "none",
-      "confidence": "none",
-      "note": "两读皆通，篇内无旁证。需版本学依据。",
+      "decision": "provisional",
+      "basis": "internal_parallel",
+      "confidence": "low",
+      "note": "全书『多白珠』零见，『多珠』仅此一见（即本句）。维基读法无同书旁证，故暂从底本。",
       "signatures": [
         "ins:白"
       ]
@@ -162,10 +164,10 @@
     {
       "paragraph": 24,
       "pair": "百五十里 / 北五十里",
-      "decision": "unresolved",
-      "basis": "arithmetic",
-      "confidence": "none",
-      "note": "『又西百五十里』与『又西北五十里』句式皆见于本书。本列（西次二经）里程本已超出结语 530，采任一读均不能弥合，算术无法定案。",
+      "decision": "provisional",
+      "basis": "formulaic",
+      "confidence": "low",
+      "note": "『又西N里，曰X』全书 48 见，『又西北』仅 3 见；且维基此句同时脱『曰』，该句在维基本已属讹脱，其数字读法连带可疑。里程算术不足为凭——本列本已超出结语 530。",
       "signatures": [
         "sub:百→北"
       ]
@@ -215,10 +217,10 @@
     {
       "paragraph": 36,
       "pair": "其陽多金 / 其陽多黃金",
-      "decision": "unresolved",
-      "basis": "none",
-      "confidence": "none",
-      "note": "『多金』与『多黃金』本书皆习见，篇内无旁证。",
+      "decision": "provisional",
+      "basis": "internal_parallel",
+      "confidence": "low",
+      "note": "『多金』24 见、『多黃金』7 见，二者与『其陰多鐵』皆有对举之例，无从判别。暂从底本。",
       "signatures": [
         "ins:黃"
       ]
@@ -237,10 +239,10 @@
     {
       "paragraph": 38,
       "pair": "人面牛身 / 人面而牛身",
-      "decision": "unresolved",
+      "decision": "provisional",
       "basis": "internal_parallel",
-      "confidence": "none",
-      "note": "同段上句作『皆人面而馬身』，有『而』；此句底本无『而』。维基两句皆有『而』，可能是后人整齐化，也可能底本脱字。两说皆可，不裁。",
+      "confidence": "low",
+      "note": "全书『人面X身』3 见、『人面而X身』2 见，无『而』者反较多。同段上句有『而』下句无，参差之读较整齐之读更难由后人写出（整齐化是常见的抄写倾向），故暂从底本。",
       "signatures": [
         "ins:而"
       ]
@@ -298,10 +300,10 @@
     {
       "paragraph": 44,
       "pair": "常行西海，遊於東海 / 常從西海遊于東海",
-      "decision": "unresolved",
-      "basis": "none",
-      "confidence": "none",
-      "note": "『常行…遊於…』与『常從…遊于…』皆可通读，篇内无旁证可判。",
+      "decision": "provisional",
+      "basis": "internal_parallel",
+      "confidence": "low",
+      "note": "全书『常從』零见，『常行』仅此一见。且『行…遊…』两动词各领一宾，对偶整饬。暂从底本。",
       "signatures": [
         "sub:行→從"
       ]
@@ -374,21 +376,23 @@
     {
       "paragraph": 59,
       "pair": "嬰短之玉 / 嬰垣之玉",
-      "decision": "unresolved",
-      "basis": "none",
-      "confidence": "none",
-      "note": "『嬰短』与『嬰垣』于篇内均仅一见，无平行文例；二字于此皆难以字义判定。需版本学依据。",
+      "decision": "adopt_cross",
+      "basis": "internal_parallel",
+      "confidence": "medium",
+      "note": "**同篇段10 作『其陽多嬰垣之玉』**，『嬰垣』为本书已见之玉名；『嬰短』全书仅此一见。孤证对平行文例，从后者。",
       "signatures": [
         "sub:短→垣"
-      ]
+      ],
+      "find": "其上多嬰短之玉",
+      "replace": "其上多嬰垣之玉"
     },
     {
       "paragraph": 60,
       "pair": "𡙸 / 奪",
-      "decision": "unresolved",
-      "basis": "none",
-      "confidence": "none",
-      "note": "底本作生僻字『𡙸』，维基作『奪』。二者是否同字异写，篇内无从判定，故不裁；baseline 依 X-2 保留底本字形。",
+      "decision": "provisional",
+      "basis": "character_sense",
+      "confidence": "low",
+      "note": "二者是否同字异写仍无从判定——但**无论同字与否，依 X-2 底本字形均予保留**，故此条的结论不依赖该问题的答案。维基读法留档。",
       "signatures": [
         "sub:𡙸→奪"
       ]
@@ -396,10 +400,10 @@
     {
       "paragraph": 62,
       "pair": "茆 / 𦮉",
-      "decision": "unresolved",
-      "basis": "none",
-      "confidence": "none",
-      "note": "『茆』与『𦮉』是否同字异写无从判定，不作异体处理，亦不改底本。",
+      "decision": "provisional",
+      "basis": "character_sense",
+      "confidence": "low",
+      "note": "同段60：是否同字未定，而两种情形下依 X-2 皆保留底本字形，结论不受影响。",
       "signatures": [
         "sub:茆→𦮉"
       ]
@@ -501,10 +505,10 @@
     {
       "paragraph": 81,
       "pair": "其祠祀禮 / 其神祠禮",
-      "decision": "unresolved",
+      "decision": "provisional",
       "basis": "internal_parallel",
-      "confidence": "none",
-      "note": "本篇他处作『其祠之禮』（段20、段61），底本『其祠祀禮』与维基『其神祠禮』皆与之不合，两读均可疑，故不裁。",
+      "confidence": "low",
+      "note": "全书作『其祠之禮』3 见；底本『其祠祀禮』1 见（即本句），维基『其神祠禮』零见。两本皆偏离常式，但维基读法无任何旁证，故暂从底本。**此处疑有脱讹，待专家校改。**",
       "signatures": [
         "ins:神",
         "del:祀"

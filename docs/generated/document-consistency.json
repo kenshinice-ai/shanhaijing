@@ -4,7 +4,7 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-19T04:54:44.293Z",
+  "generatedAt": "2026-08-19T05:20:00.169Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
@@ -42,13 +42,13 @@
     },
     {
       "path": "docs/CORPUS_AND_EDITORIAL_POLICY.md",
-      "bytes": 11598,
-      "sha256": "1200cb5689a061db5328750565161d5694966228f6a7f74ca338e5c36919de4b"
+      "bytes": 12778,
+      "sha256": "8ccd9d016117aedae557df71291f7f1a347891ddffa7c4586dbd3ced5e12f068"
     },
     {
       "path": "docs/CONTENT_COVERAGE_MATRIX.md",
       "bytes": 9390,
-      "sha256": "53a11d3f9731bdfa08dff12e892465dcf70372f99c835dd97d1095ae6d61ec0e"
+      "sha256": "c0c3c8d913aac5af52e7538b34ab1851555d378cbbf744315d6d45982c828806"
     },
     {
       "path": "docs/ENTITY_AND_DATA_DICTIONARY.md",
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/DECISION_LOG.md",
-      "bytes": 27528,
-      "sha256": "2a36790dc5d09569d4df72d3dc7d8f7598c6921b87b349ff6bd1a0f8082c4843"
+      "bytes": 29619,
+      "sha256": "265ae86549cc3eb09101dc6b9d51f492a1a86eee68f1478ad58b54c28ad9f26f"
     },
     {
       "path": "docs/RISK_REGISTER.md",

@@ -316,6 +316,30 @@
     "note": "维基作『于於』连用，明显讹脱；全书定式为『X流注于Y』。"
    },
    {
+    "paragraph": 22,
+    "signature": "sub:金→玉",
+    "decision": "provisional",
+    "basis": "internal_parallel",
+    "confidence": "low",
+    "note": "共现统计：全书与『其陰多鐵』对举者为 其陽多銅 1、其陽多金 2、其陽多黃金 1，**『其陽多玉』从不与『其陰多鐵』对举**。样本仅 4 例，倾向底本而不足以定案。"
+   },
+   {
+    "paragraph": 23,
+    "signature": "ins:白",
+    "decision": "provisional",
+    "basis": "internal_parallel",
+    "confidence": "low",
+    "note": "全书『多白珠』零见，『多珠』仅此一见（即本句）。维基读法无同书旁证，故暂从底本。"
+   },
+   {
+    "paragraph": 24,
+    "signature": "sub:百→北",
+    "decision": "provisional",
+    "basis": "formulaic",
+    "confidence": "low",
+    "note": "『又西N里，曰X』全书 48 见，『又西北』仅 3 见；且维基此句同时脱『曰』，该句在维基本已属讹脱，其数字读法连带可疑。里程算术不足为凭——本列本已超出结语 530。"
+   },
+   {
     "paragraph": 24,
     "signature": "del:曰",
     "decision": "keep_base",
@@ -332,12 +356,28 @@
     "note": "维基作『其陽多黃金，其陽多鐵』，同句两言『其陽』，自相抵牾。"
    },
    {
+    "paragraph": 36,
+    "signature": "ins:黃",
+    "decision": "provisional",
+    "basis": "internal_parallel",
+    "confidence": "low",
+    "note": "『多金』24 见、『多黃金』7 见，二者与『其陰多鐵』皆有对举之例，无从判别。暂从底本。"
+   },
+   {
     "paragraph": 37,
     "signature": "ins:裏",
     "decision": "keep_base",
     "basis": "defective_variant",
     "confidence": "high",
     "note": "维基衍一『裏』字，数不成读。"
+   },
+   {
+    "paragraph": 38,
+    "signature": "ins:而",
+    "decision": "provisional",
+    "basis": "internal_parallel",
+    "confidence": "low",
+    "note": "全书『人面X身』3 见、『人面而X身』2 见，无『而』者反较多。同段上句有『而』下句无，参差之读较整齐之读更难由后人写出（整齐化是常见的抄写倾向），故暂从底本。"
    },
    {
     "paragraph": 42,
@@ -354,6 +394,14 @@
     "basis": "character_sense",
     "confidence": "high",
     "note": "『里』为里程之单位，『裏』为内外之裏，二字义别；此处计程，当作『里』。"
+   },
+   {
+    "paragraph": 44,
+    "signature": "sub:行→從",
+    "decision": "provisional",
+    "basis": "internal_parallel",
+    "confidence": "low",
+    "note": "全书『常從』零见，『常行』仅此一见。且『行…遊…』两动词各领一宾，对偶整饬。暂从底本。"
    },
    {
     "paragraph": 45,
@@ -396,6 +444,22 @@
     "note": "本篇段45『實惟帝之平圃』、段46『是實惟帝之下都』皆作『實惟』，为同篇定式。"
    },
    {
+    "paragraph": 60,
+    "signature": "sub:𡙸→奪",
+    "decision": "provisional",
+    "basis": "character_sense",
+    "confidence": "low",
+    "note": "二者是否同字异写仍无从判定——但**无论同字与否，依 X-2 底本字形均予保留**，故此条的结论不依赖该问题的答案。维基读法留档。"
+   },
+   {
+    "paragraph": 62,
+    "signature": "sub:茆→𦮉",
+    "decision": "provisional",
+    "basis": "character_sense",
+    "confidence": "low",
+    "note": "同段60：是否同字未定，而两种情形下依 X-2 皆保留底本字形，结论不受影响。"
+   },
+   {
     "paragraph": 65,
     "signature": "del:百",
     "decision": "keep_base",
@@ -434,9 +498,26 @@
     "basis": "arithmetic",
     "confidence": "medium",
     "note": "同段65，脱『百』则本列里程更短。"
+   },
+   {
+    "paragraph": 81,
+    "signature": "ins:神",
+    "decision": "provisional",
+    "basis": "internal_parallel",
+    "confidence": "low",
+    "note": "全书作『其祠之禮』3 见；底本『其祠祀禮』1 见（即本句），维基『其神祠禮』零见。两本皆偏离常式，但维基读法无任何旁证，故暂从底本。**此处疑有脱讹，待专家校改。**"
+   },
+   {
+    "paragraph": 81,
+    "signature": "del:祀",
+    "decision": "provisional",
+    "basis": "internal_parallel",
+    "confidence": "low",
+    "note": "全书作『其祠之禮』3 见；底本『其祠祀禮』1 见（即本句），维基『其神祠禮』零见。两本皆偏离常式，但维基读法无任何旁证，故暂从底本。**此处疑有脱讹，待专家校改。**"
    }
   ],
   "settledCount": 23,
+  "provisionalCount": 10,
   "guoPuAnnotations": 280,
   "embeddedCollationNotes": [
    {
@@ -480,85 +561,7 @@
     "note": "一作「溫」"
    }
   ],
-  "pendingRulings": [
-   {
-    "paragraph": 22,
-    "base": "金",
-    "cross": "玉",
-    "context": "百里曰泰冒之山其陽多金其陰多鐵浴水出焉東",
-    "note": "『其陽多金』与『其陽多玉』在本书皆为习见句式，篇内无可资判别的平行证据。需版本学依据方能定案。"
-   },
-   {
-    "paragraph": 23,
-    "base": "",
-    "cross": "白",
-    "context": "焉而南流注于渭其中多珠",
-    "note": "两读皆通，篇内无旁证。需版本学依据。"
-   },
-   {
-    "paragraph": 24,
-    "base": "百",
-    "cross": "北",
-    "context": "又西百五十里曰高山其上多",
-    "note": "『又西百五十里』与『又西北五十里』句式皆见于本书。本列（西次二经）里程本已超出结语 530，采任一读均不能弥合，算术无法定案。"
-   },
-   {
-    "paragraph": 36,
-    "base": "",
-    "cross": "黃",
-    "context": "十里曰西皇之山其陽多金其陰多鐵其獸多麋鹿",
-    "note": "『多金』与『多黃金』本书皆习见，篇内无旁证。"
-   },
-   {
-    "paragraph": 38,
-    "base": "",
-    "cross": "而",
-    "context": "面而馬身其七神皆人面牛身四足而一臂操杖以",
-    "note": "同段上句作『皆人面而馬身』，有『而』；此句底本无『而』。维基两句皆有『而』，可能是后人整齐化，也可能底本脱字。两说皆可，不裁。"
-   },
-   {
-    "paragraph": 44,
-    "base": "行",
-    "cross": "從",
-    "context": "鳥翼蒼文而白首赤喙常行西海遊於東海以夜飛",
-    "note": "『常行…遊於…』与『常從…遊于…』皆可通读，篇内无旁证可判。"
-   },
-   {
-    "paragraph": 59,
-    "base": "短",
-    "cross": "垣",
-    "context": "山神蓐收居之其上多嬰短之玉其陽多瑾瑜之玉",
-    "note": "『嬰短』与『嬰垣』于篇内均仅一见，无平行文例；二字于此皆难以字义判定。需版本学依据。"
-   },
-   {
-    "paragraph": 60,
-    "base": "𡙸",
-    "cross": "奪",
-    "context": "目而三尾名曰讙其音如𡙸百聲是可以禦凶服之",
-    "note": "底本作生僻字『𡙸』，维基作『奪』。二者是否同字异写，篇内无从判定，故不裁；baseline 依 X-2 保留底本字形。"
-   },
-   {
-    "paragraph": 62,
-    "base": "茆",
-    "cross": "𦮉",
-    "context": "陰山上多穀無石其草多茆蕃陰水出焉西流注于",
-    "note": "『茆』与『𦮉』是否同字异写无从判定，不作异体处理，亦不改底本。"
-   },
-   {
-    "paragraph": 81,
-    "base": "",
-    "cross": "神",
-    "context": "九山三千六百八十里其祠祀禮皆用一白鷄祈糈",
-    "note": "本篇他处作『其祠之禮』（段20、段61），底本『其祠祀禮』与维基『其神祠禮』皆与之不合，两读均可疑，故不裁。"
-   },
-   {
-    "paragraph": 81,
-    "base": "祀",
-    "cross": "",
-    "context": "山三千六百八十里其祠祀禮皆用一白鷄祈糈以",
-    "note": "本篇他处作『其祠之禮』（段20、段61），底本『其祠祀禮』与维基『其神祠禮』皆与之不合，两读均可疑，故不裁。"
-   }
-  ]
+  "pendingRulings": []
  },
  "paragraphs": [
   "《西山經》華山之首，曰錢來之山，其上多松，其下多洗石。有獸焉，其狀如羊而馬尾，名曰羬羊，其脂可以已腊。",
@@ -619,7 +622,7 @@
   "又西二百二十里，曰三危之山，三青鳥居之。是山也，廣員百里。其上有獸焉，其狀如牛，白身四角，其毫如披蓑，其名曰𢕟𢓨，是食人。有鳥焉，一首而三身，其狀如𪇱，其名曰鴟。",
   "又西一百九十里，曰騩山，其上多玉而無石。神耆童居之，其音常如鍾磬。其下多積蛇。",
   "又西三百五十里，曰天山，多金玉，有青雄黃。英水出焉，而西南流注于湯谷。有神焉，其狀如黃囊，赤如丹火，六足四翼，渾敦無面目，是識歌舞，實惟帝江也。",
-  "又西二百九十里，曰泑山，神蓐收居之。其上多嬰短之玉，其陽多瑾瑜之玉，其陰多青雄黃。是山也，西望日之所入，其氣員，神紅光之所司也。",
+  "又西二百九十里，曰泑山，神蓐收居之。其上多嬰垣之玉，其陽多瑾瑜之玉，其陰多青雄黃。是山也，西望日之所入，其氣員，神紅光之所司也。",
   "西水行百里，至于翼望之山，無草木，多金玉。有獸焉，其狀如狸，一目而三尾，名曰讙，其音如𡙸百聲，是可以禦凶，服之已癉。有鳥焉，其狀如烏，三首六尾而善笑，名曰鵸鵌，服之使人不厭，又可以禦凶。",
   "凡《西次三經》之首，崇吾之山至于翼望之山，凡二十三山，六千七百四十四里。其神狀皆羊身人面。其祠之禮，用一吉玉瘞，糈用稷米。",
   "《西次四經》之首曰陰山，上多穀，無石，其草多茆蕃。陰水出焉，西流注于洛。",

@@ -1,7 +1,7 @@
 # 《山海经 Atlas》删除、约束与权限演练
 
 - 生成命令：`npm run verify:constraints`
-- 生成时间：`2026-08-19T04:55:29.062Z`
+- 生成时间：`2026-08-19T05:20:22.714Z`
 - 数据库：`postgresql://localhost:5432/shanhaijing_atlas`
 - 检查结果：`pass`（12 检查，0 错误）
 

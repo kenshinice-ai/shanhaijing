@@ -156,7 +156,7 @@ function isOrthographic(from: string, to: string): { kind: string; note: string 
 interface Ruling {
   paragraph: number;
   pair: string;
-  decision: "keep_base" | "adopt_cross" | "unresolved" | "orthographic";
+  decision: "keep_base" | "adopt_cross" | "unresolved" | "orthographic" | "provisional";
   basis: string;
   confidence: string;
   note: string;
@@ -231,6 +231,8 @@ async function main(): Promise<void> {
         continue;
       }
       matchedSignatures.add(`${index + 1}|${signature}`);
+      // `provisional` 取倾向读法作工作底本，但单独计数——它比 keep_base 弱，
+      // 专家复核应当优先重看这一档，所以不能混进「已定案」里蒙混过去。
       if (ruling.decision === "unresolved") {
         pendingRulings.push({
           paragraph: index + 1, base: op.a ?? "", cross: op.b ?? "",
@@ -285,7 +287,8 @@ async function main(): Promise<void> {
       compoundForms: COMPOUND_FORMS.map(([from, to, note]) => ({ from, to, note })),
       // 已裁决的差异连同依据与置信度留在册子里——裁决必须可复核、可推翻。
       settled,
-      settledCount: settled.length,
+      settledCount: settled.filter((x) => x.decision !== "provisional").length,
+      provisionalCount: settled.filter((x) => x.decision === "provisional").length,
       guoPuAnnotations: embeddedNotes.length,
       embeddedCollationNotes,
       pendingRulings,
@@ -299,7 +302,9 @@ async function main(): Promise<void> {
   console.log(`  异体字差异:${corpus.collation.orthographicPairs.length} 对 / ${corpus.collation.orthographicOccurrences} 处 —— 按 X-2 丢弃,不入 variant`);
   console.log(`  郭璞注条目:${embeddedNotes.length}（不进 baseline）`);
   console.log(`  维基文库「一作X」校语:${embeddedCollationNotes.length} 条（登记,不改 baseline）`);
-  console.log(`  已裁决:${settled.length} 处（keep_base ${settled.filter((x) => x.decision === "keep_base").length}、adopt_cross ${rulings.filter((r) => r.decision === "adopt_cross").length}）`);
+  const provisional = settled.filter((x) => x.decision === "provisional").length;
+  console.log(`  已定案:${settled.filter((x) => x.decision === "keep_base").length} 沿用底本 + ${rulings.filter((r) => r.decision === "adopt_cross").length} 采校核本`);
+  console.log(`  暂定（证据有倾向但不足以定案）:${provisional} 处`);
   console.log(`  仍未决:${pendingRulings.length} 处`);
   console.log(`written: ${OUT}`);
 }

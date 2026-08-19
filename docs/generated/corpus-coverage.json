@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T04:52:40.787Z",
+  "generatedAt": "2026-08-19T05:19:07.367Z",
   "command": "npm run verify:domain",
   "evidenceLevel": "local_candidate",
   "editions": [
@@ -12,7 +12,7 @@
     {
       "scope": "xishan",
       "slug": "xishan-v1-public-domain-collation",
-      "checksum": "40468036bb53209ffd4f17330f447c0530237c3bebde31f98fc1eca44660388e",
+      "checksum": "d02f302913a23683e23f13171d9c866736954ed9b7b38e4c55062c565c786c78",
       "reviewStatus": "reviewed"
     }
   ],

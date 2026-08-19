@@ -324,6 +324,30 @@
 - 证据：`scripts/data/xishan_rulings_v1.json`、`scripts/data/xishan_corpus_v1.json`、
   `CORPUS_AND_EDITORIAL_POLICY.md` §4.5。
 
+### SJ-D023：增设 `provisional` 一档，《西山经》异文全部处置完毕
+
+- 状态：`accepted`
+- 日期：2026-08-19
+- 批准者：`用户：11 处未决亦按同法尽量裁定；古书数字记载本难全书一致，取最优解即可`
+- 输入：SJ-D022 留下的 11 处未决；南山经与西山经全文的内部频次与共现统计
+- 决策：
+  1. 结论由两档扩为三档，新增 `provisional`——证据有倾向但不足以定案者，
+     取倾向读法作工作底本，置信度记 `low`，另一读留档，**不得上升为定案**。
+  2. 据此处置全部 11 处：1 处升为定案（段59），10 处暂定，**未决归零**。
+  3. 政策 §4.5.3a 明确：数字类差异不以能否弥合结语为标准，且一律不高于 `provisional`。
+- 理由：结语与段内相加本就不符（−140／+530／−304／−95），这是文本自身的状态，
+  不是校勘能消除的。把这类差异无限期挂起，既不使文本更可靠，也让读者无从使用。
+  **档位本身承载信息**：把 10 处标成 `low`，比把它们藏进「已定案」诚实，
+  也比继续留白有用。
+- 新增内部证据（本轮才计算，此前缺失）：
+  - 段59：同篇段10 作『其陽多嬰垣之玉』，『嬰垣』为本书已见玉名，『嬰短』全书仅一见 → 升为定案。
+  - 段22：与『其陰多鐵』对举者为 銅1／金2／黃金1，**『其陽多玉』从不与之对举**。
+  - 段24：『又西N里，曰X』48 见，『又西北』3 见；且维基此句同时脱『曰』。
+  - 段38：『人面X身』3 见、『人面而X身』2 见，参差之读反较常见。
+  - 段44、段23：维基读法（常從／多白珠）全书零见。
+- 影响：语料 checksum 更新（`d02f3029…`）；段落仍为 `draft`，证据层级仍为 `local_candidate`。
+- 证据：`scripts/data/xishan_rulings_v1.json`、`CORPUS_AND_EDITORIAL_POLICY.md` §4.5.3。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -345,4 +369,5 @@
 | `SJ-DLOG-009` | 2026-08-18 | 裁定 X-2 并冻结《西山经》语料（SJ-D019） | 主负责人 | `XISHAN_BASELINE_OPTIONS_2026-08-18.md`、`scripts/data/xishan_corpus_v1.json` |
 | `SJ-DLOG-010` | 2026-08-18 | 母图改水墨（SJ-D020）；预算重定与全量加载裁决（SJ-D021） | 主负责人 | `generated/map-variants-2026-08-18.md`、`generated/loading-model.md` |
 | `SJ-DLOG-011` | 2026-08-19 | 《西山经》异文逐条裁决，11 处留为未决；增设非专家校勘免责（SJ-D022） | 主负责人 | `xishan_rulings_v1.json`、`CORPUS_AND_EDITORIAL_POLICY.md` §4.5 |
+| `SJ-DLOG-012` | 2026-08-19 | 增设 `provisional` 档，未决归零（SJ-D023） | 主负责人 | `xishan_rulings_v1.json`、政策 §4.5.3 |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |
