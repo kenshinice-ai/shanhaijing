@@ -4,14 +4,14 @@
   "command": "npm run verify:docs",
   "generatorVersion": "1.0.0",
   "generatorSha256": "af70a7d60ddab56e1891e6af969cfd5a131a94dd4552f50303d0e6fb3e2e1fa6",
-  "generatedAt": "2026-08-19T05:20:00.169Z",
+  "generatedAt": "2026-08-19T10:53:51.552Z",
   "evidenceLevel": "local_candidate",
   "result": "pass",
   "gateTransitionAuthorized": false,
   "gateStatus": "blocked",
   "counts": {
     "inputs": 30,
-    "checks": 302,
+    "checks": 306,
     "errors": 0,
     "warnings": 0,
     "info": 1
@@ -42,13 +42,13 @@
     },
     {
       "path": "docs/CORPUS_AND_EDITORIAL_POLICY.md",
-      "bytes": 12778,
-      "sha256": "8ccd9d016117aedae557df71291f7f1a347891ddffa7c4586dbd3ced5e12f068"
+      "bytes": 13193,
+      "sha256": "ade66ed9e82b634369fd62178ae628d048ddbe8fa285c198c12d51f0c7e39554"
     },
     {
       "path": "docs/CONTENT_COVERAGE_MATRIX.md",
-      "bytes": 9390,
-      "sha256": "c0c3c8d913aac5af52e7538b34ab1851555d378cbbf744315d6d45982c828806"
+      "bytes": 9522,
+      "sha256": "df8a2c81d3fd10ada4d40f359aa6d43465736e4e03435c6b9e58ba0036954914"
     },
     {
       "path": "docs/ENTITY_AND_DATA_DICTIONARY.md",
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/DECISION_LOG.md",
-      "bytes": 29619,
-      "sha256": "265ae86549cc3eb09101dc6b9d51f492a1a86eee68f1478ad58b54c28ad9f26f"
+      "bytes": 33423,
+      "sha256": "e0b66038be466d59a27c8cd4d7190797252d642d0605fdc45479dd90002cd885"
     },
     {
       "path": "docs/RISK_REGISTER.md",
@@ -147,8 +147,8 @@
     },
     {
       "path": "docs/REVIEWER_ASSIGNMENTS_2026-08-15.md",
-      "bytes": 11314,
-      "sha256": "966c83cd776b86f9dfe43f7ff5c3c0f53bf4e8c6f87d2a4eae61c7f0deabcad6"
+      "bytes": 11698,
+      "sha256": "ca04c273229f8fbf28734bab7c82f4563ca9df5ee277014e7046d18e3f41f742"
     },
     {
       "path": "docs/MAP_IMPLEMENTATION_STRATEGY_2026-08-15.md",

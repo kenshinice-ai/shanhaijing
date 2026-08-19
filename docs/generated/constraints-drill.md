@@ -1,7 +1,7 @@
 # 《山海经 Atlas》删除、约束与权限演练
 
 - 生成命令：`npm run verify:constraints`
-- 生成时间：`2026-08-19T05:20:22.714Z`
+- 生成时间：`2026-08-19T10:53:40.556Z`
 - 数据库：`postgresql://localhost:5432/shanhaijing_atlas`
 - 检查结果：`pass`（12 检查，0 错误）
 
@@ -10,7 +10,7 @@ bootstrap 只证明写得进去，证明不了写不进去的东西真的写不�
 
 ## Findings
 
-- [info] DELETE-CASCADE: 删除 boyi 级联清除 1 条提及、2 条分类指派，无孤儿
+- [info] DELETE-CASCADE: 删除 aoyin 级联清除 1 条提及、3 条分类指派，无孤儿
 - [info] CONSTRAINT-FK: 指派引用词表外的词条：已拒绝（SQLSTATE 23503）
 - [info] CONSTRAINT-CHECK: 非法 review_status：已拒绝（SQLSTATE 23514）
 - [info] CONSTRAINT-CHECK: 母图 status 为 published 却无 asset_url：已拒绝（SQLSTATE 23514）

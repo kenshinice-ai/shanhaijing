@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T05:19:07.367Z",
+  "generatedAt": "2026-08-19T10:53:39.906Z",
   "command": "npm run verify:domain",
   "evidenceLevel": "local_candidate",
   "editions": [
@@ -21,6 +21,10 @@
     "textualOccurrences": 24,
     "passagesReviewed": 43,
     "passagesTotal": 125
+  },
+  "frozenNotDisplayed": {
+    "uniqueCreatureConcepts": 62,
+    "textualOccurrences": 64
   },
   "sections": [
     {

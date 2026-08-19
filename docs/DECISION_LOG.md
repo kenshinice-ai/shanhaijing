@@ -348,6 +348,58 @@
 - 影响：语料 checksum 更新（`d02f3029…`）；段落仍为 `draft`，证据层级仍为 `local_candidate`。
 - 证据：`scripts/data/xishan_rulings_v1.json`、`CORPUS_AND_EDITORIAL_POLICY.md` §4.5.3。
 
+### SJ-D024：《西山经》领域建模——机械抽取入库，译文留给人
+
+- 状态：`accepted`
+- 日期：2026-08-19
+- 批准者：`用户：继续下一阶段`
+- 输入：已冻结语料（82 段，checksum `d02f3029…`）；执行清单 `XISHAN_DOMAIN_PLAN.md`
+- 决策：
+  1. 由 `scripts/extract_xishan_domain.ts` 从冻结语料确定性抽取 78 站（77 山）、
+     65 水、183 条边、62 个异兽与神祇概念、125 条分类指派，全部以 `draft` 入库。
+  2. **X-4 的山数一半就此了结**：四列结语相加 78、全篇结语作 77，差额落在第 48 段
+     「西水行四百里，曰流沙，二百里至于蠃母之山」——一段两站，而流沙非山。
+     78 数站、77 数山，两个数各自都对，是计量单位不同，不是讹误。
+  3. 里程仍不自洽（段内相加 17,712／四列结语 17,521／全篇结语 17,517），
+     依政策 §4.5.3a 登记为 `unresolved` variant，不裁决。
+  4. 英文只给专名转写（依 `xishan_readings_v1.json` 逐字可复核），
+     摘要一律留空——写摘要是翻译，翻译要人负责（执行清单 1-2）。
+  5. 分类词条取通用类目而非逐兽立词：一兽一词不是分类，是把描述换个写法重说一遍。
+     新增 1 轴（`being_kind`）26 词；《南山经》既有的逐兽词条留待统一，本轮不动。
+  6. 神祇与异兽同表，另以 `being_kind` 轴区分。《西山经》去掉神祇便所剩无几。
+  7. 原文未出其名者（5 处）不代拟名，登记为 `pending_review` 候选。
+- 理由：结构与引文可由机器逐条断言（每条引文都验为段内连续子串），译文不能。
+  把两者分开，是让"已建模"这句话有确切的所指。
+- 证据：`db/seeds/007_xishan_domain.sql`、`docs/generated/xishan-domain-review.md`、
+  `docs/generated/xishan-arithmetic.md`；verify:domain 1169 检查 0 错误。
+
+### SJ-D025：seed 按内容记账，改过的 seed 必须重跑
+
+- 状态：`accepted`
+- 日期：2026-08-19
+- 批准者：主负责人（实施 SJ-D024 时发现）
+- 输入：007 在空库装载成功、在既有库被外键挡下
+- 决策：`seed_history` 增记文件 SHA-256；字节变了就重放，没变就跳过。
+  migration 仍是只进不改的——schema 变更不可重放，seed 本就写成幂等。
+- 理由：改过的 seed 永不重跑，意味着**空库与既有库得到不同的数据**。
+  这个洞是 007 依赖 005 新增词条时暴露的，但它一直都在：
+  此前每一次修改既有 seed，线上都没有跟着变。
+- 证据：`db/migrations/005_seed_checksums.sql`、`apps/api/src/db-cli.ts`；
+  克隆生产库升级后 verify:domain 1169 检查 0 错误，重放仍幂等。
+
+### SJ-D026：对外计数只数读者够得着的东西（补全）
+
+- 状态：`accepted`
+- 日期：2026-08-19
+- 批准者：主负责人（实施 SJ-D024 时发现）
+- 输入：《西山经》领域数据入库后 `/api/works` 的异兽概念数由 23 跳至 85
+- 决策：`uniqueCreatureConceptCount` 只数有已发布出现的概念；
+  `corpusCoverage` 分母与图集载荷同口径，只算已发布底本。两处各加一条回归断言。
+- 理由：与首页「43/125」是同一类缺陷，只是上一轮只修了图集载荷这一处。
+  概念表没有 `review_status`，所以这个洞不会被"加个过滤"的直觉发现——
+  得由"读者能不能看到"来定义。
+- 证据：`apps/api/src/app.ts`、`apps/api/src/app.test.ts`（13 项 API 测试）。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -371,3 +423,4 @@
 | `SJ-DLOG-011` | 2026-08-19 | 《西山经》异文逐条裁决，11 处留为未决；增设非专家校勘免责（SJ-D022） | 主负责人 | `xishan_rulings_v1.json`、`CORPUS_AND_EDITORIAL_POLICY.md` §4.5 |
 | `SJ-DLOG-012` | 2026-08-19 | 增设 `provisional` 档，未决归零（SJ-D023） | 主负责人 | `xishan_rulings_v1.json`、政策 §4.5.3 |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |
+| `SJ-DLOG-013` | 2026-08-19 | 《西山经》领域建模入库，X-4 山数归因了结（SJ-D024）；seed 按内容记账（SJ-D025）；对外计数补全（SJ-D026） | 主负责人 | `db/seeds/007_xishan_domain.sql`、`generated/xishan-domain-review.md` |

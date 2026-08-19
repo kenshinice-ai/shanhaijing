@@ -48,6 +48,12 @@ SELECT '1d000000-0000-4000-8000-000000000007', w.id, 'seasonality', '时序', 'S
 ON CONFLICT (axis) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
   definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en, sequence=EXCLUDED.sequence;
 
+INSERT INTO shj_taxonomy_axes (id, work_id, axis, label_zh, label_en, definition_zh, definition_en, sequence, review_status)
+SELECT '1d000000-0000-4000-8000-000000000008', w.id, 'being_kind', '存在类别', 'Kind of being', '原文如何称呼这个存在：神、司职之神、由他者所化。与形态无关，只记文本自己的称谓与身份陈述。', 'What the received text calls the being: a spirit, a spirit holding an office, or a form something else turned into. Independent of shape; it records only the text''s own designation.', 8, 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en, sequence=EXCLUDED.sequence;
+
 -- 词条
 INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
 SELECT '1e000000-0000-4000-8000-000000000001', w.id, 'morphology', 'aquatic_terrestrial_composite', '水陆复合', 'Aquatic–terrestrial composite', '以鱼为名而居于陆，或兼具水陆两栖的部件组合。', 'Named as a fish yet dwelling on land, or combining aquatic and terrestrial parts.', 'text_direct', 'published'
@@ -309,6 +315,174 @@ ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCL
 
 INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
 SELECT '1e000000-0000-4000-8000-000000000044', w.id, 'seasonality', 'winter_summer_cycle', '冬死夏生', 'Winter-death, summer-life cycle', '冬死而夏生的往复周期。', 'A cycle of dying in winter and living again in summer.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000045', w.id, 'morphology', 'bristled', '多毛', 'Bristled', '以毛、鬣、蝟毛一类描写立形者。', 'Described through bristles, mane, or quill-like hair.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000046', w.id, 'morphology', 'composite_fish', '复合鱼形', 'Composite fish', '鱼身而杂取他物的首、翼、足。', 'A fish body assembled with another creature''s head, wings, or limbs.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000047', w.id, 'morphology', 'horned', '有角', 'Horned', '原文明记角数或角形者。', 'The text states the number or shape of its horns.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000048', w.id, 'morphology', 'human_faced', '人面', 'Human-faced', '以人面立形者，不论其身为鸟兽鱼神。', 'Carries a human face, whatever the body — bird, beast, fish, or spirit.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000049', w.id, 'morphology', 'hybrid_limbs', '异类肢体', 'Hybrid limbs', '肢体取自异类，如马足人手、鸱形人足。', 'Limbs borrowed from another kind: a horse''s feet with human hands, an owl with human feet.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000050', w.id, 'morphology', 'multiplied_limbs', '多首多足', 'Multiplied heads and limbs', '首、足、翼、身的数目超出常物。与「多尾多耳」分列，后者只记尾耳。', 'Heads, feet, wings or bodies counted beyond the ordinary. Kept apart from multiplied tails and ears, which covers only those two.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000051', w.id, 'morphology', 'serpentine', '蛇形', 'Serpentine', '原文以「有蛇焉」或蛇身立形者。', 'Introduced as a serpent, or given a serpent''s body.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000052', w.id, 'morphology', 'single_limbed', '一足一翼', 'Single-limbed', '足、翼、目、手成单，原文明记其独。', 'One foot, one wing, one eye or one hand, stated as singular by the text.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000053', w.id, 'morphology', 'winged_quadruped', '有翼之兽', 'Winged quadruped', '兽身而生鸟翼。', 'A four-legged body carrying bird wings.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000054', w.id, 'behavior', 'abducts_people', '好举人', 'Carries people off', '原文称其好举人。', 'The text says it likes to pick people up and carry them.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000055', w.id, 'behavior', 'human_speech', '能作人言', 'Speaks like a person', '原文称其能人言。', 'The text says it can speak as a person does.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000056', w.id, 'behavior', 'nocturnal_flight', '夜飞', 'Flies by night', '原文明记以夜飞行。', 'The text states that it flies at night.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000057', w.id, 'behavior', 'paired_flight', '相得乃飞', 'Flies only in pairs', '须两两相合方能飞。', 'It can fly only when two of them join.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000058', w.id, 'behavior', 'preys_on_named', '食某物', 'Preys on a named creature', '原文明言所食之物（食鱼、食虎豹一类），有别于泛言食人。', 'The text names what it eats — fish, tigers and leopards — as distinct from the general man-eating claim.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000059', w.id, 'sound', 'animal_like_call', '声如禽兽', 'Animal-like call', '以禽兽之声为听感类比；类比对象是听感参照，不是物种鉴定。', 'Its call is compared to an animal''s; the referent is an auditory comparison, not a species identification.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000060', w.id, 'sound', 'object_like_call', '声如器物', 'Object-like call', '以击石、钟磬、鼓一类器物之声为听感类比。', 'Its call is compared to struck stone, bells and chimes, or a drum.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000061', w.id, 'effect', 'enhancement_claim', '增益体能', 'Enhancement claim', '原文称食之、佩之而增气力、脚力一类。', 'The text claims eating or wearing it increases strength or stamina.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000062', w.id, 'effect', 'harm_claim', '致害', 'Harm claim', '原文称食之而致害，如使人无子。', 'The text claims eating it causes harm, such as childlessness.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000063', w.id, 'effect', 'medicinal_claim', '疗疾之效', 'Medicinal claim', '原文称食之、服之、佩之而已某疾；登记为文本主张，不作医药建议。', 'The text claims eating, wearing or taking it cures an ailment; recorded as a textual claim, never as medical advice.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000064', w.id, 'effect', 'protective_claim', '禦凶避害', 'Protective claim', '原文称可以御火、御兵、御凶、不畏雷一类。', 'The text claims it wards off fire, weapons, ill fortune, or thunder.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000065', w.id, 'effect', 'toxic_use', '毒杀之用', 'Toxic use', '原文称其可毒杀他物，或触之则死则枯。', 'The text says it poisons or kills what it touches.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000066', w.id, 'omen', 'fire_omen', '讹火之兆', 'Omen of fire', '见则其邑有讹火。', 'Its appearance portends uncanny fire.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000067', w.id, 'omen', 'harvest_omen', '大穰之兆', 'Omen of abundant harvest', '见则天下或其国大穰。', 'Its appearance portends a bumper harvest.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000068', w.id, 'omen', 'war_omen', '兵事之兆', 'Omen of war', '见则有兵、大兵，或其邑有大兵。', 'Its appearance portends warfare.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000069', w.id, 'being_kind', 'deity', '神', 'Deity', '原文以「神X」「有神焉」称之者。', 'The text calls it a spirit outright.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000070', w.id, 'being_kind', 'divine_office', '司职', 'Divine office', '原文明记其所司之事。', 'The text states the office or duty it administers.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000071', w.id, 'being_kind', 'transformed_form', '化身', 'Transformed form', '原文记其由他者所化，或化为他物。', 'The text records it turning into, or having been turned from, something else.', 'text_direct', 'published'
+  FROM works w WHERE w.slug='shanhaijing'
+ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
+  definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;
+
+INSERT INTO shj_taxonomy_terms (id, work_id, axis, term, label_zh, label_en, definition_zh, definition_en, evidence_requirement, review_status)
+SELECT '1e000000-0000-4000-8000-000000000072', w.id, 'seasonality', 'winter_visible_summer_dormant', '冬见夏蛰', 'Winter-visible, summer-dormant', '冬季可见而夏季蛰伏，与「冬死夏生」不同。', 'Visible in winter and dormant in summer — not the same as dying in winter and reviving in summer.', 'text_direct', 'published'
   FROM works w WHERE w.slug='shanhaijing'
 ON CONFLICT (axis, term) DO UPDATE SET label_zh=EXCLUDED.label_zh, label_en=EXCLUDED.label_en,
   definition_zh=EXCLUDED.definition_zh, definition_en=EXCLUDED.definition_en;

@@ -79,7 +79,7 @@ section tree 与 segmentation **全未冻结**，因此本文件不给出任何�
 以下标记之间的内容只能由 coverage verifier 重写：`npm run verify:domain` 每次运行都会以数据库现状覆盖它。手工修改会在下次运行时被抹掉，这是有意的。
 
 <!-- SHANHAIJING_COVERAGE:BEGIN -->
-> 由 `npm run verify:domain` 于 `2026-08-19T05:19:07.367Z` 生成；证据层级 `local_candidate`。
+> 由 `npm run verify:domain` 于 `2026-08-19T10:53:39.906Z` 生成；证据层级 `local_candidate`。
 
 > 底本（每篇各一个 baseline）：
 > - `nanshan` → `nanshan-v1-public-domain-collation`，checksum `824c1e36104b9886…`，状态 `published`
@@ -97,6 +97,7 @@ section tree 与 segmentation **全未冻结**，因此本文件不给出任何�
 | **合计** | **125** | **43** | **24** | **23（归并后独立概念）** |
 
 > 「已审核」为 0 的山系表示**文本已冻结、内容尚未逐段审核**——不进 API，也不计入覆盖率分子。
+> 另有 **64** 处提及、**62** 个概念已入库但为 `draft`——抽取未经人复核，不进 API，故不计入上表。
 > 合计列的「异兽概念」是**归并后的独立概念数**，不是各行相加——同一异兽在多个山系出现只计一次。
 > 三项统计彼此独立，禁止相加或互相替代。
 <!-- SHANHAIJING_COVERAGE:END -->

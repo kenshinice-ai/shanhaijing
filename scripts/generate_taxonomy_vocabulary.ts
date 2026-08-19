@@ -45,6 +45,10 @@ const AXES: Axis[] = [
   { axis: "seasonality", zh: "时序", en: "Seasonality",
     defZh: "与季节相系的生死或出没周期。",
     defEn: "Life, death or appearance cycles tied to the seasons." },
+  // Appended so the ids of the seven original axes stay put.
+  { axis: "being_kind", zh: "存在类别", en: "Kind of being",
+    defZh: "原文如何称呼这个存在：神、司职之神、由他者所化。与形态无关，只记文本自己的称谓与身份陈述。",
+    defEn: "What the received text calls the being: a spirit, a spirit holding an office, or a form something else turned into. Independent of shape; it records only the text's own designation." },
 ];
 
 const TERMS: Term[] = [
@@ -140,9 +144,76 @@ const TERMS: Term[] = [
     defZh: "见则郡县大水。", defEn: "Its appearance portends flooding." },
   { axis: "omen", term: "peace_omen", zh: "安宁之兆", en: "Omen of peace",
     defZh: "见则天下安宁。", defEn: "Its appearance portends peace." },
-  // seasonality
   { axis: "seasonality", term: "winter_summer_cycle", zh: "冬死夏生", en: "Winter-death, summer-life cycle",
     defZh: "冬死而夏生的往复周期。", defEn: "A cycle of dying in winter and living again in summer." },
+  // --- Terms added with the Xishan corpus; appended so existing term ids stay put.
+  // morphology — general classes introduced with the Xishan corpus (SJ-D024)
+  { axis: "morphology", term: "bristled", zh: "多毛", en: "Bristled",
+    defZh: "以毛、鬣、蝟毛一类描写立形者。", defEn: "Described through bristles, mane, or quill-like hair." },
+  { axis: "morphology", term: "composite_fish", zh: "复合鱼形", en: "Composite fish",
+    defZh: "鱼身而杂取他物的首、翼、足。", defEn: "A fish body assembled with another creature's head, wings, or limbs." },
+  { axis: "morphology", term: "horned", zh: "有角", en: "Horned",
+    defZh: "原文明记角数或角形者。", defEn: "The text states the number or shape of its horns." },
+  { axis: "morphology", term: "human_faced", zh: "人面", en: "Human-faced",
+    defZh: "以人面立形者，不论其身为鸟兽鱼神。", defEn: "Carries a human face, whatever the body — bird, beast, fish, or spirit." },
+  { axis: "morphology", term: "hybrid_limbs", zh: "异类肢体", en: "Hybrid limbs",
+    defZh: "肢体取自异类，如马足人手、鸱形人足。", defEn: "Limbs borrowed from another kind: a horse's feet with human hands, an owl with human feet." },
+  { axis: "morphology", term: "multiplied_limbs", zh: "多首多足", en: "Multiplied heads and limbs",
+    defZh: "首、足、翼、身的数目超出常物。与「多尾多耳」分列，后者只记尾耳。",
+    defEn: "Heads, feet, wings or bodies counted beyond the ordinary. Kept apart from multiplied tails and ears, which covers only those two." },
+  { axis: "morphology", term: "serpentine", zh: "蛇形", en: "Serpentine",
+    defZh: "原文以「有蛇焉」或蛇身立形者。", defEn: "Introduced as a serpent, or given a serpent's body." },
+  { axis: "morphology", term: "single_limbed", zh: "一足一翼", en: "Single-limbed",
+    defZh: "足、翼、目、手成单，原文明记其独。", defEn: "One foot, one wing, one eye or one hand, stated as singular by the text." },
+  { axis: "morphology", term: "winged_quadruped", zh: "有翼之兽", en: "Winged quadruped",
+    defZh: "兽身而生鸟翼。", defEn: "A four-legged body carrying bird wings." },
+  // behavior
+  { axis: "behavior", term: "abducts_people", zh: "好举人", en: "Carries people off",
+    defZh: "原文称其好举人。", defEn: "The text says it likes to pick people up and carry them." },
+  { axis: "behavior", term: "human_speech", zh: "能作人言", en: "Speaks like a person",
+    defZh: "原文称其能人言。", defEn: "The text says it can speak as a person does." },
+  { axis: "behavior", term: "nocturnal_flight", zh: "夜飞", en: "Flies by night",
+    defZh: "原文明记以夜飞行。", defEn: "The text states that it flies at night." },
+  { axis: "behavior", term: "paired_flight", zh: "相得乃飞", en: "Flies only in pairs",
+    defZh: "须两两相合方能飞。", defEn: "It can fly only when two of them join." },
+  { axis: "behavior", term: "preys_on_named", zh: "食某物", en: "Preys on a named creature",
+    defZh: "原文明言所食之物（食鱼、食虎豹一类），有别于泛言食人。",
+    defEn: "The text names what it eats — fish, tigers and leopards — as distinct from the general man-eating claim." },
+  // sound
+  { axis: "sound", term: "animal_like_call", zh: "声如禽兽", en: "Animal-like call",
+    defZh: "以禽兽之声为听感类比；类比对象是听感参照，不是物种鉴定。",
+    defEn: "Its call is compared to an animal's; the referent is an auditory comparison, not a species identification." },
+  { axis: "sound", term: "object_like_call", zh: "声如器物", en: "Object-like call",
+    defZh: "以击石、钟磬、鼓一类器物之声为听感类比。", defEn: "Its call is compared to struck stone, bells and chimes, or a drum." },
+  // effect
+  { axis: "effect", term: "enhancement_claim", zh: "增益体能", en: "Enhancement claim",
+    defZh: "原文称食之、佩之而增气力、脚力一类。", defEn: "The text claims eating or wearing it increases strength or stamina." },
+  { axis: "effect", term: "harm_claim", zh: "致害", en: "Harm claim",
+    defZh: "原文称食之而致害，如使人无子。", defEn: "The text claims eating it causes harm, such as childlessness." },
+  { axis: "effect", term: "medicinal_claim", zh: "疗疾之效", en: "Medicinal claim",
+    defZh: "原文称食之、服之、佩之而已某疾；登记为文本主张，不作医药建议。",
+    defEn: "The text claims eating, wearing or taking it cures an ailment; recorded as a textual claim, never as medical advice." },
+  { axis: "effect", term: "protective_claim", zh: "禦凶避害", en: "Protective claim",
+    defZh: "原文称可以御火、御兵、御凶、不畏雷一类。", defEn: "The text claims it wards off fire, weapons, ill fortune, or thunder." },
+  { axis: "effect", term: "toxic_use", zh: "毒杀之用", en: "Toxic use",
+    defZh: "原文称其可毒杀他物，或触之则死则枯。", defEn: "The text says it poisons or kills what it touches." },
+  // omen
+  { axis: "omen", term: "fire_omen", zh: "讹火之兆", en: "Omen of fire",
+    defZh: "见则其邑有讹火。", defEn: "Its appearance portends uncanny fire." },
+  { axis: "omen", term: "harvest_omen", zh: "大穰之兆", en: "Omen of abundant harvest",
+    defZh: "见则天下或其国大穰。", defEn: "Its appearance portends a bumper harvest." },
+  { axis: "omen", term: "war_omen", zh: "兵事之兆", en: "Omen of war",
+    defZh: "见则有兵、大兵，或其邑有大兵。", defEn: "Its appearance portends warfare." },
+  // being_kind
+  { axis: "being_kind", term: "deity", zh: "神", en: "Deity",
+    defZh: "原文以「神X」「有神焉」称之者。", defEn: "The text calls it a spirit outright." },
+  { axis: "being_kind", term: "divine_office", zh: "司职", en: "Divine office",
+    defZh: "原文明记其所司之事。", defEn: "The text states the office or duty it administers." },
+  { axis: "being_kind", term: "transformed_form", zh: "化身", en: "Transformed form",
+    defZh: "原文记其由他者所化，或化为他物。", defEn: "The text records it turning into, or having been turned from, something else." },
+  // seasonality
+  { axis: "seasonality", term: "winter_visible_summer_dormant", zh: "冬见夏蛰", en: "Winter-visible, summer-dormant",
+    defZh: "冬季可见而夏季蛰伏，与「冬死夏生」不同。", defEn: "Visible in winter and dormant in summer — not the same as dying in winter and reviving in summer." },
 ];
 
 async function main(): Promise<void> {

@@ -99,10 +99,17 @@ async function main(): Promise<void> {
   for (const gap of auditGaps) fail("passage-audit", `passage ${gap.slug}: missing audit or audit input checksum mismatch`);
 
   // --- Three independent statistics ----------------------------------------
-  const stats = (await rows<{ concepts: string; occurrences: string; passages_total: string; passages_reviewed: string }>(
+  const stats = (await rows<{ concepts: string; occurrences: string; passages_total: string; passages_reviewed: string;
+    concepts_published: string; occurrences_published: string }>(
     `SELECT
        (SELECT count(*) FROM shj_creatures WHERE work_id=$1) AS concepts,
        (SELECT count(*) FROM shj_creature_occurrences o JOIN shj_creatures c ON c.id=o.creature_id WHERE c.work_id=$1) AS occurrences,
+       -- 覆盖率表的每一行都按 published 计；合计若按全部计，就会出现
+       -- 「行行是 0、合计是 88」这种自相矛盾的表。两者必须同口径。
+       (SELECT count(DISTINCT o.creature_id) FROM shj_creature_occurrences o JOIN shj_creatures c ON c.id=o.creature_id
+         WHERE c.work_id=$1 AND o.review_status='published') AS concepts_published,
+       (SELECT count(*) FROM shj_creature_occurrences o JOIN shj_creatures c ON c.id=o.creature_id
+         WHERE c.work_id=$1 AND o.review_status='published') AS occurrences_published,
        (SELECT count(*) FROM shj_text_passages p JOIN shj_text_sections s ON s.id=p.section_id
           JOIN shj_text_editions e ON e.id=s.edition_id WHERE e.work_id=$1) AS passages_total,
        (SELECT count(*) FROM shj_passage_audits a JOIN shj_text_passages p ON p.id=a.passage_id
@@ -163,31 +170,57 @@ async function main(): Promise<void> {
     [workId],
   );
   for (const section of sections) {
-    const edges = await rows<{ from_place_id: string; to_place_id: string; sequence: number; distance_value: string | null }>(
-      "SELECT from_place_id, to_place_id, sequence, distance_value FROM shj_topology_edges WHERE section_id=$1 ORDER BY sequence",
+    // The route is the chain; hydrography edges hang off it and must not be
+    // read as steps. Before the Xishan corpus every edge was a route step, so
+    // this check could ignore relation_kind — it no longer can.
+    const routeEdges = await rows<{ from_place_id: string; to_place_id: string; sequence: number; distance_value: string | null }>(
+      `SELECT from_place_id, to_place_id, sequence, distance_value FROM shj_topology_edges
+        WHERE section_id=$1 AND relation_kind='distance_direction' ORDER BY sequence`,
       [section.id],
     );
-    for (let index = 1; index < edges.length; index += 1) {
+    for (let index = 1; index < routeEdges.length; index += 1) {
       checks += 1;
-      if (edges[index].from_place_id !== edges[index - 1].to_place_id) {
-        fail("topology-chain", `section ${section.slug}: edge ${edges[index].sequence} does not continue from edge ${edges[index - 1].sequence}`);
+      if (routeEdges[index].from_place_id !== routeEdges[index - 1].to_place_id) {
+        fail("topology-chain", `section ${section.slug}: edge ${routeEdges[index].sequence} does not continue from edge ${routeEdges[index - 1].sequence}`);
       }
     }
-    for (const edge of edges) {
+    const allEdges = await rows<{ from_place_id: string; to_place_id: string; sequence: number; relation_kind: string; from_kind: string; to_kind: string }>(
+      `SELECT e.from_place_id, e.to_place_id, e.sequence, e.relation_kind, f.place_kind AS from_kind, t.place_kind AS to_kind
+         FROM shj_topology_edges e
+         JOIN shj_textual_places f ON f.id=e.from_place_id
+         JOIN shj_textual_places t ON t.id=e.to_place_id
+        WHERE e.section_id=$1 ORDER BY e.sequence`,
+      [section.id],
+    );
+    const LAND = new Set(["mountain", "mountain_range", "region", "route_node", "unknown"]);
+    const WATER = new Set(["river", "water_source", "marsh", "sea", "region", "unknown"]);
+    for (const edge of allEdges) {
       checks += 1;
       if (edge.from_place_id === edge.to_place_id) fail("topology-loop", `section ${section.slug}: self-loop at sequence ${edge.sequence}`);
+      checks += 1;
+      if (edge.relation_kind === "source_of" && !(LAND.has(edge.from_kind) && WATER.has(edge.to_kind))) {
+        fail("topology-kind", `section ${section.slug}: source_of at sequence ${edge.sequence} runs ${edge.from_kind}→${edge.to_kind}`);
+      }
+      checks += 1;
+      if (edge.relation_kind === "flows_into" && !(WATER.has(edge.from_kind) && WATER.has(edge.to_kind))) {
+        fail("topology-kind", `section ${section.slug}: flows_into at sequence ${edge.sequence} runs ${edge.from_kind}→${edge.to_kind}`);
+      }
     }
   }
 
   // --- Bilingual completeness on published entities -------------------------
   const translationGaps = await rows<{ kind: string; slug: string; locales: string }>(
+    // 同一条理由适用于概念与地点：约束的是「已经对外」的东西。
+    // 概念表没有 review_status，其对外与否取决于它是否有已发布的出现。
     `SELECT 'creature' AS kind, c.slug, string_agg(tr.locale::text, ',' ORDER BY tr.locale::text) AS locales
        FROM shj_creatures c LEFT JOIN shj_creature_translations tr ON tr.creature_id=c.id AND tr.status='published'
-      WHERE c.work_id=$1 GROUP BY c.slug HAVING count(DISTINCT tr.locale) < 2
+      WHERE c.work_id=$1
+        AND EXISTS (SELECT 1 FROM shj_creature_occurrences o WHERE o.creature_id=c.id AND o.review_status='published')
+      GROUP BY c.slug HAVING count(DISTINCT tr.locale) < 2
      UNION ALL
      SELECT 'place', p.slug, string_agg(tr.locale::text, ',' ORDER BY tr.locale::text)
        FROM shj_textual_places p LEFT JOIN shj_textual_place_translations tr ON tr.place_id=p.id AND tr.status='published'
-      WHERE p.work_id=$1 GROUP BY p.slug HAVING count(DISTINCT tr.locale) < 2
+      WHERE p.work_id=$1 AND p.review_status='published' GROUP BY p.slug HAVING count(DISTINCT tr.locale) < 2
      UNION ALL
      -- 只约束已发布的段落。刚冻结、尚未逐段审核的语料（如《西山经》）本就没有译文，
      -- 把它算作"双语缺口"会把一个正常的中间状态报成错误，久而久之让人学会忽略这条检查。
@@ -312,10 +345,14 @@ async function main(): Promise<void> {
       scope: edition.scope, slug: edition.slug, checksum: edition.checksum_sha256, reviewStatus: edition.review_status,
     })),
     totals: {
-      uniqueCreatureConcepts: Number(stats.concepts),
-      textualOccurrences: Number(stats.occurrences),
+      uniqueCreatureConcepts: Number(stats.concepts_published),
+      textualOccurrences: Number(stats.occurrences_published),
       passagesReviewed: Number(stats.passages_reviewed),
       passagesTotal: Number(stats.passages_total),
+    },
+    frozenNotDisplayed: {
+      uniqueCreatureConcepts: Number(stats.concepts) - Number(stats.concepts_published),
+      textualOccurrences: Number(stats.occurrences) - Number(stats.occurrences_published),
     },
     sections: coverageRows.map((row) => ({
       slug: row.section_slug,
@@ -348,6 +385,7 @@ async function main(): Promise<void> {
     coverageTable,
     "",
     "> 「已审核」为 0 的山系表示**文本已冻结、内容尚未逐段审核**——不进 API，也不计入覆盖率分子。",
+    `> 另有 **${coverage.frozenNotDisplayed.textualOccurrences}** 处提及、**${coverage.frozenNotDisplayed.uniqueCreatureConcepts}** 个概念已入库但为 \`draft\`——抽取未经人复核，不进 API，故不计入上表。`,
     "> 合计列的「异兽概念」是**归并后的独立概念数**，不是各行相加——同一异兽在多个山系出现只计一次。",
     "> 三项统计彼此独立，禁止相加或互相替代。",
     "",

@@ -298,7 +298,11 @@ async function main(): Promise<void> {
 
   await writeFile(OUT, `${JSON.stringify(corpus, null, 1)}\n`);
   const editionChecksum = sha256(base.join("\n"));
-  console.log(`西山经语料:${base.length} 段,edition checksum ${editionChecksum}`);
+  // 两个 checksum 口径不同,曾同名出现在两处,读者会以为语料变了。
+  // 入库的是规范化文本的那一个（与 verifier 同口径）;这里的是原文的。
+  console.log(`西山经语料:${base.length} 段`);
+  console.log(`  原文 checksum(本脚本):${editionChecksum}`);
+  console.log(`  规范化 checksum(入库、verifier 用):${sha256(base.map((text) => text.replace(/[\s，。、；：「」『』（）《》〈〉？！·]/gu, "")).join("\n"))}`);
   console.log(`  异体字差异:${corpus.collation.orthographicPairs.length} 对 / ${corpus.collation.orthographicOccurrences} 处 —— 按 X-2 丢弃,不入 variant`);
   console.log(`  郭璞注条目:${embeddedNotes.length}（不进 baseline）`);
   console.log(`  维基文库「一作X」校语:${embeddedCollationNotes.length} 条（登记,不改 baseline）`);

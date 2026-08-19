@@ -46,7 +46,13 @@ export function createApp(db: Database, corsOrigin: string = process.env.CORS_OR
           COALESCE(req.title,fb.title) AS title,COALESCE(req.summary,fb.summary) AS summary,alt.title AS "alternateTitle",
           CASE WHEN req.title IS NULL THEN w.default_locale ELSE $1::locale_code END AS "resolvedLocale",(req.title IS NULL) AS "fallbackUsed",
           COALESCE(req.status,fb.status) AS "translationStatus",
-          (SELECT count(*)::int FROM shj_creatures sc WHERE sc.work_id=w.id AND sc.concept_status<>'superseded') AS "uniqueCreatureConceptCount",
+          -- 只数读者够得着的概念。概念表没有 review_status,其对外与否取决于
+          -- 是否有已发布的出现;不加这个条件,《西山经》一入库这里就报 85,
+          -- 而图集里仍只有 23 个——同「43/125」是同一类缺陷。
+          (SELECT count(*)::int FROM shj_creatures sc
+            WHERE sc.work_id=w.id AND sc.concept_status<>'superseded'
+              AND EXISTS (SELECT 1 FROM shj_creature_occurrences sco
+                           WHERE sco.creature_id=sc.id AND sco.review_status='published')) AS "uniqueCreatureConceptCount",
           (SELECT count(*)::int
              FROM shj_creature_occurrences so
              JOIN shj_creatures soc ON soc.id=so.creature_id
@@ -65,7 +71,9 @@ export function createApp(db: Database, corsOrigin: string = process.env.CORS_OR
            )
              FROM shj_text_passages sp
              JOIN shj_text_sections ss ON ss.id=sp.section_id
-             JOIN shj_text_editions se ON se.id=ss.edition_id
+             -- 与图集载荷同一条口径:分母只算已发布的底本。冻结未发布的篇目
+             -- 属内部进度,归 CONTENT_COVERAGE_MATRIX,不归对外载荷。
+             JOIN shj_text_editions se ON se.id=ss.edition_id AND se.review_status='published'
              LEFT JOIN shj_passage_audits sa ON sa.passage_id=sp.id
             WHERE se.work_id=w.id AND se.is_baseline) AS "corpusCoverage",
           (SELECT count(*)::int FROM shj_textual_places sl WHERE sl.work_id=w.id AND sl.review_status='published') AS "textualPlaceCount"

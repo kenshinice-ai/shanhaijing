@@ -66,4 +66,19 @@ describe("coverage counts only what a reader can reach", () => {
     const fromClause = coverageQuery.slice(0, coverageQuery.indexOf("GROUP BY") + 1 || 2000);
     expect(fromClause).toContain("shj_text_editions e ON e.id=s.edition_id AND e.review_status='published'");
   });
+
+  it("counts only creature concepts that have a published occurrence", () => {
+    // 同一类缺陷的第二处：概念表没有 review_status,不加条件就会把草稿概念
+    // 算进对外载荷。《西山经》入库后该数会从 23 跳到 85 而图集毫无变化。
+    const source = readFileSync(join(__dirname, "app.ts"), "utf8");
+    const query = source.slice(source.indexOf('AS "uniqueCreatureConceptCount"') - 600, source.indexOf('AS "uniqueCreatureConceptCount"'));
+    expect(query).toContain("shj_creature_occurrences sco");
+    expect(query).toContain("sco.review_status='published'");
+  });
+
+  it("keeps the works payload on the same denominator as the atlas", () => {
+    const source = readFileSync(join(__dirname, "app.ts"), "utf8");
+    const query = source.slice(source.indexOf('AS "corpusCoverage"') - 900, source.indexOf('AS "corpusCoverage"'));
+    expect(query).toContain("shj_text_editions se ON se.id=ss.edition_id AND se.review_status='published'");
+  });
 });

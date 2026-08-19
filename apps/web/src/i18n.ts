@@ -76,13 +76,13 @@ export const NO_ENDORSEMENT: Record<Locale, string> = {
   "zh-CN":
     "本图集为项目自行编纂的候选成果，未经任何学术机构或外部专家签署。分类、地望候选、" +
     "声音推演与艺术演绎均为本项目的编辑判断，不代表学术定论；引用时请一并注明其证据等级。" +
-    "原文校勘同样未经古籍专家复核，异文裁决附依据与置信度，未能判定者明确留为未决。",
+    "原文校勘同样未经古籍专家复核，异文裁决附依据与置信度，证据不足以定案者标为暂定，不充作定论。",
   en:
     "This atlas is candidate work authored by the project. It carries no institutional or expert " +
     "endorsement: classifications, location candidates, sound reconstructions and artistic renderings " +
     "are the project's own editorial judgements, not scholarly conclusions. Cite them at that level. " +
     "The textual collation is likewise unreviewed by classicists: each variant ruling states its basis " +
-    "and confidence, and the ones that could not be decided are left explicitly open.",
+    "and confidence, and readings the evidence could not settle are marked provisional rather than passed off as decided.",
 };
 
 /** Origin region strings are authored in English in the database. */

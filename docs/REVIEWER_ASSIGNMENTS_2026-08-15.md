@@ -27,6 +27,7 @@
 | `R-GEO` | 历史地理、古地图 | 项目历史地理负责人 | 复旦大学历史地理研究中心；首选专家候选李晓杰教授 | `assigned_internal / external_not_contacted` | textual topology 与 candidate set 审查；不能把候选地提升为唯一事实 |
 | `R-RIGHTS` | 版权、媒体、许可 | 项目版权与媒体合规负责人 | 中国大陆执业版权律师或机构法务；监管/规范依据为国家版权局 | `assigned_internal / qualified_counsel_not_retained` | rights fail-closed、许可清单、撤回；不提供替代正式法律意见的结论 |
 | `R-AUDIO` | 声学、声音设计 | 项目音频工程负责人 | 熟悉 ITU-R BS.1770 / EBU R 128 的广播或数字音频工程师 | `assigned_internal / external_not_contacted` | 测量算法、manifest、披露和播放门禁；推演真实性仍需学术 reviewer |
+| `R-AI-EXTRACT` | 机械抽取与非专家裁决 | 由 AI 执行、经仓库所有者指派 | 无——本角色的产出**按定义未经人复核** | `assigned_ai / human_review_pending` | 从冻结语料确定性抽取的结构与引文、非专家校勘裁决；**不得单独作为发布依据**，其产出一律以 `draft` 入库，须由 `R-CLASSICS` 复核后方可升档 |
 | `R-BILINGUAL-ZH` | 中文、拼音、术语 | 项目中文术语编辑 | 古籍中文编辑或国家语言文字规范专家 | `assigned_internal / external_not_contacted` | 中文规范名、拼音、分词、术语表 |
 | `R-BILINGUAL-EN` | 英译、英文可读性 | 项目英文编辑 | 英语母语学术编辑，且具中国古籍/宗教神话翻译经验 | `assigned_internal / external_not_contacted` | 英文名称、摘要和 disclosure；不得单人发布未经中文 reviewer 对齐的译名 |
 | `R-A11Y` | 无障碍 | 项目 accessibility 负责人 | 具 WCAG 2.2、屏幕阅读器和键盘测试经验的无障碍专家 | `assigned_internal / external_not_contacted` | WCAG/AT 测试矩阵、阻断缺陷和 waiver 建议 |

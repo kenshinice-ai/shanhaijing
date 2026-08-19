@@ -84,9 +84,17 @@ jobs:
         run: |
           npm run generate:overview
           npm run generate:corpus-seed
+          npm run generate:taxonomy
+          npm run generate:xishan
+          npm run extract:xishan
           git diff --exit-code -- \
             apps/web/public/media/shanhaijing/artistic-overview-v1.svg \
-            db/seeds/004_nanshan_full.sql
+            db/seeds/004_nanshan_full.sql \
+            db/seeds/005_taxonomy_vocabulary.sql \
+            db/seeds/006_xishan_corpus.sql \
+            db/seeds/007_xishan_domain.sql \
+            docs/generated/xishan-arithmetic.md \
+            docs/generated/xishan-domain-review.md
 
       - name: start the API
         run: |

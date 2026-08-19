@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T05:20:32.843Z",
+  "generatedAt": "2026-08-19T10:55:17.644Z",
   "generator": "scripts/verify_parity.ts",
   "api": "http://localhost:4100",
   "artifact": "apps/web/dist/data",
@@ -9,8 +9,8 @@
   "comparisons": [
     {
       "file": "works.zh-CN.json",
-      "bytes": 913,
-      "sha256": "5da86b624e8ac619459cc866da695c992cf43f48e50630d52e8fa1f5c493bd1d",
+      "bytes": 912,
+      "sha256": "a19e0bddcbe97e28075c2707b1156766b7da0d6c71baba79068135591dac61da",
       "differences": 0
     },
     {
@@ -21,8 +21,8 @@
     },
     {
       "file": "works.en.json",
-      "bytes": 993,
-      "sha256": "5999629df2c03093b64f932e44c5e48a1169017b788c9262beb7b319cb4e1adf",
+      "bytes": 992,
+      "sha256": "4fd5250eb362ec042405229c666b21186d19ef494cab43909106f538eb45e13e",
       "differences": 0
     },
     {

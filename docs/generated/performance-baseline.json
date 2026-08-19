@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T05:20:33.895Z",
+  "generatedAt": "2026-08-19T10:55:18.715Z",
   "generator": "scripts/measure_performance.ts",
   "node": "v26.7.0",
   "platform": "darwin/arm64",
@@ -7,19 +7,19 @@
   "artifact": "apps/web/dist",
   "totals": {
     "files": 12,
-    "raw": 607766,
-    "brotli": 129975
+    "raw": 607821,
+    "brotli": 130007
   },
   "firstLoad": {
     "files": [
-      "assets/index-BSBM9Hhi.js",
+      "assets/index-CL2ZQ4PZ.js",
       "assets/index-CPPWTQEV.css",
       "data/atlas.shanhaijing.zh-CN.json",
       "index.html",
       "media/shanhaijing/artistic-overview-v1.svg"
     ],
-    "raw": 503616,
-    "brotli": 110255
+    "raw": 503673,
+    "brotli": 110293
   },
   "assets": [
     {
@@ -29,10 +29,10 @@
       "brotli": 680
     },
     {
-      "path": "assets/index-BSBM9Hhi.js",
-      "raw": 304469,
-      "gzip": 93021,
-      "brotli": 80562
+      "path": "assets/index-CL2ZQ4PZ.js",
+      "raw": 304526,
+      "gzip": 93049,
+      "brotli": 80598
     },
     {
       "path": "assets/index-CPPWTQEV.css",
@@ -54,15 +54,15 @@
     },
     {
       "path": "data/works.en.json",
-      "raw": 993,
-      "gzip": 612,
+      "raw": 992,
+      "gzip": 608,
       "brotli": 481
     },
     {
       "path": "data/works.zh-CN.json",
-      "raw": 913,
-      "gzip": 662,
-      "brotli": 511
+      "raw": 912,
+      "gzip": 658,
+      "brotli": 505
     },
     {
       "path": "favicon.svg",
@@ -86,7 +86,7 @@
       "path": "index.html",
       "raw": 935,
       "gzip": 582,
-      "brotli": 378
+      "brotli": 380
     },
     {
       "path": "media/shanhaijing/artistic-overview-v1.svg",
@@ -101,14 +101,14 @@
       "atlasBytes": 92355,
       "jsonParse": {
         "p50": 0.13,
-        "p95": 0.17,
-        "worst": 0.31,
+        "p95": 0.14,
+        "worst": 0.3,
         "runs": 60
       },
       "zodAtlas": {
-        "p50": 0.14,
-        "p95": 0.29,
-        "worst": 0.36,
+        "p50": 0.15,
+        "p95": 0.26,
+        "worst": 0.45,
         "runs": 60
       },
       "zodWorks": {
@@ -124,26 +124,26 @@
       "jsonParse": {
         "p50": 0.13,
         "p95": 0.14,
-        "worst": 0.31,
+        "worst": 0.27,
         "runs": 60
       },
       "zodAtlas": {
         "p50": 0.13,
-        "p95": 0.18,
-        "worst": 0.19,
+        "p95": 0.19,
+        "worst": 0.2,
         "runs": 60
       },
       "zodWorks": {
         "p50": 0,
         "p95": 0,
-        "worst": 0.01,
+        "worst": 0.02,
         "runs": 60
       }
     }
   ],
   "labelLayout": {
     "nodes": 468,
-    "ms": 221.43
+    "ms": 217.82
   },
   "budgets": [
     {
