@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T10:55:18.715Z",
+  "generatedAt": "2026-08-19T11:00:33.490Z",
   "generator": "scripts/measure_performance.ts",
   "node": "v26.7.0",
   "platform": "darwin/arm64",
@@ -8,7 +8,7 @@
   "totals": {
     "files": 12,
     "raw": 607821,
-    "brotli": 130007
+    "brotli": 129995
   },
   "firstLoad": {
     "files": [
@@ -19,7 +19,7 @@
       "media/shanhaijing/artistic-overview-v1.svg"
     ],
     "raw": 503673,
-    "brotli": 110293
+    "brotli": 110278
   },
   "assets": [
     {
@@ -43,14 +43,14 @@
     {
       "path": "data/atlas.shanhaijing.en.json",
       "raw": 95673,
-      "gzip": 18291,
-      "brotli": 13533
+      "gzip": 18290,
+      "brotli": 13536
     },
     {
       "path": "data/atlas.shanhaijing.zh-CN.json",
       "raw": 92355,
       "gzip": 17272,
-      "brotli": 12822
+      "brotli": 12807
     },
     {
       "path": "data/works.en.json",
@@ -100,20 +100,20 @@
       "locale": "zh-CN",
       "atlasBytes": 92355,
       "jsonParse": {
-        "p50": 0.13,
+        "p50": 0.12,
         "p95": 0.14,
-        "worst": 0.3,
+        "worst": 0.29,
         "runs": 60
       },
       "zodAtlas": {
-        "p50": 0.15,
+        "p50": 0.16,
         "p95": 0.26,
-        "worst": 0.45,
+        "worst": 0.33,
         "runs": 60
       },
       "zodWorks": {
         "p50": 0,
-        "p95": 0,
+        "p95": 0.01,
         "worst": 0.01,
         "runs": 60
       }
@@ -124,26 +124,26 @@
       "jsonParse": {
         "p50": 0.13,
         "p95": 0.14,
-        "worst": 0.27,
+        "worst": 0.28,
         "runs": 60
       },
       "zodAtlas": {
         "p50": 0.13,
-        "p95": 0.19,
+        "p95": 0.18,
         "worst": 0.2,
         "runs": 60
       },
       "zodWorks": {
         "p50": 0,
         "p95": 0,
-        "worst": 0.02,
+        "worst": 0.01,
         "runs": 60
       }
     }
   ],
   "labelLayout": {
     "nodes": 468,
-    "ms": 217.82
+    "ms": 215.95
   },
   "budgets": [
     {

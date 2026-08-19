@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T10:56:23.125Z",
+  "generatedAt": "2026-08-19T11:00:32.465Z",
   "generator": "scripts/verify_parity.ts",
   "api": "http://localhost:4100",
   "artifact": "apps/web/dist/data",
@@ -16,7 +16,7 @@
     {
       "file": "atlas.shanhaijing.zh-CN.json",
       "bytes": 92355,
-      "sha256": "e99ba6ccbe5eb8a7c62ab9025a0911c589e487ed06109e9692613ecc4ba03a60",
+      "sha256": "cf8f8c51e32281517490683be3e62b57fabe73e05b9285ff7e534247621c52c5",
       "differences": 0
     },
     {
@@ -28,7 +28,7 @@
     {
       "file": "atlas.shanhaijing.en.json",
       "bytes": 95673,
-      "sha256": "73d1f7fe177ee52a6d55c6687d6535fa608c42336c2dc23f801fc58327c023fe",
+      "sha256": "a4c61ff19d56a1cb8df9cfc1c0fceab704af6cd273c7d5c2cda3acfe2b039f8a",
       "differences": 0
     }
   ],

@@ -99,17 +99,22 @@ async function main(): Promise<void> {
   const pool = new pg.Pool({ connectionString: DATABASE_URL });
   try {
     const placeRows = await pool.query<{ slug: string; layout_x: number; layout_y: number; sort_order: number; creatures: string }>(
+      // 母图本身是 published 资产,只能画 published 的内容。少了这个条件,
+      // 任何一篇刚入库的 draft 地点都会悄悄出现在对外的手卷上——
+      // 《西山经》领域数据一装进来,CI 的确定性检查就是这样把它照出来的。
       `SELECT p.slug, p.layout_x, p.layout_y, p.sort_order,
-              (SELECT count(*) FROM shj_creature_occurrences o WHERE o.place_id=p.id) AS creatures
+              (SELECT count(*) FROM shj_creature_occurrences o
+                WHERE o.place_id=p.id AND o.review_status='published') AS creatures
          FROM shj_textual_places p JOIN works w ON w.id=p.work_id
-        WHERE w.slug='shanhaijing' ORDER BY p.sort_order`,
+        WHERE w.slug='shanhaijing' AND p.review_status='published' ORDER BY p.sort_order`,
     );
     const passageRows = await pool.query<{ text_zh: string; place_slug: string | null }>(
       `SELECT p.text_zh, (SELECT pl.slug FROM shj_place_mentions m JOIN shj_textual_places pl ON pl.id=m.place_id
                            WHERE m.passage_id=p.id ORDER BY m.mention_order LIMIT 1) AS place_slug
          FROM shj_text_passages p JOIN shj_text_sections s ON s.id=p.section_id
          JOIN shj_text_editions e ON e.id=s.edition_id JOIN works w ON w.id=e.work_id
-        WHERE w.slug='shanhaijing' ORDER BY s.sequence, p.sequence`,
+        WHERE w.slug='shanhaijing' AND e.review_status='published' AND p.review_status='published'
+        ORDER BY s.sequence, p.sequence`,
     );
 
     const places: Place[] = placeRows.rows.map((row) => ({

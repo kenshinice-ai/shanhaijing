@@ -79,7 +79,7 @@ section tree 与 segmentation **全未冻结**，因此本文件不给出任何�
 以下标记之间的内容只能由 coverage verifier 重写：`npm run verify:domain` 每次运行都会以数据库现状覆盖它。手工修改会在下次运行时被抹掉，这是有意的。
 
 <!-- SHANHAIJING_COVERAGE:BEGIN -->
-> 由 `npm run verify:domain` 于 `2026-08-19T10:53:39.906Z` 生成；证据层级 `local_candidate`。
+> 由 `npm run verify:domain` 于 `2026-08-19T11:00:11.751Z` 生成；证据层级 `local_candidate`。
 
 > 底本（每篇各一个 baseline）：
 > - `nanshan` → `nanshan-v1-public-domain-collation`，checksum `824c1e36104b9886…`，状态 `published`

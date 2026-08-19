@@ -400,6 +400,20 @@
   得由"读者能不能看到"来定义。
 - 证据：`apps/api/src/app.ts`、`apps/api/src/app.test.ts`（13 项 API 测试）。
 
+### SJ-D027：母图只画已发布的内容
+
+- 状态：`accepted`
+- 日期：2026-08-19
+- 批准者：主负责人（CI 的确定性检查发现）
+- 输入：《西山经》领域数据入库后 CI 重跑 `generate:overview`，产出的 SVG 与仓库不一致
+- 决策：母图生成器的地点与段落查询一律加 `review_status='published'`。
+- 理由：母图本身是 `published` 资产。生成器却按「全部地点」取数，
+  于是**任何一篇刚入库的 draft 地点都会悄悄画进对外的手卷**。
+  这个洞在只有《南山经》时不可能暴露——那时全部地点都是 published。
+  加上条件后重新生成，SVG 与仓库字节相同（`b6b4baa1…`），说明此前的图未受污染。
+- 回归防线：CI 的「生成器确定性」这一步就是它——去掉过滤条件，SVG 立刻变，CI 立刻红。
+- 证据：`scripts/generate_overview.ts`、CI run 32245110732（发现）。
+
 ## 待裁决问题索引
 
 - `EXPERT_REVIEW_QUESTIONS.md`：学科专家问题与 reviewer disposition。
@@ -423,4 +437,4 @@
 | `SJ-DLOG-011` | 2026-08-19 | 《西山经》异文逐条裁决，11 处留为未决；增设非专家校勘免责（SJ-D022） | 主负责人 | `xishan_rulings_v1.json`、`CORPUS_AND_EDITORIAL_POLICY.md` §4.5 |
 | `SJ-DLOG-012` | 2026-08-19 | 增设 `provisional` 档，未决归零（SJ-D023） | 主负责人 | `xishan_rulings_v1.json`、政策 §4.5.3 |
 | `SJ-DLOG-006` | 2026-08-18 | 抽出为独立仓库并压平共享内核（SJ-D013） | 主负责人 | `MIGRATION_RECORD_2026-08-18.md` |
-| `SJ-DLOG-013` | 2026-08-19 | 《西山经》领域建模入库，X-4 山数归因了结（SJ-D024）；seed 按内容记账（SJ-D025）；对外计数补全（SJ-D026） | 主负责人 | `db/seeds/007_xishan_domain.sql`、`generated/xishan-domain-review.md` |
+| `SJ-DLOG-013` | 2026-08-19 | 《西山经》领域建模入库，X-4 山数归因了结（SJ-D024）；seed 按内容记账（SJ-D025）；对外计数补全（SJ-D026）；母图只画已发布内容（SJ-D027） | 主负责人 | `db/seeds/007_xishan_domain.sql`、`generated/xishan-domain-review.md` |

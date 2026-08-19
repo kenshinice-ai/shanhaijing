@@ -20,7 +20,7 @@ UPDATE shj_artistic_overviews SET
   coordinate_space = 'artistic-composite-svg-v1',
   asset_url = '/media/shanhaijing/artistic-overview-v1.svg',
   prompt_path = 'scripts/generate_overview.ts',
-  prompt_sha256 = '21d0856184f4f8e44da8d876df93d1adc0e0e45f939d8e1fd595b1641831c75c',
+  prompt_sha256 = '0c325024fbe930154abbdd57f0001f8b54967e2645c1944cd9d6a43f42f534d3',
   description_zh = '由项目自绘的确定性程序化 SVG 手卷母图：山簇、水流、海面与灵光全部从原文段落与拓扑数据推导，无标签，热点与图例由界面程序叠加。',
   description_en = 'An original, deterministic procedural SVG handscroll master: mountain clusters, rivers, seas, and auras are derived from the passage and topology data. The master is label-free; hotspots and legends are laid over it programmatically.',
   disclosure_zh = '艺术总览依据文本主题进行幻想拼接，不代表古代地望或现代坐标定论。',

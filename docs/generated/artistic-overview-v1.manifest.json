@@ -1,7 +1,7 @@
 {
   "version": "artistic-composite-svg-v1",
   "generator": "scripts/generate_overview.ts",
-  "generatedAt": "2026-08-18T23:26:28.012Z",
+  "generatedAt": "2026-08-19T10:59:08.872Z",
   "deterministic": true,
   "inputs": {
     "textualPlaces": 39,
