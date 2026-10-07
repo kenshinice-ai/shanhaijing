@@ -245,3 +245,8 @@
 - `updatedAt`：2026-08-18
 
 在外部人工签署、冻结输入和明确 Gate 授权未填充前，本文件保持 `review_ready`、`local_candidate`、`blocked`。统计区必须由生成报告提供，禁止手工补写“已完成”数字。
+
+## 等 Lee
+
+- **[决定] 「主负责人」「用户」「`R-RELEASE`」是不是同一个人** — docs/DECISION_LOG.md:149 写「主负责人(用户)」像是同一人,docs/RELEASE_CHECKLIST.md:124-125 又把请求方「主负责人」和批准方「用户(仓库所有者)」分开写,docs/RUNBOOK.md:11 的 release owner 是 Lee;推荐:指人时一律写「Lee」,指角色时写 `R-RELEASE`,「主负责人」若指执行的会话或代理就单独定义 · 不定则谁请求、谁批准发布在文档里读不清,术语表也收不进 · 自 2026-10-07
+- **[决定] 「Gate」的两个意思拆不拆** — 同一个词指项目阶段门(docs/README.md:21「Gate 0」、docs/HANDOFF_TEMPLATE.md:6-7)和五层证据各自的放行结论(docs/RELEASE_CHECKLIST.md:35、:49 等「Gate:passed」);推荐拆成「阶段 Gate」和「证据层 Gate」 · 不定则 HANDOFF_TEMPLATE 的字段名和术语表都定不下来 · 自 2026-10-07
